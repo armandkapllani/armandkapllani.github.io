@@ -9,7 +9,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -23,8 +23,20 @@
       --color-accent-hover: #1e3a5f;
       --font-serif: 'Source Serif 4', Georgia, serif;
       --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
       --max-width: 900px;
       --spacing: 8px;
+      
+      /* Code colors */
+      --code-bg: #1e1e2e;
+      --code-text: #cdd6f4;
+      --code-comment: #6c7086;
+      --code-keyword: #cba6f7;
+      --code-string: #a6e3a1;
+      --code-function: #89b4fa;
+      --code-number: #fab387;
+      --code-operator: #89dceb;
+      --code-variable: #f5e0dc;
     }
 
     * {
@@ -97,16 +109,104 @@
       list-style: none;
     }
 
-    .nav-links a {
+    .nav-links > li {
+      position: relative;
+    }
+
+    .nav-links > li > a {
       color: var(--color-ink-muted);
       text-decoration: none;
       font-size: 0.875rem;
       font-weight: 500;
       transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .nav-links a:hover {
+    .nav-links > li > a:hover {
       color: var(--color-ink);
+    }
+
+    .nav-links > li > a svg {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 200px;
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      padding: calc(var(--spacing) * 1);
+      margin-top: 8px;
+    }
+
+    .nav-links > li:hover .dropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-links > li:hover > a svg {
+      transform: rotate(180deg);
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing) * 1.5);
+      padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 2);
+      color: var(--color-ink-secondary);
+      font-size: 0.875rem;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .dropdown a:hover {
+      background: var(--color-bg-subtle);
+      color: var(--color-accent);
+    }
+
+    .dropdown-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--color-accent), #4a7ab8);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dropdown-icon svg {
+      width: 18px;
+      height: 18px;
+      color: white;
+    }
+
+    .dropdown-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dropdown-title {
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+
+    .dropdown-desc {
+      font-size: 0.75rem;
+      color: var(--color-ink-muted);
     }
 
     /* Main Container */
@@ -326,6 +426,346 @@
       font-size: 0.875rem;
     }
 
+    /* Package Section */
+    .package-hero {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+      border-radius: 12px;
+      padding: calc(var(--spacing) * 5);
+      margin-bottom: calc(var(--spacing) * 4);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .package-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .package-hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .package-name {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: calc(var(--spacing) * 1);
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing) * 2);
+    }
+
+    .package-version {
+      font-size: 0.875rem;
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .package-tagline {
+      font-size: 1.125rem;
+      opacity: 0.9;
+      margin-bottom: calc(var(--spacing) * 3);
+      max-width: 600px;
+    }
+
+    .package-badges {
+      display: flex;
+      gap: calc(var(--spacing) * 1.5);
+      flex-wrap: wrap;
+    }
+
+    .package-badges img {
+      height: 20px;
+    }
+
+    .package-install {
+      background: var(--color-bg-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+      margin-bottom: calc(var(--spacing) * 4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: calc(var(--spacing) * 2);
+    }
+
+    .package-install code {
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      color: var(--color-ink);
+    }
+
+    .copy-btn {
+      background: var(--color-accent);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .copy-btn:hover {
+      background: var(--color-accent-hover);
+    }
+
+    .copy-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: calc(var(--spacing) * 3);
+      margin-bottom: calc(var(--spacing) * 5);
+    }
+
+    .feature-card {
+      background: var(--color-bg-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: calc(var(--spacing) * 3);
+      transition: all 0.2s ease;
+    }
+
+    .feature-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: 0 4px 20px rgba(44, 82, 130, 0.1);
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--color-accent), #4a7ab8);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: calc(var(--spacing) * 2);
+    }
+
+    .feature-icon svg {
+      width: 22px;
+      height: 22px;
+      color: white;
+    }
+
+    .feature-title {
+      font-weight: 600;
+      color: var(--color-ink);
+      margin-bottom: calc(var(--spacing) * 1);
+      font-size: 0.9375rem;
+    }
+
+    .feature-desc {
+      font-size: 0.8125rem;
+      color: var(--color-ink-muted);
+      line-height: 1.6;
+    }
+
+    /* Code Blocks */
+    .code-section {
+      margin-bottom: calc(var(--spacing) * 5);
+    }
+
+    .code-section-title {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--color-ink);
+      margin-bottom: calc(var(--spacing) * 2);
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing) * 1.5);
+    }
+
+    .code-section-title .step-number {
+      width: 28px;
+      height: 28px;
+      background: var(--color-accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+    }
+
+    .code-description {
+      font-size: 0.9375rem;
+      color: var(--color-ink-secondary);
+      margin-bottom: calc(var(--spacing) * 2);
+      line-height: 1.7;
+    }
+
+    .code-block {
+      background: var(--code-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: calc(var(--spacing) * 2);
+    }
+
+    .code-header {
+      background: rgba(255,255,255,0.05);
+      padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 2.5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--code-comment);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-copy {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: var(--code-text);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .code-copy:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .code-copy svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    pre {
+      margin: 0;
+      padding: calc(var(--spacing) * 2.5);
+      overflow-x: auto;
+    }
+
+    pre code {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      color: var(--code-text);
+    }
+
+    /* Syntax highlighting */
+    .keyword { color: var(--code-keyword); }
+    .string { color: var(--code-string); }
+    .function { color: var(--code-function); }
+    .number { color: var(--code-number); }
+    .comment { color: var(--code-comment); font-style: italic; }
+    .operator { color: var(--code-operator); }
+    .variable { color: var(--code-variable); }
+    .param { color: var(--code-number); }
+
+    /* Output block */
+    .output-block {
+      background: #f5f5f5;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: calc(var(--spacing) * 2);
+      margin-top: calc(var(--spacing) * 1);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-ink-secondary);
+      overflow-x: auto;
+    }
+
+    .output-label {
+      font-size: 0.6875rem;
+      color: var(--color-ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: calc(var(--spacing) * 1);
+    }
+
+    /* Quick Reference */
+    .quick-ref {
+      background: var(--color-bg-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: calc(var(--spacing) * 4);
+    }
+
+    .quick-ref-title {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: calc(var(--spacing) * 3);
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing) * 1);
+    }
+
+    .quick-ref-title svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-accent);
+    }
+
+    .quick-ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: calc(var(--spacing) * 3);
+    }
+
+    .quick-ref-item {
+      font-size: 0.8125rem;
+    }
+
+    .quick-ref-item h4 {
+      font-weight: 600;
+      color: var(--color-ink);
+      margin-bottom: calc(var(--spacing) * 1);
+    }
+
+    .quick-ref-item code {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: white;
+      border: 1px solid var(--color-border);
+      padding: calc(var(--spacing) * 1) calc(var(--spacing) * 1.5);
+      border-radius: 4px;
+      color: var(--color-ink-secondary);
+      margin-bottom: calc(var(--spacing) * 0.5);
+    }
+
+    .quick-ref-item p {
+      color: var(--color-ink-muted);
+      font-size: 0.75rem;
+    }
+
     /* Footer */
     footer {
       padding: calc(var(--spacing) * 4) 0;
@@ -367,6 +807,26 @@
       .paper-badge {
         align-self: flex-start;
       }
+
+      .package-name {
+        font-size: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: calc(var(--spacing) * 1);
+      }
+
+      .package-install {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .dropdown {
+        position: fixed;
+        top: 60px;
+        left: 16px;
+        right: 16px;
+        transform: none;
+      }
     }
   </style>
 </head>
@@ -378,6 +838,27 @@
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#research">Research</a></li>
+        <li>
+          <a href="#packages">
+            Packages
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+          <div class="dropdown">
+            <a href="#packages">
+              <div class="dropdown-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                </svg>
+              </div>
+              <div class="dropdown-text">
+                <span class="dropdown-title">etwfe</span>
+                <span class="dropdown-desc">Extended Two-Way Fixed Effects</span>
+              </div>
+            </a>
+          </div>
+        </li>
         <li><a href="#teaching">Teaching</a></li>
       </ul>
     </div>
@@ -500,6 +981,309 @@
 
     </section>
 
+    <!-- PACKAGES SECTION -->
+    <section id="packages">
+      <h2 class="section-title">Python Packages</h2>
+
+      <!-- Package Hero -->
+      <div class="package-hero">
+        <div class="package-hero-content">
+          <h3 class="package-name">
+            etwfe
+            <span class="package-version">v0.1.0</span>
+          </h3>
+          <p class="package-tagline">
+            Extended Two-Way Fixed Effects estimator for Python. Implementation of Wooldridge (2021, 2023) 
+            methodology for difference-in-differences with heterogeneous treatment effects.
+          </p>
+          <div class="package-badges">
+            <a href="https://pypi.org/project/etwfe/" target="_blank">
+              <img src="https://img.shields.io/pypi/v/etwfe?color=blue&label=PyPI" alt="PyPI">
+            </a>
+            <a href="https://github.com/armandkapllani/etwfe" target="_blank">
+              <img src="https://img.shields.io/github/stars/armandkapllani/etwfe?style=social" alt="GitHub">
+            </a>
+            <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python">
+          </div>
+        </div>
+      </div>
+
+      <!-- Install -->
+      <div class="package-install">
+        <code>pip install etwfe</code>
+        <button class="copy-btn" onclick="navigator.clipboard.writeText('pip install etwfe')">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          Copy
+        </button>
+      </div>
+
+      <!-- Features -->
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+            </svg>
+          </div>
+          <h4 class="feature-title">Heterogeneous Effects</h4>
+          <p class="feature-desc">Properly handles treatment effect heterogeneity in staggered DiD settings using Wooldridge's methodology.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+            </svg>
+          </div>
+          <h4 class="feature-title">Event Studies</h4>
+          <p class="feature-desc">Generate event study estimates with pre-treatment periods for parallel trends testing.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+            </svg>
+          </div>
+          <h4 class="feature-title">GLM Support</h4>
+          <p class="feature-desc">Poisson, logit, and probit families for count data and binary outcomes.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+            </svg>
+          </div>
+          <h4 class="feature-title">High Performance</h4>
+          <p class="feature-desc">Data compression for large datasets with millions of observations.</p>
+        </div>
+      </div>
+
+      <!-- Code Examples -->
+      <div class="code-section">
+        <h3 class="code-section-title">
+          <span class="step-number">1</span>
+          Basic Usage
+        </h3>
+        <p class="code-description">
+          Fit an ETWFE model with a simple formula. The <code>tvar</code> specifies the time variable, 
+          <code>gvar</code> is the treatment cohort (first period treated), and <code>ivar</code> adds unit fixed effects.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">Python</span>
+            <button class="code-copy" onclick="copyCode(this)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre><code><span class="keyword">from</span> etwfe <span class="keyword">import</span> etwfe
+
+<span class="comment"># Fit ETWFE model</span>
+model = <span class="function">etwfe</span>(
+    fml=<span class="string">"outcome ~ control1 + control2"</span>,  <span class="comment"># outcome ~ controls</span>
+    tvar=<span class="string">"year"</span>,                           <span class="comment"># time variable</span>
+    gvar=<span class="string">"first_treat"</span>,                    <span class="comment"># treatment cohort</span>
+    data=df,
+    ivar=<span class="string">"unit_id"</span>,                        <span class="comment"># unit fixed effects</span>
+    cgroup=<span class="string">"notyet"</span>,                       <span class="comment"># control group type</span>
+    vcov={<span class="string">"CRV1"</span>: <span class="string">"unit_id"</span>}               <span class="comment"># clustered SEs</span>
+)
+
+<span class="comment"># View summary</span>
+model.<span class="function">summary</span>()</code></pre>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <h3 class="code-section-title">
+          <span class="step-number">2</span>
+          Marginal Effects
+        </h3>
+        <p class="code-description">
+          Compute average treatment effects aggregated in different ways: overall, by event time, 
+          by treatment cohort, or by calendar time.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">Python</span>
+            <button class="code-copy" onclick="copyCode(this)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre><code><span class="comment"># Overall ATT</span>
+att = model.<span class="function">emfx</span>(type=<span class="string">"simple"</span>)
+
+<span class="comment"># Event study (by time since treatment)</span>
+event_study = model.<span class="function">emfx</span>(type=<span class="string">"event"</span>)
+
+<span class="comment"># By treatment cohort</span>
+by_cohort = model.<span class="function">emfx</span>(type=<span class="string">"group"</span>)
+
+<span class="comment"># By calendar time</span>
+by_time = model.<span class="function">emfx</span>(type=<span class="string">"calendar"</span>)
+
+<span class="comment"># Include pre-treatment periods</span>
+pre_post = model.<span class="function">emfx</span>(type=<span class="string">"event"</span>, post_only=<span class="keyword">False</span>)</code></pre>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <h3 class="code-section-title">
+          <span class="step-number">3</span>
+          Event Study Plot
+        </h3>
+        <p class="code-description">
+          Visualize treatment effects over time with built-in plotting functionality.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">Python</span>
+            <button class="code-copy" onclick="copyCode(this)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre><code><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+
+<span class="comment"># Event study plot</span>
+model.<span class="function">plot</span>(type=<span class="string">"event"</span>)
+plt.<span class="function">show</span>()
+
+<span class="comment"># By cohort</span>
+model.<span class="function">plot</span>(type=<span class="string">"group"</span>)
+
+<span class="comment"># By calendar time</span>
+model.<span class="function">plot</span>(type=<span class="string">"calendar"</span>)</code></pre>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <h3 class="code-section-title">
+          <span class="step-number">4</span>
+          Poisson Model (Count Data)
+        </h3>
+        <p class="code-description">
+          Use the <code>family</code> parameter for non-linear models. Supports Poisson, logit, and probit.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">Python</span>
+            <button class="code-copy" onclick="copyCode(this)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre><code><span class="comment"># Poisson regression for count outcomes</span>
+model_pois = <span class="function">etwfe</span>(
+    fml=<span class="string">"count_outcome ~ controls"</span>,
+    tvar=<span class="string">"year"</span>,
+    gvar=<span class="string">"first_treat"</span>,
+    data=df,
+    family=<span class="string">"poisson"</span>,        <span class="comment"># Poisson family</span>
+    vcov={<span class="string">"CRV1"</span>: <span class="string">"unit_id"</span>}
+)
+
+<span class="comment"># Get effects on response scale</span>
+effects = model_pois.<span class="function">emfx</span>(type=<span class="string">"event"</span>, predict=<span class="string">"response"</span>)</code></pre>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <h3 class="code-section-title">
+          <span class="step-number">5</span>
+          Heterogeneous Effects
+        </h3>
+        <p class="code-description">
+          Use <code>xvar</code> to estimate treatment effect heterogeneity across subgroups.
+        </p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">Python</span>
+            <button class="code-copy" onclick="copyCode(this)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre><code><span class="comment"># Model with heterogeneous effects by region</span>
+model_het = <span class="function">etwfe</span>(
+    fml=<span class="string">"outcome ~ controls"</span>,
+    tvar=<span class="string">"year"</span>,
+    gvar=<span class="string">"first_treat"</span>,
+    data=df,
+    xvar=<span class="string">"region"</span>,             <span class="comment"># heterogeneity variable</span>
+    cgroup=<span class="string">"never"</span>
+)
+
+<span class="comment"># ATT by region</span>
+att_by_region = model_het.<span class="function">emfx</span>(type=<span class="string">"simple"</span>, by_xvar=<span class="keyword">True</span>)
+
+<span class="comment"># Event study by region</span>
+event_by_region = model_het.<span class="function">emfx</span>(type=<span class="string">"event"</span>, by_xvar=<span class="keyword">True</span>)</code></pre>
+        </div>
+      </div>
+
+      <!-- Quick Reference -->
+      <div class="quick-ref">
+        <h3 class="quick-ref-title">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Quick Reference
+        </h3>
+        <div class="quick-ref-grid">
+          <div class="quick-ref-item">
+            <h4>Marginal Effects Types</h4>
+            <code>emfx(type="simple")</code>
+            <p>Overall ATT</p>
+            <code>emfx(type="event")</code>
+            <p>By event time</p>
+            <code>emfx(type="group")</code>
+            <p>By treatment cohort</p>
+            <code>emfx(type="calendar")</code>
+            <p>By calendar time</p>
+          </div>
+          <div class="quick-ref-item">
+            <h4>Control Groups</h4>
+            <code>cgroup="notyet"</code>
+            <p>Not-yet-treated units</p>
+            <code>cgroup="never"</code>
+            <p>Never-treated units only</p>
+          </div>
+          <div class="quick-ref-item">
+            <h4>GLM Families</h4>
+            <code>family="poisson"</code>
+            <p>Count data</p>
+            <code>family="logit"</code>
+            <p>Binary outcome (logistic)</p>
+            <code>family="probit"</code>
+            <p>Binary outcome (probit)</p>
+          </div>
+          <div class="quick-ref-item">
+            <h4>Options</h4>
+            <code>post_only=False</code>
+            <p>Include pre-treatment</p>
+            <code>window=3</code>
+            <p>Restrict event window</p>
+            <code>compress=True</code>
+            <p>Speed up large data</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
     <section id="teaching">
       <h2 class="section-title">Teaching</h2>
       
@@ -519,6 +1303,20 @@
     </footer>
 
   </div>
+
+  <script>
+    function copyCode(button) {
+      const codeBlock = button.closest('.code-block').querySelector('code');
+      const text = codeBlock.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = button.innerHTML;
+        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg> Copied!';
+        setTimeout(() => {
+          button.innerHTML = originalText;
+        }, 2000);
+      });
+    }
+  </script>
 
 </body>
 </html>
