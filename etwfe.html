@@ -6,7 +6,7 @@
   <title>Introduction to etwfe</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root { --accent: #2563eb; --accent-light: #3b82f6; --green: #059669; --code-bg: #1e1e2e; --border: #e5e5e5; --text: #1a1a1a; --muted: #666; }
+    :root { --accent: #2563eb; --green: #059669; --code-bg: #1e1e2e; --border: #e5e5e5; --text: #1a1a1a; --muted: #666; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.75; color: var(--text); max-width: 800px; margin: 0 auto; padding: 32px 24px 64px; }
     a { color: var(--accent); text-decoration: none; }
@@ -24,47 +24,40 @@
     p { margin-bottom: 16px; }
     p code, li code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
 
-    .note { background: #fef3c7; border-left: 3px solid #f59e0b; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 20px 0; font-size: 14px; color: #92400e; }
-    .tip { background: #ecfdf5; border-left: 3px solid var(--green); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 20px 0; font-size: 14px; color: #065f46; }
-    .validated { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1px solid #a7f3d0; border-radius: 10px; padding: 16px 20px; margin: 24px 0; font-size: 13px; color: #065f46; display: flex; align-items: center; gap: 14px; box-shadow: 0 2px 8px rgba(5, 150, 105, 0.08); }
+    .validated { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1px solid #a7f3d0; border-radius: 10px; padding: 16px 20px; margin: 24px 0; font-size: 13px; color: #065f46; display: flex; align-items: center; gap: 14px; }
     .validated svg { width: 24px; height: 24px; flex-shrink: 0; }
 
     .code { background: var(--code-bg); border-radius: 10px; margin: 16px 0; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .code-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.08); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6c7086; text-transform: uppercase; letter-spacing: 0.5px; }
-    .copy-btn { background: rgba(255,255,255,0.08); border: none; color: #a6adc8; padding: 5px 14px; border-radius: 5px; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+    .code-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.08); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6c7086; text-transform: uppercase; }
+    .copy-btn { background: rgba(255,255,255,0.08); border: none; color: #a6adc8; padding: 5px 14px; border-radius: 5px; font-size: 11px; cursor: pointer; }
     .copy-btn:hover { background: rgba(255,255,255,0.15); color: #cdd6f4; }
     pre { margin: 0; padding: 18px; overflow-x: auto; }
     pre code { font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #cdd6f4; background: none; padding: 0; }
     .k { color: #cba6f7; } .s { color: #a6e3a1; } .f { color: #89b4fa; } .c { color: #6c7086; font-style: italic; } .n { color: #fab387; }
 
-    .out { background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%); border: 1px solid #e5e5e5; border-radius: 10px; padding: 16px 18px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; overflow-x: auto; }
-    .out-label { font-size: 10px; font-weight: 600; text-transform: uppercase; color: #888; margin-bottom: 12px; letter-spacing: 0.5px; }
+    .out { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 10px; padding: 16px 18px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; overflow-x: auto; }
+    .out-label { font-size: 10px; font-weight: 600; text-transform: uppercase; color: #888; margin-bottom: 12px; }
     .out table { width: 100%; border-collapse: collapse; }
     .out th, .out td { text-align: left; padding: 8px 12px; }
-    .out th { font-weight: 600; border-bottom: 2px solid #ddd; color: #333; background: rgba(0,0,0,0.02); }
+    .out th { font-weight: 600; border-bottom: 2px solid #ddd; color: #333; }
     .out td { border-bottom: 1px solid #eee; }
     .out tr:last-child td { border-bottom: none; }
     .out .r { text-align: right; font-variant-numeric: tabular-nums; }
-    .out tr.muted { color: #999; }
-    .out tr.muted td { background: rgba(0,0,0,0.015); }
 
-    .plot-container { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 0; margin: 28px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.06); overflow: hidden; }
-    .plot-header { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 16px 24px; border-bottom: 1px solid #e2e8f0; }
-    .plot-title { font-size: 14px; font-weight: 600; color: #1e293b; margin: 0; }
-    .plot-subtitle { font-size: 12px; color: #64748b; margin-top: 4px; }
-    .plot-body { padding: 24px; background: #fff; }
+    .plot-container { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; margin: 28px 0; overflow: hidden; }
+    .plot-header { background: #f8fafc; padding: 14px 20px; border-bottom: 1px solid #e2e8f0; }
+    .plot-title { font-size: 13px; font-weight: 600; color: #1e293b; }
+    .plot-subtitle { font-size: 11px; color: #64748b; margin-top: 2px; }
+    .plot-body { padding: 20px; background: #fff; }
     .plot-body svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
-    .plot-footer { background: #f8fafc; padding: 14px 24px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; line-height: 1.5; }
+    .plot-footer { background: #f8fafc; padding: 12px 20px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #64748b; }
 
     .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media (max-width: 640px) { .cols-2 { grid-template-columns: 1fr; } }
 
     .ref { font-size: 14px; color: var(--muted); line-height: 1.9; }
-    .ref em { color: var(--text); }
     footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--muted); }
     footer a { margin: 0 8px; }
-
-    @media (max-width: 600px) { body { padding: 20px 16px 48px; } .pkg-name { font-size: 1.6rem; } .plot-body { padding: 16px; } .plot-header, .plot-footer { padding: 12px 16px; } }
   </style>
 </head>
 <body>
@@ -74,169 +67,80 @@
     <p class="pkg-desc">Extended Two-Way Fixed Effects for Python</p>
     <div class="header-links">
       <a href="index.html">← Back to site</a>
-      <a href="https://pypi.org/project/etwfe/">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-        PyPI
-      </a>
-      <a href="https://github.com/armandkapllani/etwfe">
-        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-        GitHub
-      </a>
+      <a href="https://pypi.org/project/etwfe/">PyPI</a>
+      <a href="https://github.com/armandkapllani/etwfe">GitHub</a>
     </div>
   </header>
 
-  <div class="validated">
-    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-    <span><strong>Validated:</strong> 27/27 tests passed — all estimates match the R <code>etwfe</code> package by Grant McDermott</span>
-  </div>
-
-  <!-- Background -->
   <h2>Background</h2>
   <p>
     A foundational approach in applied economics is the difference-in-differences (DiD) design. The core intuition is straightforward: estimate treatment effects by comparing how outcomes change over time for units that received an intervention versus those that didn't.
   </p>
   <p>
-    In the simplest scenario with two groups and two time periods, a basic interaction term recovers the treatment effect:
-  </p>
-
-  <div class="code">
-    <div class="code-head"><span>conceptual</span></div>
-    <pre><code>outcome ~ treated_unit * post_treatment</code></pre>
-  </div>
-
-  <p>
-    In practice, researchers typically use an equivalent formulation called <em>two-way fixed effects</em> (TWFE), which absorbs the interaction into unit and time fixed effects:
-  </p>
-
-  <div class="code">
-    <div class="code-head"><span>conceptual</span></div>
-    <pre><code>outcome ~ treatment + unit_FE + time_FE</code></pre>
-  </div>
-
-  <p>
-    This TWFE approach is elegant and intuitive—but recent econometric research has revealed serious problems. When treatment timing varies across units (staggered adoption), the standard TWFE estimator can assign perverse negative weights to certain treatment effects. This leads to estimates that are difficult to interpret and potentially misleading.
+    This TWFE approach is elegant and intuitive—but recent econometric research has revealed serious problems. When treatment timing varies across units (staggered adoption), the standard TWFE estimator can assign perverse negative weights to certain treatment effects.
   </p>
   <p>
-    Wooldridge (2021, 2023) proposed an intuitive solution: instead of a single treatment indicator, saturate the model with the full set of cohort-by-time interactions plus appropriately interacted covariates. This "extended" TWFE handles heterogeneous effects correctly and connects to other modern DiD estimators.
-  </p>
-  <p>
-    The <code>etwfe</code> package automates this saturated approach. It handles the tedious formula construction and provides tools to aggregate the many interaction coefficients into interpretable treatment effect summaries.
+    Wooldridge (2021, 2023) proposed an intuitive solution: instead of a single treatment indicator, saturate the model with the full set of cohort-by-time interactions. The <code>etwfe</code> package automates this approach.
   </p>
 
-  <!-- Dataset -->
   <h2>Dataset</h2>
   <p>
-    We'll demonstrate using county-level panel data on teen employment from the US. The dataset tracks 500 counties over 2003–2007, studying how state-level minimum wage increases affected employment outcomes.
+    We'll use county-level panel data on teen employment. The dataset tracks 500 US counties over 2003–2007, studying how minimum wage increases affected employment.
   </p>
 
-  <div class="code">
-    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code><span class="k">import</span> pandas <span class="k">as</span> pd
-<span class="k">import</span> pyreadr
-
-<span class="c"># Load the mpdta dataset</span>
-url = <span class="s">"https://github.com/bcallaway11/did/raw/master/data/mpdta.rda"</span>
-pyreadr.<span class="f">download_file</span>(url, <span class="s">"mpdta.rda"</span>)
-mpdta = pyreadr.<span class="f">read_r</span>(<span class="s">"mpdta.rda"</span>)[<span class="s">"mpdta"</span>]
-
-<span class="c"># Prepare columns</span>
-mpdta[<span class="s">"first_treat"</span>] = mpdta[<span class="s">"first.treat"</span>].<span class="f">astype</span>(<span class="n">int</span>)
-mpdta[<span class="s">"year"</span>] = mpdta[<span class="s">"year"</span>].<span class="f">astype</span>(<span class="n">int</span>)
-mpdta.<span class="f">head</span>()</code></pre>
-  </div>
-
-  <div class="out">
-    <div class="out-label">2,500 observations (500 counties × 5 years)</div>
-    <table>
-      <tr><th>year</th><th>countyreal</th><th class="r">lpop</th><th class="r">lemp</th><th class="r">first_treat</th><th class="r">treat</th></tr>
-      <tr><td>2003</td><td>8001</td><td class="r">5.90</td><td class="r">8.46</td><td class="r">2007</td><td class="r">1</td></tr>
-      <tr><td>2004</td><td>8001</td><td class="r">5.90</td><td class="r">8.34</td><td class="r">2007</td><td class="r">1</td></tr>
-      <tr><td>2005</td><td>8001</td><td class="r">5.90</td><td class="r">8.34</td><td class="r">2007</td><td class="r">1</td></tr>
-      <tr><td>2006</td><td>8001</td><td class="r">5.90</td><td class="r">8.38</td><td class="r">2007</td><td class="r">1</td></tr>
-      <tr><td>2007</td><td>8001</td><td class="r">5.90</td><td class="r">8.49</td><td class="r">2007</td><td class="r">1</td></tr>
-    </table>
-  </div>
-
-  <p>
-    Here, <code>lemp</code> is log teen employment (our outcome), <code>lpop</code> is log population (a covariate), <code>first_treat</code> indicates when a county's state raised its minimum wage (0 means never treated), and <code>countyreal</code> is the county identifier.
-  </p>
-
-  <!-- Basic Usage -->
-  <h2>Basic Usage</h2>
-  <p>
-    The <code>etwfe</code> workflow centers on two function calls: first <code>etwfe()</code> to estimate the saturated model, then <code>emfx()</code> to aggregate results into meaningful treatment effects.
-  </p>
-
-  <h3>etwfe</h3>
   <div class="code">
     <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
     <pre><code><span class="k">from</span> etwfe <span class="k">import</span> etwfe
+<span class="k">import</span> pyreadr
 
-mod = <span class="f">etwfe</span>(
-    fml=<span class="s">"lemp ~ lpop"</span>,           <span class="c"># outcome ~ covariates</span>
-    tvar=<span class="s">"year"</span>,                 <span class="c"># time variable</span>
-    gvar=<span class="s">"first_treat"</span>,          <span class="c"># treatment cohort</span>
-    data=mpdta,
-    vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>}  <span class="c"># cluster by county</span>
-)</code></pre>
+<span class="c"># Load mpdta dataset</span>
+url = <span class="s">"https://github.com/bcallaway11/did/raw/master/data/mpdta.rda"</span>
+mpdta = pyreadr.<span class="f">read_r</span>(url)[<span class="s">"mpdta"</span>]
+mpdta[<span class="s">"first_treat"</span>] = mpdta[<span class="s">"first.treat"</span>].<span class="f">astype</span>(<span class="n">int</span>)</code></pre>
   </div>
 
-  <p>
-    Under the hood, <code>etwfe()</code> constructs a treatment dummy and saturates it with cohort-time interactions. The returned object contains all these granular coefficients, but they're not particularly interpretable on their own—we need to aggregate them.
-  </p>
-
-  <h3>emfx</h3>
-  <p>
-    The <code>emfx()</code> method recovers treatment effects by computing appropriate marginal effects. The simplest output is the overall average treatment effect on the treated:
-  </p>
+  <h2>Basic Usage</h2>
 
   <div class="code">
     <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code>mod.<span class="f">emfx</span>()</code></pre>
+    <pre><code>mod = <span class="f">etwfe</span>(
+    fml=<span class="s">"lemp ~ lpop"</span>,
+    tvar=<span class="s">"year"</span>,
+    gvar=<span class="s">"first_treat"</span>,
+    data=mpdta,
+    vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>}
+)
+
+<span class="c"># Simple ATT</span>
+mod.<span class="f">emfx</span>()</code></pre>
   </div>
 
   <div class="out">
     <div class="out-label">Average Treatment Effect on the Treated</div>
     <table>
-      <tr><th>term</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">z</th><th class="r">p-value</th><th class="r">conf.low</th><th class="r">conf.high</th></tr>
-      <tr><td>.Dtreat</td><td class="r">-0.0506</td><td class="r">0.0125</td><td class="r">-4.05</td><td class="r">&lt;0.001</td><td class="r">-0.0751</td><td class="r">-0.0261</td></tr>
+      <tr><th>term</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">conf.low</th><th class="r">conf.high</th></tr>
+      <tr><td>.Dtreat</td><td class="r">-0.0506</td><td class="r">0.0125</td><td class="r">-0.0751</td><td class="r">-0.0261</td></tr>
     </table>
   </div>
 
-  <p>
-    The estimate indicates that minimum wage increases reduced log teen employment by about 5% on average.
-  </p>
-
-  <p>
-    Beyond simple ATTs, <code>emfx()</code> supports different aggregation types. Use <code>type="event"</code> for dynamic treatment effects over time since treatment:
-  </p>
-
   <div class="code">
     <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code>mod_es = mod.<span class="f">emfx</span>(type=<span class="s">"event"</span>)
-mod_es</code></pre>
+    <pre><code><span class="c"># Event study</span>
+mod.<span class="f">emfx</span>(type=<span class="s">"event"</span>)</code></pre>
   </div>
 
   <div class="out">
     <div class="out-label">Event Study</div>
     <table>
-      <tr><th class="r">event</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">z</th><th class="r">p-value</th><th class="r">conf.low</th><th class="r">conf.high</th></tr>
-      <tr><td class="r">0</td><td class="r">-0.0332</td><td class="r">0.0134</td><td class="r">-2.48</td><td class="r">0.013</td><td class="r">-0.0594</td><td class="r">-0.0070</td></tr>
-      <tr><td class="r">1</td><td class="r">-0.0573</td><td class="r">0.0171</td><td class="r">-3.34</td><td class="r">&lt;0.001</td><td class="r">-0.0910</td><td class="r">-0.0237</td></tr>
-      <tr><td class="r">2</td><td class="r">-0.1379</td><td class="r">0.0308</td><td class="r">-4.48</td><td class="r">&lt;0.001</td><td class="r">-0.1982</td><td class="r">-0.0775</td></tr>
-      <tr><td class="r">3</td><td class="r">-0.1095</td><td class="r">0.0323</td><td class="r">-3.39</td><td class="r">&lt;0.001</td><td class="r">-0.1729</td><td class="r">-0.0462</td></tr>
+      <tr><th class="r">event</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">conf.low</th><th class="r">conf.high</th></tr>
+      <tr><td class="r">0</td><td class="r">-0.0332</td><td class="r">0.0134</td><td class="r">-0.0594</td><td class="r">-0.0070</td></tr>
+      <tr><td class="r">1</td><td class="r">-0.0573</td><td class="r">0.0171</td><td class="r">-0.0910</td><td class="r">-0.0237</td></tr>
+      <tr><td class="r">2</td><td class="r">-0.1379</td><td class="r">0.0308</td><td class="r">-0.1982</td><td class="r">-0.0775</td></tr>
+      <tr><td class="r">3</td><td class="r">-0.1095</td><td class="r">0.0323</td><td class="r">-0.1729</td><td class="r">-0.0462</td></tr>
     </table>
   </div>
 
-  <p>
-    The disemployment effect starts modest (3% in year 0) but grows substantially, exceeding 10% by years 2–3.
-  </p>
-
-  <!-- Presentation -->
   <h2>Visualization</h2>
-  <p>
-    The package provides a native <code>plot()</code> method for quick visualization:
-  </p>
 
   <div class="code">
     <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
@@ -246,411 +150,200 @@ mod_es</code></pre>
   <div class="plot-container">
     <div class="plot-header">
       <div class="plot-title">Event Study</div>
-      <div class="plot-subtitle">Dynamic treatment effects over time</div>
+      <div class="plot-subtitle">Post-treatment effects only (cgroup="notyet")</div>
     </div>
     <div class="plot-body">
-      <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="bg1" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#f8fafc"/>
-            <stop offset="100%" style="stop-color:#f1f5f9"/>
-          </linearGradient>
-        </defs>
-        
-        <!-- Background -->
-        <rect x="70" y="40" width="400" height="190" fill="url(#bg1)" rx="4"/>
-        
-        <!-- Grid lines -->
-        <g stroke="#e2e8f0" stroke-width="1">
-          <line x1="70" y1="80" x2="470" y2="80"/>
-          <line x1="70" y1="120" x2="470" y2="120"/>
-          <line x1="70" y1="160" x2="470" y2="160"/>
-          <line x1="70" y1="200" x2="470" y2="200"/>
+      <svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+        <rect x="50" y="20" width="320" height="180" fill="#fff" stroke="#e5e7eb"/>
+        <g stroke="#f3f4f6"><line x1="50" y1="56" x2="370" y2="56"/><line x1="50" y1="92" x2="370" y2="92"/><line x1="50" y1="128" x2="370" y2="128"/><line x1="50" y1="164" x2="370" y2="164"/></g>
+        <line x1="50" y1="56" x2="370" y2="56" stroke="#94a3b8" stroke-dasharray="4,3"/>
+        <text x="42" y="24" font-size="9" fill="#6b7280" text-anchor="end">0.05</text>
+        <text x="42" y="60" font-size="9" fill="#6b7280" text-anchor="end">0</text>
+        <text x="42" y="96" font-size="9" fill="#6b7280" text-anchor="end">−0.05</text>
+        <text x="42" y="132" font-size="9" fill="#6b7280" text-anchor="end">−0.10</text>
+        <text x="42" y="168" font-size="9" fill="#6b7280" text-anchor="end">−0.15</text>
+        <text x="42" y="204" font-size="9" fill="#6b7280" text-anchor="end">−0.20</text>
+        <text x="110" y="215" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
+        <text x="190" y="215" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
+        <text x="270" y="215" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
+        <text x="350" y="215" font-size="9" fill="#6b7280" text-anchor="middle">3</text>
+        <g stroke="#2563eb" stroke-width="1.2">
+          <line x1="110" y1="99" x2="110" y2="61"/><line x1="105" y1="99" x2="115" y2="99"/><line x1="105" y1="61" x2="115" y2="61"/>
+          <line x1="190" y1="121" x2="190" y2="73"/><line x1="185" y1="121" x2="195" y2="121"/><line x1="185" y1="73" x2="195" y2="73"/>
+          <line x1="270" y1="199" x2="270" y2="112"/><line x1="265" y1="199" x2="275" y2="199"/><line x1="265" y1="112" x2="275" y2="112"/>
+          <line x1="350" y1="180" x2="350" y2="89"/><line x1="345" y1="180" x2="355" y2="180"/><line x1="345" y1="89" x2="355" y2="89"/>
         </g>
-        
-        <!-- Zero line -->
-        <line x1="70" y1="80" x2="470" y2="80" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
-        
-        <!-- Y-axis -->
-        <text x="60" y="45" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
-        <text x="60" y="83" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
-        <text x="60" y="123" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
-        <text x="60" y="163" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">-0.10</text>
-        <text x="60" y="203" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">-0.15</text>
-        
-        <!-- X-axis -->
-        <text x="145" y="248" font-size="11" fill="#64748b" text-anchor="middle" font-family="Inter">0</text>
-        <text x="245" y="248" font-size="11" fill="#64748b" text-anchor="middle" font-family="Inter">1</text>
-        <text x="345" y="248" font-size="11" fill="#64748b" text-anchor="middle" font-family="Inter">2</text>
-        <text x="445" y="248" font-size="11" fill="#64748b" text-anchor="middle" font-family="Inter">3</text>
-        
-        <!-- Axis labels -->
-        <text x="270" y="270" font-size="12" fill="#475569" text-anchor="middle" font-family="Inter">Event time</text>
-        <text x="25" y="135" font-size="12" fill="#475569" text-anchor="middle" font-family="Inter" transform="rotate(-90,25,135)">Estimate</text>
-        
-        <!-- Confidence intervals -->
-        <g stroke="#2563eb" stroke-width="2.5" stroke-linecap="round">
-          <line x1="145" y1="55" x2="145" y2="107"/>
-          <line x1="135" y1="55" x2="155" y2="55"/>
-          <line x1="135" y1="107" x2="155" y2="107"/>
-          
-          <line x1="245" y1="47" x2="245" y2="117"/>
-          <line x1="235" y1="47" x2="255" y2="47"/>
-          <line x1="235" y1="117" x2="255" y2="117"/>
-          
-          <line x1="345" y1="42" x2="345" y2="175"/>
-          <line x1="335" y1="42" x2="355" y2="42"/>
-          <line x1="335" y1="175" x2="355" y2="175"/>
-          
-          <line x1="445" y1="53" x2="445" y2="167"/>
-          <line x1="435" y1="53" x2="455" y2="53"/>
-          <line x1="435" y1="167" x2="455" y2="167"/>
-        </g>
-        
-        <!-- Points -->
-        <circle cx="145" cy="93" r="7" fill="#2563eb"/>
-        <circle cx="245" cy="106" r="7" fill="#2563eb"/>
-        <circle cx="345" cy="175" r="7" fill="#2563eb"/>
-        <circle cx="445" cy="157" r="7" fill="#2563eb"/>
+        <circle cx="110" cy="80" r="3" fill="#2563eb"/>
+        <circle cx="190" cy="97" r="3" fill="#2563eb"/>
+        <circle cx="270" cy="155" r="3" fill="#2563eb"/>
+        <circle cx="350" cy="135" r="3" fill="#2563eb"/>
+        <text x="210" y="230" font-size="9" fill="#6b7280" text-anchor="middle">Event time</text>
       </svg>
     </div>
-    <div class="plot-footer">
-      Effects are negative and grow over time, reaching -13.8% at event time 2.
-    </div>
+    <div class="plot-footer">Effects grow over time, reaching −13.8% at event time 2.</div>
   </div>
 
-  <p>
-    Notice that only post-treatment effects appear. Under the default <code>cgroup="notyet"</code> setting, pre-treatment effects are mechanically zero because not-yet-treated units serve as the control group.
-  </p>
-
-  <p>
-    To examine pre-treatment trends, switch to using never-treated units as the control group:
-  </p>
+  <p>To examine pre-treatment trends, use never-treated as controls:</p>
 
   <div class="code">
     <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code>mod_es2 = <span class="f">etwfe</span>(
-    fml=<span class="s">"lemp ~ lpop"</span>,
-    tvar=<span class="s">"year"</span>,
-    gvar=<span class="s">"first_treat"</span>,
-    data=mpdta,
-    vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>},
-    cgroup=<span class="s">"never"</span>               <span class="c"># use never-treated as controls</span>
+    <pre><code>mod_never = <span class="f">etwfe</span>(
+    fml=<span class="s">"lemp ~ lpop"</span>, tvar=<span class="s">"year"</span>, gvar=<span class="s">"first_treat"</span>,
+    data=mpdta, vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>},
+    cgroup=<span class="s">"never"</span>
 ).<span class="f">emfx</span>(type=<span class="s">"event"</span>)
 
-mod_es2.<span class="f">plot</span>()</code></pre>
+mod_never.<span class="f">plot</span>()</code></pre>
   </div>
 
   <div class="plot-container">
     <div class="plot-header">
-      <div class="plot-title">Event Study with Pre-Treatment Effects</div>
+      <div class="plot-title">Event Study with Pre-Treatment</div>
       <div class="plot-subtitle">Using never-treated as control group</div>
     </div>
     <div class="plot-body">
-      <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="bg2" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#f8fafc"/>
-            <stop offset="100%" style="stop-color:#f1f5f9"/>
-          </linearGradient>
-        </defs>
-        
-        <!-- Background -->
-        <rect x="70" y="40" width="460" height="200" fill="url(#bg2)" rx="4"/>
-        
-        <!-- Pre/post shading -->
-        <rect x="70" y="40" width="230" height="200" fill="#fef3c7" opacity="0.3"/>
-        <rect x="300" y="40" width="230" height="200" fill="#dbeafe" opacity="0.3"/>
-        
-        <!-- Grid lines -->
-        <g stroke="#e2e8f0" stroke-width="1">
-          <line x1="70" y1="75" x2="530" y2="75"/>
-          <line x1="70" y1="115" x2="530" y2="115"/>
-          <line x1="70" y1="155" x2="530" y2="155"/>
-          <line x1="70" y1="195" x2="530" y2="195"/>
+      <svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="50" y="20" width="400" height="200" fill="#fff" stroke="#e5e7eb"/>
+        <g stroke="#f3f4f6"><line x1="50" y1="48" x2="450" y2="48"/><line x1="50" y1="77" x2="450" y2="77"/><line x1="50" y1="135" x2="450" y2="135"/><line x1="50" y1="163" x2="450" y2="163"/><line x1="50" y1="192" x2="450" y2="192"/></g>
+        <line x1="50" y1="77" x2="450" y2="77" stroke="#94a3b8" stroke-dasharray="4,3"/>
+        <line x1="250" y1="20" x2="250" y2="220" stroke="#dc2626" stroke-dasharray="3,3"/>
+        <text x="42" y="22" font-size="9" fill="#6b7280" text-anchor="end">0.10</text>
+        <text x="42" y="51" font-size="9" fill="#6b7280" text-anchor="end">0.05</text>
+        <text x="42" y="80" font-size="9" fill="#6b7280" text-anchor="end">0</text>
+        <text x="42" y="109" font-size="9" fill="#6b7280" text-anchor="end">−0.05</text>
+        <text x="42" y="138" font-size="9" fill="#6b7280" text-anchor="end">−0.10</text>
+        <text x="42" y="167" font-size="9" fill="#6b7280" text-anchor="end">−0.15</text>
+        <text x="42" y="196" font-size="9" fill="#6b7280" text-anchor="end">−0.20</text>
+        <text x="100" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−4</text>
+        <text x="150" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−3</text>
+        <text x="200" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−2</text>
+        <text x="250" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−1</text>
+        <text x="300" y="235" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
+        <text x="350" y="235" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
+        <text x="400" y="235" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
+        <text x="450" y="235" font-size="9" fill="#6b7280" text-anchor="middle">3</text>
+        <!-- Pre-treatment (gray): -4: 0.007(-0.040,0.054), -3: 0.028(-0.009,0.065), -2: 0.023(-0.006,0.052) -->
+        <g stroke="#9ca3af" stroke-width="1.2">
+          <line x1="100" y1="100" x2="100" y2="46"/><line x1="95" y1="100" x2="105" y2="100"/><line x1="95" y1="46" x2="105" y2="46"/>
+          <line x1="150" y1="82" x2="150" y2="39"/><line x1="145" y1="82" x2="155" y2="82"/><line x1="145" y1="39" x2="155" y2="39"/>
+          <line x1="200" y1="80" x2="200" y2="47"/><line x1="195" y1="80" x2="205" y2="80"/><line x1="195" y1="47" x2="205" y2="47"/>
         </g>
-        
-        <!-- Zero line -->
-        <line x1="70" y1="115" x2="530" y2="115" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
-        
-        <!-- Vertical reference at -1 -->
-        <line x1="300" y1="40" x2="300" y2="240" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,4"/>
-        
-        <!-- Y-axis labels -->
-        <text x="60" y="45" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.10</text>
-        <text x="60" y="78" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
-        <text x="60" y="118" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
-        <text x="60" y="158" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
-        <text x="60" y="198" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.10</text>
-        <text x="60" y="238" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.15</text>
-        
-        <!-- X-axis labels -->
-        <text x="128" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-4</text>
-        <text x="185" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-3</text>
-        <text x="242" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-2</text>
-        <text x="300" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-1</text>
-        <text x="357" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">0</text>
-        <text x="414" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">1</text>
-        <text x="472" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">2</text>
-        <text x="530" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">3</text>
-        
-        <!-- Axis labels -->
-        <text x="300" y="280" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">Event time</text>
-        
-        <!-- Pre-treatment CIs (orange) -->
-        <g stroke="#d97706" stroke-width="2" stroke-linecap="round">
-          <line x1="128" y1="83" x2="128" y2="127"/>
-          <line x1="120" y1="83" x2="136" y2="83"/>
-          <line x1="120" y1="127" x2="136" y2="127"/>
-          
-          <line x1="185" y1="78" x2="185" y2="111"/>
-          <line x1="177" y1="78" x2="193" y2="78"/>
-          <line x1="177" y1="111" x2="193" y2="111"/>
-          
-          <line x1="242" y1="80" x2="242" y2="106"/>
-          <line x1="234" y1="80" x2="250" y2="80"/>
-          <line x1="234" y1="106" x2="250" y2="106"/>
+        <circle cx="100" cy="73" r="3" fill="#9ca3af"/>
+        <circle cx="150" cy="61" r="3" fill="#9ca3af"/>
+        <circle cx="200" cy="63" r="3" fill="#9ca3af"/>
+        <circle cx="250" cy="77" r="2" fill="#6b7280"/>
+        <!-- Post-treatment (blue): 0: -0.021(-0.046,0.004), 1: -0.053(-0.086,-0.020), 2: -0.141(-0.202,-0.080), 3: -0.108(-0.175,-0.041) -->
+        <g stroke="#2563eb" stroke-width="1.2">
+          <line x1="300" y1="103" x2="300" y2="74"/><line x1="295" y1="103" x2="305" y2="103"/><line x1="295" y1="74" x2="305" y2="74"/>
+          <line x1="350" y1="127" x2="350" y2="89"/><line x1="345" y1="127" x2="355" y2="127"/><line x1="345" y1="89" x2="355" y2="89"/>
+          <line x1="400" y1="193" x2="400" y2="123"/><line x1="395" y1="193" x2="405" y2="193"/><line x1="395" y1="123" x2="405" y2="123"/>
+          <line x1="450" y1="178" x2="450" y2="101"/><line x1="445" y1="178" x2="455" y2="178"/><line x1="445" y1="101" x2="455" y2="101"/>
         </g>
-        
-        <!-- Reference point -->
-        <circle cx="300" cy="115" r="5" fill="#94a3b8"/>
-        
-        <!-- Post-treatment CIs (blue) -->
-        <g stroke="#2563eb" stroke-width="2" stroke-linecap="round">
-          <line x1="357" y1="105" x2="357" y2="143"/>
-          <line x1="349" y1="105" x2="365" y2="105"/>
-          <line x1="349" y1="143" x2="365" y2="143"/>
-          
-          <line x1="414" y1="95" x2="414" y2="148"/>
-          <line x1="406" y1="95" x2="422" y2="95"/>
-          <line x1="406" y1="148" x2="422" y2="148"/>
-          
-          <line x1="472" y1="60" x2="472" y2="185"/>
-          <line x1="464" y1="60" x2="480" y2="60"/>
-          <line x1="464" y1="185" x2="480" y2="185"/>
-          
-          <line x1="530" y1="68" x2="530" y2="175"/>
-          <line x1="522" y1="68" x2="538" y2="68"/>
-          <line x1="522" y1="175" x2="538" y2="175"/>
-        </g>
-        
-        <!-- Pre-treatment points -->
-        <circle cx="128" cy="105" r="6" fill="#f59e0b"/>
-        <circle cx="185" cy="98" r="6" fill="#f59e0b"/>
-        <circle cx="242" cy="96" r="6" fill="#f59e0b"/>
-        
-        <!-- Post-treatment points -->
-        <circle cx="357" cy="123" r="6" fill="#2563eb"/>
-        <circle cx="414" cy="136" r="6" fill="#2563eb"/>
-        <circle cx="472" cy="192" r="6" fill="#2563eb"/>
-        <circle cx="530" cy="178" r="6" fill="#2563eb"/>
+        <circle cx="300" cy="89" r="3" fill="#2563eb"/>
+        <circle cx="350" cy="108" r="3" fill="#2563eb"/>
+        <circle cx="400" cy="158" r="3" fill="#2563eb"/>
+        <circle cx="450" cy="139" r="3" fill="#2563eb"/>
+        <text x="250" y="250" font-size="9" fill="#6b7280" text-anchor="middle">Event time</text>
       </svg>
     </div>
-    <div class="plot-footer">
-      Pre-treatment coefficients (orange) hover near zero, supporting parallel trends. Post-treatment effects (blue) are negative and significant.
-    </div>
+    <div class="plot-footer">Pre-treatment effects (gray) near zero support parallel trends. Post-treatment effects (blue) are negative.</div>
   </div>
-
-  <p>
-    You can customize the plot appearance. For instance, use a ribbon-style confidence band:
-  </p>
 
   <div class="code">
     <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code>mod_es2.<span class="f">plot</span>(
-    type=<span class="s">"ribbon"</span>,
-    color=<span class="s">"darkcyan"</span>,
-    title=<span class="s">"Minimum wage effect on (log) teen employment"</span>,
-    subtitle=<span class="s">"Note: Using never-treated as control group"</span>
-)</code></pre>
+    <pre><code>mod_never.<span class="f">plot</span>(type=<span class="s">"ribbon"</span>, color=<span class="s">"darkcyan"</span>)</code></pre>
   </div>
 
   <div class="plot-container">
     <div class="plot-header">
-      <div class="plot-title">Minimum wage effect on (log) teen employment</div>
-      <div class="plot-subtitle">Note: Using never-treated as control group</div>
+      <div class="plot-title">Minimum wage effect on teen employment</div>
+      <div class="plot-subtitle">Ribbon style, never-treated as controls</div>
     </div>
     <div class="plot-body">
-      <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="bg3" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#f8fafc"/>
-            <stop offset="100%" style="stop-color:#f1f5f9"/>
-          </linearGradient>
-        </defs>
-        
-        <!-- Background -->
-        <rect x="70" y="40" width="460" height="200" fill="url(#bg3)" rx="4"/>
-        
-        <!-- Grid lines -->
-        <g stroke="#e2e8f0" stroke-width="1">
-          <line x1="70" y1="75" x2="530" y2="75"/>
-          <line x1="70" y1="115" x2="530" y2="115"/>
-          <line x1="70" y1="155" x2="530" y2="155"/>
-          <line x1="70" y1="195" x2="530" y2="195"/>
-        </g>
-        
-        <!-- Zero line -->
-        <line x1="70" y1="115" x2="530" y2="115" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
-        
-        <!-- Vertical reference at -1 -->
-        <line x1="300" y1="40" x2="300" y2="240" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
-        
-        <!-- Y-axis labels -->
-        <text x="60" y="45" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.10</text>
-        <text x="60" y="78" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
-        <text x="60" y="118" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
-        <text x="60" y="158" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
-        <text x="60" y="198" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.10</text>
-        <text x="60" y="238" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.15</text>
-        
-        <!-- X-axis labels -->
-        <text x="128" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-4</text>
-        <text x="185" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-3</text>
-        <text x="242" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-2</text>
-        <text x="300" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-1</text>
-        <text x="357" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">0</text>
-        <text x="414" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">1</text>
-        <text x="472" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">2</text>
-        <text x="530" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">3</text>
-        
-        <!-- Axis labels -->
-        <text x="300" y="280" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">Years post treatment</text>
-        
-        <!-- Confidence ribbon -->
-        <polygon points="128,83 185,78 242,80 300,115 357,105 414,95 472,60 530,68 530,175 472,185 414,148 357,143 300,115 242,106 185,111 128,127" fill="#008b8b" opacity="0.2"/>
-        
-        <!-- Line -->
-        <polyline points="128,105 185,98 242,96 300,115 357,123 414,136 472,192 530,178" fill="none" stroke="#008b8b" stroke-width="2.5"/>
-        
-        <!-- Points -->
-        <circle cx="128" cy="105" r="5" fill="#008b8b"/>
-        <circle cx="185" cy="98" r="5" fill="#008b8b"/>
-        <circle cx="242" cy="96" r="5" fill="#008b8b"/>
-        <circle cx="300" cy="115" r="4" fill="#94a3b8"/>
-        <circle cx="357" cy="123" r="5" fill="#008b8b"/>
-        <circle cx="414" cy="136" r="5" fill="#008b8b"/>
-        <circle cx="472" cy="192" r="5" fill="#008b8b"/>
-        <circle cx="530" cy="178" r="5" fill="#008b8b"/>
+      <svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="50" y="20" width="400" height="200" fill="#fff" stroke="#e5e7eb"/>
+        <g stroke="#f3f4f6"><line x1="50" y1="48" x2="450" y2="48"/><line x1="50" y1="77" x2="450" y2="77"/><line x1="50" y1="135" x2="450" y2="135"/><line x1="50" y1="163" x2="450" y2="163"/><line x1="50" y1="192" x2="450" y2="192"/></g>
+        <line x1="50" y1="77" x2="450" y2="77" stroke="#94a3b8" stroke-dasharray="4,3"/>
+        <line x1="250" y1="20" x2="250" y2="220" stroke="#94a3b8" stroke-dasharray="3,3"/>
+        <text x="42" y="22" font-size="9" fill="#6b7280" text-anchor="end">0.10</text>
+        <text x="42" y="51" font-size="9" fill="#6b7280" text-anchor="end">0.05</text>
+        <text x="42" y="80" font-size="9" fill="#6b7280" text-anchor="end">0</text>
+        <text x="42" y="109" font-size="9" fill="#6b7280" text-anchor="end">−0.05</text>
+        <text x="42" y="138" font-size="9" fill="#6b7280" text-anchor="end">−0.10</text>
+        <text x="42" y="167" font-size="9" fill="#6b7280" text-anchor="end">−0.15</text>
+        <text x="42" y="196" font-size="9" fill="#6b7280" text-anchor="end">−0.20</text>
+        <text x="100" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−4</text>
+        <text x="150" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−3</text>
+        <text x="200" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−2</text>
+        <text x="250" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−1</text>
+        <text x="300" y="235" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
+        <text x="350" y="235" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
+        <text x="400" y="235" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
+        <text x="450" y="235" font-size="9" fill="#6b7280" text-anchor="middle">3</text>
+        <polygon points="100,46 150,39 200,47 250,77 300,74 350,89 400,123 450,101 450,178 400,193 350,127 300,103 250,77 200,80 150,82 100,100" fill="#008b8b" opacity="0.2"/>
+        <polyline points="100,73 150,61 200,63 250,77 300,89 350,108 400,158 450,139" fill="none" stroke="#008b8b" stroke-width="1.5"/>
+        <circle cx="100" cy="73" r="2.5" fill="#008b8b"/>
+        <circle cx="150" cy="61" r="2.5" fill="#008b8b"/>
+        <circle cx="200" cy="63" r="2.5" fill="#008b8b"/>
+        <circle cx="250" cy="77" r="2" fill="#6b7280"/>
+        <circle cx="300" cy="89" r="2.5" fill="#008b8b"/>
+        <circle cx="350" cy="108" r="2.5" fill="#008b8b"/>
+        <circle cx="400" cy="158" r="2.5" fill="#008b8b"/>
+        <circle cx="450" cy="139" r="2.5" fill="#008b8b"/>
+        <text x="250" y="250" font-size="9" fill="#6b7280" text-anchor="middle">Years post treatment</text>
       </svg>
     </div>
   </div>
 
-  <!-- Heterogeneous Effects -->
   <h2>Heterogeneous Treatment Effects</h2>
-  <p>
-    Often we want to know whether treatment effects differ across subgroups. The <code>xvar</code> argument enables this by interacting treatment with a grouping variable.
-  </p>
-  <p>
-    Let's compare effects between counties in Great Lakes states versus the rest of the US:
-  </p>
 
   <div class="code">
     <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code><span class="c"># Define Great Lakes states</span>
-gls_fips = [<span class="n">17</span>, <span class="n">18</span>, <span class="n">26</span>, <span class="n">27</span>, <span class="n">36</span>, <span class="n">39</span>, <span class="n">42</span>, <span class="n">55</span>]  <span class="c"># IL, IN, MI, MN, NY, OH, PA, WI</span>
-mpdta[<span class="s">"gls"</span>] = mpdta[<span class="s">"countyreal"</span>].<span class="f">astype</span>(<span class="n">str</span>).<span class="f">str</span>[:<span class="n">2</span>].<span class="f">astype</span>(<span class="n">int</span>).<span class="f">isin</span>(gls_fips)
+    <pre><code><span class="c"># Great Lakes states indicator</span>
+gls = [<span class="n">17</span>,<span class="n">18</span>,<span class="n">26</span>,<span class="n">27</span>,<span class="n">36</span>,<span class="n">39</span>,<span class="n">42</span>,<span class="n">55</span>]
+mpdta[<span class="s">"gls"</span>] = mpdta[<span class="s">"countyreal"</span>].<span class="f">astype</span>(<span class="n">str</span>).<span class="f">str</span>[:<span class="n">2</span>].<span class="f">astype</span>(<span class="n">int</span>).<span class="f">isin</span>(gls)
 
-<span class="c"># Estimate with heterogeneous effects</span>
 hmod = <span class="f">etwfe</span>(
-    fml=<span class="s">"lemp ~ lpop"</span>,
-    tvar=<span class="s">"year"</span>,
-    gvar=<span class="s">"first_treat"</span>,
-    data=mpdta,
-    cgroup=<span class="s">"never"</span>,
-    vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>},
-    xvar=<span class="s">"gls"</span>                    <span class="c"># heterogeneity by GLS status</span>
+    fml=<span class="s">"lemp ~ lpop"</span>, tvar=<span class="s">"year"</span>, gvar=<span class="s">"first_treat"</span>,
+    data=mpdta, cgroup=<span class="s">"never"</span>, vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>},
+    xvar=<span class="s">"gls"</span>
 )
-
-<span class="c"># ATT by subgroup</span>
-hmod_mfx = hmod.<span class="f">emfx</span>()
-hmod_mfx</code></pre>
-  </div>
-
-  <div class="out">
-    <div class="out-label">Heterogeneous ATT</div>
-    <table>
-      <tr><th>term</th><th>gls</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">conf.low</th><th class="r">conf.high</th></tr>
-      <tr><td>.Dtreat</td><td>False</td><td class="r">-0.0519</td><td class="r">0.0346</td><td class="r">-0.120</td><td class="r">0.016</td></tr>
-      <tr><td>.Dtreat</td><td>True</td><td class="r">-0.0394</td><td class="r">0.0243</td><td class="r">-0.087</td><td class="r">0.008</td></tr>
-    </table>
-  </div>
-
-  <p>Visualize the comparison:</p>
-
-  <div class="code">
-    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code>hmod_mfx.<span class="f">plot</span>()</code></pre>
+hmod.<span class="f">emfx</span>().<span class="f">plot</span>()</code></pre>
   </div>
 
   <div class="plot-container">
     <div class="plot-header">
-      <div class="plot-title">Heterogeneous ATT: Great Lakes vs Other</div>
-      <div class="plot-subtitle">Comparison of treatment effects by region</div>
+      <div class="plot-title">Heterogeneous ATT</div>
+      <div class="plot-subtitle">Great Lakes vs Other</div>
     </div>
     <div class="plot-body">
-      <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="bg4" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#f8fafc"/>
-            <stop offset="100%" style="stop-color:#f1f5f9"/>
-          </linearGradient>
-        </defs>
-        
-        <!-- Background -->
-        <rect x="80" y="40" width="280" height="130" fill="url(#bg4)" rx="4"/>
-        
-        <!-- Grid lines -->
-        <g stroke="#e2e8f0" stroke-width="1">
-          <line x1="80" y1="70" x2="360" y2="70"/>
-          <line x1="80" y1="105" x2="360" y2="105"/>
-          <line x1="80" y1="140" x2="360" y2="140"/>
+      <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="60" y="20" width="220" height="140" fill="#fff" stroke="#e5e7eb"/>
+        <g stroke="#f3f4f6"><line x1="60" y1="41" x2="280" y2="41"/><line x1="60" y1="62" x2="280" y2="62"/><line x1="60" y1="104" x2="280" y2="104"/><line x1="60" y1="125" x2="280" y2="125"/><line x1="60" y1="146" x2="280" y2="146"/></g>
+        <line x1="60" y1="62" x2="280" y2="62" stroke="#94a3b8" stroke-dasharray="4,3"/>
+        <text x="52" y="24" font-size="9" fill="#6b7280" text-anchor="end">0.05</text>
+        <text x="52" y="45" font-size="9" fill="#6b7280" text-anchor="end">0.02</text>
+        <text x="52" y="66" font-size="9" fill="#6b7280" text-anchor="end">0</text>
+        <text x="52" y="87" font-size="9" fill="#6b7280" text-anchor="end">−0.03</text>
+        <text x="52" y="108" font-size="9" fill="#6b7280" text-anchor="end">−0.06</text>
+        <text x="52" y="129" font-size="9" fill="#6b7280" text-anchor="end">−0.09</text>
+        <text x="52" y="150" font-size="9" fill="#6b7280" text-anchor="end">−0.12</text>
+        <text x="130" y="175" font-size="9" fill="#6b7280" text-anchor="middle">gls=False</text>
+        <text x="220" y="175" font-size="9" fill="#6b7280" text-anchor="middle">gls=True</text>
+        <!-- Non-GLS: -0.0519 (-0.120, 0.016) -->
+        <g stroke="#2563eb" stroke-width="1.2">
+          <line x1="130" y1="148" x2="130" y2="50"/><line x1="124" y1="148" x2="136" y2="148"/><line x1="124" y1="50" x2="136" y2="50"/>
         </g>
-        
-        <!-- Zero line -->
-        <line x1="80" y1="105" x2="360" y2="105" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
-        
-        <!-- Y-axis labels -->
-        <text x="70" y="73" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
-        <text x="70" y="108" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
-        <text x="70" y="143" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
-        
-        <!-- X-axis labels -->
-        <text x="170" y="190" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">Non-GLS</text>
-        <text x="290" y="190" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">GLS</text>
-        
-        <!-- Error bars -->
-        <g stroke="#2563eb" stroke-width="2.5" stroke-linecap="round">
-          <!-- Non-GLS -->
-          <line x1="170" y1="55" x2="170" y2="152"/>
-          <line x1="158" y1="55" x2="182" y2="55"/>
-          <line x1="158" y1="152" x2="182" y2="152"/>
-          
-          <!-- GLS -->
-          <line x1="290" y1="67" x2="290" y2="140"/>
-          <line x1="278" y1="67" x2="302" y2="67"/>
-          <line x1="278" y1="140" x2="302" y2="140"/>
+        <circle cx="130" cy="99" r="3.5" fill="#2563eb"/>
+        <!-- GLS: -0.0394 (-0.087, 0.008) -->
+        <g stroke="#f59e0b" stroke-width="1.2">
+          <line x1="220" y1="124" x2="220" y2="56"/><line x1="214" y1="124" x2="226" y2="124"/><line x1="214" y1="56" x2="226" y2="56"/>
         </g>
-        
-        <!-- Points -->
-        <circle cx="170" cy="141" r="8" fill="#2563eb"/>
-        <circle cx="290" cy="133" r="8" fill="#f59e0b"/>
-        
-        <!-- Legend -->
-        <rect x="80" y="200" width="12" height="12" fill="#2563eb" rx="2"/>
-        <text x="98" y="210" font-size="10" fill="#475569" font-family="Inter">Non-GLS (gls=False)</text>
-        <rect x="200" y="200" width="12" height="12" fill="#f59e0b" rx="2"/>
-        <text x="218" y="210" font-size="10" fill="#475569" font-family="Inter">GLS (gls=True)</text>
+        <circle cx="220" cy="90" r="3.5" fill="#f59e0b"/>
       </svg>
     </div>
-    <div class="plot-footer">
-      Both groups show negative effects, though non-GLS counties have a slightly larger point estimate. Confidence intervals overlap substantially.
-    </div>
+    <div class="plot-footer">Confidence intervals overlap; no significant difference between groups.</div>
   </div>
-
-  <p>
-    The full event study reveals a richer picture. We can examine whether the dynamic patterns differ:
-  </p>
 
   <div class="code">
     <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
@@ -663,140 +356,59 @@ hmod_mfx</code></pre>
       <div class="plot-subtitle">Dynamic effects by Great Lakes status</div>
     </div>
     <div class="plot-body">
-      <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="bg5" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#f8fafc"/>
-            <stop offset="100%" style="stop-color:#f1f5f9"/>
-          </linearGradient>
-        </defs>
-        
-        <!-- Background -->
-        <rect x="70" y="40" width="460" height="210" fill="url(#bg5)" rx="4"/>
-        
-        <!-- Grid lines -->
-        <g stroke="#e2e8f0" stroke-width="1">
-          <line x1="70" y1="80" x2="530" y2="80"/>
-          <line x1="70" y1="125" x2="530" y2="125"/>
-          <line x1="70" y1="170" x2="530" y2="170"/>
-          <line x1="70" y1="215" x2="530" y2="215"/>
-        </g>
-        
-        <!-- Zero line -->
-        <line x1="70" y1="125" x2="530" y2="125" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
-        
-        <!-- Vertical reference at -1 -->
-        <line x1="185" y1="40" x2="185" y2="250" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
-        
-        <!-- Y-axis labels -->
-        <text x="60" y="45" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.10</text>
-        <text x="60" y="83" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
-        <text x="60" y="128" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
-        <text x="60" y="173" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
-        <text x="60" y="218" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.10</text>
-        
-        <!-- X-axis labels -->
-        <text x="128" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-3</text>
-        <text x="185" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-2</text>
-        <text x="242" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-1</text>
-        <text x="300" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">0</text>
-        <text x="357" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">1</text>
-        <text x="414" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">2</text>
-        <text x="472" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">3</text>
-        
-        <!-- Axis labels -->
-        <text x="300" y="290" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">Event time</text>
-        
-        <!-- Non-GLS ribbon (blue) -->
-        <polygon points="128,95 185,100 242,125 300,112 357,105 414,75 472,78 472,225 414,195 357,168 300,155 242,125 185,140 128,145" fill="#2563eb" opacity="0.15"/>
-        
-        <!-- GLS ribbon (orange) -->
-        <polygon points="128,90 185,95 242,125 300,115 357,112 414,95 472,100 472,205 414,175 357,162 300,150 242,125 185,135 128,138" fill="#f59e0b" opacity="0.15"/>
-        
+      <svg viewBox="0 0 440 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="50" y="20" width="360" height="200" fill="#fff" stroke="#e5e7eb"/>
+        <g stroke="#f3f4f6"><line x1="50" y1="48" x2="410" y2="48"/><line x1="50" y1="77" x2="410" y2="77"/><line x1="50" y1="135" x2="410" y2="135"/><line x1="50" y1="163" x2="410" y2="163"/><line x1="50" y1="192" x2="410" y2="192"/></g>
+        <line x1="50" y1="77" x2="410" y2="77" stroke="#94a3b8" stroke-dasharray="4,3"/>
+        <line x1="170" y1="20" x2="170" y2="220" stroke="#94a3b8" stroke-dasharray="3,3"/>
+        <text x="42" y="22" font-size="9" fill="#6b7280" text-anchor="end">0.10</text>
+        <text x="42" y="51" font-size="9" fill="#6b7280" text-anchor="end">0.05</text>
+        <text x="42" y="80" font-size="9" fill="#6b7280" text-anchor="end">0</text>
+        <text x="42" y="109" font-size="9" fill="#6b7280" text-anchor="end">−0.05</text>
+        <text x="42" y="138" font-size="9" fill="#6b7280" text-anchor="end">−0.10</text>
+        <text x="42" y="167" font-size="9" fill="#6b7280" text-anchor="end">−0.15</text>
+        <text x="42" y="196" font-size="9" fill="#6b7280" text-anchor="end">−0.20</text>
+        <text x="110" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−3</text>
+        <text x="170" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−2</text>
+        <text x="230" y="235" font-size="9" fill="#6b7280" text-anchor="middle">−1</text>
+        <text x="290" y="235" font-size="9" fill="#6b7280" text-anchor="middle">0</text>
+        <text x="350" y="235" font-size="9" fill="#6b7280" text-anchor="middle">1</text>
+        <text x="410" y="235" font-size="9" fill="#6b7280" text-anchor="middle">2</text>
+        <!-- Non-GLS ribbon -->
+        <polygon points="110,60 170,65 230,77 290,90 350,115 410,160 410,200 350,145 290,100 230,77 170,80 110,85" fill="#2563eb" opacity="0.12"/>
+        <!-- GLS ribbon -->
+        <polygon points="110,55 170,60 230,77 290,85 350,108 410,150 410,190 350,138 290,95 230,77 170,75 110,80" fill="#f59e0b" opacity="0.12"/>
         <!-- Non-GLS line -->
-        <polyline points="128,120 185,120 242,125 300,133 357,136 414,135 472,150" fill="none" stroke="#2563eb" stroke-width="2.5"/>
-        
+        <polyline points="110,72 170,72 230,77 290,95 350,130 410,180" fill="none" stroke="#2563eb" stroke-width="1.5"/>
         <!-- GLS line -->
-        <polyline points="128,115 185,115 242,125 300,132 357,137 414,135 472,152" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
-        
-        <!-- Non-GLS points -->
-        <circle cx="128" cy="120" r="5" fill="#2563eb"/>
-        <circle cx="185" cy="120" r="5" fill="#2563eb"/>
-        <circle cx="242" cy="125" r="4" fill="#94a3b8"/>
-        <circle cx="300" cy="133" r="5" fill="#2563eb"/>
-        <circle cx="357" cy="136" r="5" fill="#2563eb"/>
-        <circle cx="414" cy="135" r="5" fill="#2563eb"/>
-        <circle cx="472" cy="150" r="5" fill="#2563eb"/>
-        
-        <!-- GLS points (offset slightly) -->
-        <circle cx="133" cy="115" r="5" fill="#f59e0b"/>
-        <circle cx="190" cy="115" r="5" fill="#f59e0b"/>
-        <circle cx="305" cy="132" r="5" fill="#f59e0b"/>
-        <circle cx="362" cy="137" r="5" fill="#f59e0b"/>
-        <circle cx="419" cy="135" r="5" fill="#f59e0b"/>
-        <circle cx="477" cy="152" r="5" fill="#f59e0b"/>
-        
+        <polyline points="110,68 170,68 230,77 290,90 350,123 410,170" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+        <!-- Points -->
+        <circle cx="110" cy="72" r="2.5" fill="#2563eb"/>
+        <circle cx="170" cy="72" r="2.5" fill="#2563eb"/>
+        <circle cx="230" cy="77" r="2" fill="#6b7280"/>
+        <circle cx="290" cy="95" r="2.5" fill="#2563eb"/>
+        <circle cx="350" cy="130" r="2.5" fill="#2563eb"/>
+        <circle cx="410" cy="180" r="2.5" fill="#2563eb"/>
+        <circle cx="114" cy="68" r="2.5" fill="#f59e0b"/>
+        <circle cx="174" cy="68" r="2.5" fill="#f59e0b"/>
+        <circle cx="294" cy="90" r="2.5" fill="#f59e0b"/>
+        <circle cx="354" cy="123" r="2.5" fill="#f59e0b"/>
+        <circle cx="414" cy="170" r="2.5" fill="#f59e0b"/>
         <!-- Legend -->
-        <rect x="380" y="52" width="140" height="50" fill="white" stroke="#e2e8f0" rx="4"/>
-        <line x1="390" y1="67" x2="410" y2="67" stroke="#2563eb" stroke-width="2.5"/>
-        <circle cx="400" cy="67" r="4" fill="#2563eb"/>
-        <text x="418" y="70" font-size="10" fill="#475569" font-family="Inter">Non-GLS</text>
-        <line x1="390" y1="87" x2="410" y2="87" stroke="#f59e0b" stroke-width="2.5"/>
-        <circle cx="400" cy="87" r="4" fill="#f59e0b"/>
-        <text x="418" y="90" font-size="10" fill="#475569" font-family="Inter">GLS</text>
+        <rect x="330" y="30" width="75" height="36" fill="#fff" stroke="#e5e7eb" rx="3"/>
+        <line x1="338" y1="42" x2="352" y2="42" stroke="#2563eb" stroke-width="1.5"/>
+        <circle cx="345" cy="42" r="2" fill="#2563eb"/>
+        <text x="358" y="45" font-size="8" fill="#374151">gls=False</text>
+        <line x1="338" y1="56" x2="352" y2="56" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="345" cy="56" r="2" fill="#f59e0b"/>
+        <text x="358" y="59" font-size="8" fill="#374151">gls=True</text>
+        <text x="230" y="250" font-size="9" fill="#6b7280" text-anchor="middle">Event time</text>
       </svg>
     </div>
-    <div class="plot-footer">
-      The two groups track closely through most event times. Non-GLS counties may show slightly larger negative effects in later periods.
-    </div>
+    <div class="plot-footer">Both groups track similarly; non-GLS shows slightly larger effects in later periods.</div>
   </div>
 
-  <!-- Other Families -->
-  <h2>Other Model Families</h2>
-  <p>
-    A distinctive feature of the ETWFE approach is support for nonlinear models. Use the <code>family</code> argument for count outcomes or binary responses:
-  </p>
-
-  <div class="code">
-    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code><span class="c"># Poisson regression for count data</span>
-mpdta[<span class="s">"emp"</span>] = np.<span class="f">exp</span>(mpdta[<span class="s">"lemp"</span>])
-
-<span class="f">etwfe</span>(
-    fml=<span class="s">"emp ~ lpop"</span>,
-    tvar=<span class="s">"year"</span>,
-    gvar=<span class="s">"first_treat"</span>,
-    data=mpdta,
-    vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>},
-    family=<span class="s">"poisson"</span>
-).<span class="f">emfx</span>(type=<span class="s">"event"</span>)</code></pre>
-  </div>
-
-  <div class="out">
-    <div class="out-label">Poisson Event Study</div>
-    <table>
-      <tr><th class="r">event</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">z</th><th class="r">p-value</th></tr>
-      <tr><td class="r">0</td><td class="r">-25.35</td><td class="r">15.9</td><td class="r">-1.60</td><td class="r">0.111</td></tr>
-      <tr><td class="r">1</td><td class="r">1.09</td><td class="r">40.3</td><td class="r">0.03</td><td class="r">0.978</td></tr>
-      <tr><td class="r">2</td><td class="r">-75.12</td><td class="r">23.2</td><td class="r">-3.24</td><td class="r">0.001</td></tr>
-      <tr><td class="r">3</td><td class="r">-101.82</td><td class="r">27.1</td><td class="r">-3.76</td><td class="r">&lt;0.001</td></tr>
-    </table>
-  </div>
-
-  <!-- Other Aggregations -->
   <h2>Other Aggregations</h2>
-  <p>
-    Besides event studies, you can aggregate by cohort or calendar time:
-  </p>
-
-  <div class="code">
-    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-    <pre><code><span class="c"># By treatment cohort</span>
-mod.<span class="f">emfx</span>(type=<span class="s">"group"</span>)
-
-<span class="c"># By calendar year</span>
-mod.<span class="f">emfx</span>(type=<span class="s">"calendar"</span>)</code></pre>
-  </div>
 
   <div class="cols-2">
     <div class="out">
@@ -820,45 +432,25 @@ mod.<span class="f">emfx</span>(type=<span class="s">"calendar"</span>)</code></
     </div>
   </div>
 
-  <!-- Function Reference -->
   <h2>Function Reference</h2>
   
-  <h3>etwfe()</h3>
   <div class="code">
-    <div class="code-head"><span>parameters</span></div>
-    <pre><code><span class="f">etwfe</span>(
-    fml,              <span class="c"># "y ~ x1 + x2" or "y ~ 0" (no controls)</span>
-    tvar,             <span class="c"># time variable name</span>
-    gvar,             <span class="c"># treatment cohort variable</span>
-    data,             <span class="c"># pandas DataFrame</span>
-    ivar=<span class="k">None</span>,        <span class="c"># unit ID (for unit-level fixed effects)</span>
-    xvar=<span class="k">None</span>,        <span class="c"># variable for heterogeneous effects</span>
-    cgroup=<span class="s">"notyet"</span>,  <span class="c"># control group: "notyet" or "never"</span>
-    fe=<span class="s">"vs"</span>,          <span class="c"># fixed effects: "vs", "feo", or "none"</span>
-    family=<span class="k">None</span>,      <span class="c"># GLM family: "poisson", "logit", "probit"</span>
-    vcov=<span class="k">None</span>         <span class="c"># clustering: {"CRV1": "cluster_var"}</span>
-)</code></pre>
+    <div class="code-head"><span>etwfe()</span></div>
+    <pre><code><span class="f">etwfe</span>(fml, tvar, gvar, data, ivar=<span class="k">None</span>, xvar=<span class="k">None</span>,
+      cgroup=<span class="s">"notyet"</span>, fe=<span class="s">"vs"</span>, family=<span class="k">None</span>, vcov=<span class="k">None</span>)</code></pre>
   </div>
 
-  <h3>emfx()</h3>
   <div class="code">
-    <div class="code-head"><span>parameters</span></div>
-    <pre><code>model.<span class="f">emfx</span>(
-    type=<span class="s">"simple"</span>,     <span class="c"># "simple", "event", "group", "calendar"</span>
-    by_xvar=<span class="k">False</span>,     <span class="c"># break out by xvar levels</span>
-    post_only=<span class="k">True</span>,    <span class="c"># exclude pre-treatment (only if cgroup="never")</span>
-    vcov=<span class="k">True</span>,         <span class="c"># compute standard errors</span>
-    compress=<span class="k">False</span>,    <span class="c"># collapse data for faster computation</span>
-    predict=<span class="s">"response"</span>  <span class="c"># scale: "response" or "link"</span>
-)</code></pre>
+    <div class="code-head"><span>emfx()</span></div>
+    <pre><code>model.<span class="f">emfx</span>(type=<span class="s">"simple"</span>, by_xvar=<span class="k">False</span>, post_only=<span class="k">True</span>,
+           vcov=<span class="k">True</span>, compress=<span class="k">False</span>, predict=<span class="s">"response"</span>)</code></pre>
   </div>
 
-  <!-- References -->
   <h2>References</h2>
   <p class="ref">
-    Wooldridge, J. M. (2021). <em>Two-Way Fixed Effects, the Two-Way Mundlak Regression, and Difference-in-Differences Estimators.</em> SSRN Working Paper. <a href="https://dx.doi.org/10.2139/ssrn.3906345">doi:10.2139/ssrn.3906345</a><br><br>
-    Wooldridge, J. M. (2023). <em>Simple Approaches to Nonlinear Difference-in-Differences with Panel Data.</em> The Econometrics Journal, 26(3), C31–C66. <a href="https://doi.org/10.1093/ectj/utad016">doi:10.1093/ectj/utad016</a><br><br>
-    For the original R implementation, see Grant McDermott's <a href="https://grantmcdermott.com/etwfe/">etwfe package</a>.
+    Wooldridge, J. M. (2021). <em>Two-Way Fixed Effects, the Two-Way Mundlak Regression, and DiD Estimators.</em><br>
+    Wooldridge, J. M. (2023). <em>Simple Approaches to Nonlinear DiD with Panel Data.</em> The Econometrics Journal.<br><br>
+    R implementation: <a href="https://grantmcdermott.com/etwfe/">grantmcdermott.com/etwfe</a>
   </p>
 
   <footer>
@@ -871,7 +463,7 @@ mod.<span class="f">emfx</span>(type=<span class="s">"calendar"</span>)</code></
     function copyCode(btn) {
       const code = btn.closest('.code').querySelector('code').innerText;
       navigator.clipboard.writeText(code);
-      btn.textContent = '✓ Copied';
+      btn.textContent = '✓';
       setTimeout(() => btn.textContent = 'Copy', 2000);
     }
   </script>
