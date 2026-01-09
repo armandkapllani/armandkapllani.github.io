@@ -3,1696 +3,877 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="etwfe - Extended Two-Way Fixed Effects for Python">
-  <meta name="author" content="Armand Kapllani">
-  <title>etwfe | Extended Two-Way Fixed Effects for Python</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
+  <title>Introduction to etwfe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --color-ink: #1c1c1c;
-      --color-ink-secondary: #3d3d3d;
-      --color-ink-muted: #6b6b6b;
-      --color-bg: #ffffff;
-      --color-bg-subtle: #f8f8f8;
-      --color-border: #e0e0e0;
-      --color-accent: #2c5282;
-      --color-accent-hover: #1e3a5f;
-      --color-accent-light: #ebf4ff;
-      --color-success: #059669;
-      --color-warning: #d97706;
-      --font-serif: 'Source Serif 4', Georgia, serif;
-      --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-      --max-width: 1000px;
-      --spacing: 8px;
-      
-      /* Code colors - Catppuccin Mocha */
-      --code-bg: #1e1e2e;
-      --code-text: #cdd6f4;
-      --code-comment: #6c7086;
-      --code-keyword: #cba6f7;
-      --code-string: #a6e3a1;
-      --code-function: #89b4fa;
-      --code-number: #fab387;
-      --code-operator: #89dceb;
-      --code-variable: #f5e0dc;
-      --code-class: #f9e2af;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--font-sans);
-      font-size: 16px;
-      line-height: 1.7;
-      color: var(--color-ink);
-      background: var(--color-bg);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    ::selection {
-      background: var(--color-accent);
-      color: white;
-    }
-
-    a {
-      color: var(--color-accent);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    a:hover {
-      color: var(--color-accent-hover);
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.97);
-      border-bottom: 1px solid var(--color-border);
-      z-index: 1000;
-      backdrop-filter: blur(8px);
-    }
-
-    .nav-container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 calc(var(--spacing) * 4);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 60px;
-    }
-
-    .nav-logo {
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--color-ink);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: calc(var(--spacing) * 1.5);
-    }
-
-    .nav-logo-icon {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--color-accent), #4a7ab8);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .nav-logo-icon svg {
-      width: 18px;
-      height: 18px;
-      color: white;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: calc(var(--spacing) * 3);
-      list-style: none;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: var(--color-ink-muted);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--color-ink);
-    }
-
-    .nav-btn {
-      background: var(--color-accent);
-      color: white !important;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: background 0.2s ease;
-    }
-
-    .nav-btn:hover {
-      background: var(--color-accent-hover);
-      color: white !important;
-    }
-
-    /* Main Container */
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 calc(var(--spacing) * 4);
-    }
-
-    /* Hero Section */
-    .hero {
-      padding-top: calc(var(--spacing) * 14);
-      padding-bottom: calc(var(--spacing) * 8);
-      text-align: center;
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--color-accent-light);
-      color: var(--color-accent);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      margin-bottom: calc(var(--spacing) * 3);
-    }
-
-    .hero-title {
-      font-family: var(--font-mono);
-      font-size: 3rem;
-      font-weight: 600;
-      color: var(--color-ink);
-      margin-bottom: calc(var(--spacing) * 2);
-    }
-
-    .hero-subtitle {
-      font-size: 1.25rem;
-      color: var(--color-ink-secondary);
-      max-width: 700px;
-      margin: 0 auto calc(var(--spacing) * 4);
-      line-height: 1.6;
-    }
-
-    .hero-badges {
-      display: flex;
-      justify-content: center;
-      gap: calc(var(--spacing) * 2);
-      margin-bottom: calc(var(--spacing) * 4);
-      flex-wrap: wrap;
-    }
-
-    .hero-badges img {
-      height: 22px;
-    }
-
-    .hero-install {
-      background: var(--code-bg);
-      border-radius: 10px;
-      padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
-      display: inline-flex;
-      align-items: center;
-      gap: calc(var(--spacing) * 3);
-      margin-bottom: calc(var(--spacing) * 4);
-    }
-
-    .hero-install code {
-      font-family: var(--font-mono);
-      font-size: 1rem;
-      color: var(--code-text);
-    }
-
-    .hero-install .dollar {
-      color: var(--code-comment);
-    }
-
-    .copy-btn {
-      background: rgba(255,255,255,0.1);
-      color: var(--code-text);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .copy-btn:hover {
-      background: rgba(255,255,255,0.2);
-    }
-
-    .copy-btn svg {
-      width: 14px;
-      height: 14px;
-    }
-
-    .hero-links {
-      display: flex;
-      justify-content: center;
-      gap: calc(var(--spacing) * 2);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 0.9375rem;
-      transition: all 0.2s ease;
-    }
-
-    .btn-primary {
-      background: var(--color-accent);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--color-accent-hover);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: var(--color-bg-subtle);
-      color: var(--color-ink);
-      border: 1px solid var(--color-border);
-    }
-
-    .btn-secondary:hover {
-      background: var(--color-border);
-      color: var(--color-ink);
-    }
-
-    .btn svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    /* TOC Sidebar */
-    .page-layout {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: calc(var(--spacing) * 6);
-      padding: calc(var(--spacing) * 6) 0;
-    }
-
-    .toc {
-      position: sticky;
-      top: 80px;
-      height: fit-content;
-    }
-
-    .toc-title {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--color-ink-muted);
-      margin-bottom: calc(var(--spacing) * 2);
-    }
-
-    .toc-list {
-      list-style: none;
-    }
-
-    .toc-list li {
-      margin-bottom: calc(var(--spacing) * 1);
-    }
-
-    .toc-list a {
-      font-size: 0.875rem;
-      color: var(--color-ink-muted);
-      display: block;
-      padding: 4px 0;
-      border-left: 2px solid transparent;
-      padding-left: 12px;
-      margin-left: -12px;
-      transition: all 0.2s ease;
-    }
-
-    .toc-list a:hover,
-    .toc-list a.active {
-      color: var(--color-accent);
-      border-left-color: var(--color-accent);
-    }
-
-    .toc-list .toc-sub {
-      padding-left: 16px;
-    }
-
-    .toc-list .toc-sub a {
-      font-size: 0.8125rem;
-    }
-
-    /* Content */
-    .content {
-      min-width: 0;
-    }
-
-    .section {
-      margin-bottom: calc(var(--spacing) * 8);
-      scroll-margin-top: 80px;
-    }
-
-    .section-title {
-      font-family: var(--font-serif);
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--color-ink);
-      margin-bottom: calc(var(--spacing) * 2);
-      padding-bottom: calc(var(--spacing) * 2);
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .section-intro {
-      font-size: 1rem;
-      color: var(--color-ink-secondary);
-      margin-bottom: calc(var(--spacing) * 4);
-      line-height: 1.8;
-    }
-
-    .subsection {
-      margin-bottom: calc(var(--spacing) * 6);
-    }
-
-    .subsection-title {
-      font-family: var(--font-serif);
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: var(--color-ink);
-      margin-bottom: calc(var(--spacing) * 2);
-      display: flex;
-      align-items: center;
-      gap: calc(var(--spacing) * 1.5);
-    }
-
-    .step-badge {
-      width: 28px;
-      height: 28px;
-      background: var(--color-accent);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      font-family: var(--font-sans);
-      flex-shrink: 0;
-    }
-
-    .description {
-      font-size: 0.9375rem;
-      color: var(--color-ink-secondary);
-      margin-bottom: calc(var(--spacing) * 2);
-      line-height: 1.75;
-    }
-
-    /* Code Blocks */
-    .code-block {
-      background: var(--code-bg);
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: calc(var(--spacing) * 2);
-    }
-
-    .code-header {
-      background: rgba(255,255,255,0.05);
-      padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 2.5);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .code-lang {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--code-comment);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .code-filename {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--code-text);
-      opacity: 0.7;
-    }
-
-    .code-copy {
-      background: rgba(255,255,255,0.1);
-      border: none;
-      color: var(--code-text);
-      padding: 6px 12px;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .code-copy:hover {
-      background: rgba(255,255,255,0.2);
-    }
-
-    .code-copy svg {
-      width: 12px;
-      height: 12px;
-    }
-
-    pre {
-      margin: 0;
-      padding: calc(var(--spacing) * 2.5);
-      overflow-x: auto;
-    }
-
-    pre code {
-      font-family: var(--font-mono);
-      font-size: 0.8125rem;
-      line-height: 1.7;
-      color: var(--code-text);
-    }
-
-    /* Syntax highlighting */
-    .kw { color: var(--code-keyword); }
-    .str { color: var(--code-string); }
-    .fn { color: var(--code-function); }
-    .num { color: var(--code-number); }
-    .cm { color: var(--code-comment); font-style: italic; }
-    .op { color: var(--code-operator); }
-    .var { color: var(--code-variable); }
-    .cls { color: var(--code-class); }
-
-    /* Output Block */
-    .output-block {
-      background: #fafafa;
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-      margin-top: -8px;
-      margin-bottom: calc(var(--spacing) * 3);
-      overflow: hidden;
-    }
-
-    .output-header {
-      background: #f0f0f0;
-      padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
-      border-bottom: 1px solid var(--color-border);
-      font-size: 0.6875rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--color-ink-muted);
-    }
-
-    .output-content {
-      padding: calc(var(--spacing) * 2);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--color-ink-secondary);
-      overflow-x: auto;
-      white-space: pre;
-      line-height: 1.6;
-    }
-
-    /* Table Output */
-    .output-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-    }
-
-    .output-table th {
-      text-align: left;
-      padding: 8px 12px;
-      background: #f5f5f5;
-      border-bottom: 2px solid var(--color-border);
-      font-weight: 600;
-      color: var(--color-ink);
-    }
-
-    .output-table td {
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--color-border);
-      color: var(--color-ink-secondary);
-    }
-
-    .output-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .output-table tr:hover td {
-      background: #f9f9f9;
-    }
-
-    .output-table .num {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* Features Grid */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: calc(var(--spacing) * 2);
-      margin-bottom: calc(var(--spacing) * 4);
-    }
-
-    .feature-card {
-      background: var(--color-bg-subtle);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      padding: calc(var(--spacing) * 2.5);
-      transition: all 0.2s ease;
-    }
-
-    .feature-card:hover {
-      border-color: var(--color-accent);
-      box-shadow: 0 4px 20px rgba(44, 82, 130, 0.1);
-    }
-
-    .feature-icon {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, var(--color-accent), #4a7ab8);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: calc(var(--spacing) * 1.5);
-    }
-
-    .feature-icon svg {
-      width: 20px;
-      height: 20px;
-      color: white;
-    }
-
-    .feature-title {
-      font-weight: 600;
-      color: var(--color-ink);
-      margin-bottom: calc(var(--spacing) * 0.5);
-      font-size: 0.875rem;
-    }
-
-    .feature-desc {
-      font-size: 0.75rem;
-      color: var(--color-ink-muted);
-      line-height: 1.5;
-    }
-
-    /* Info Box */
-    .info-box {
-      background: var(--color-accent-light);
-      border-left: 4px solid var(--color-accent);
-      padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
-      border-radius: 0 8px 8px 0;
-      margin-bottom: calc(var(--spacing) * 3);
-    }
-
-    .info-box p {
-      font-size: 0.875rem;
-      color: var(--color-accent-hover);
-      margin: 0;
-    }
-
-    .info-box code {
-      background: rgba(44, 82, 130, 0.1);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: var(--font-mono);
-      font-size: 0.8125rem;
-    }
-
-    /* Parameter Table */
-    .param-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: calc(var(--spacing) * 3);
-      font-size: 0.875rem;
-    }
-
-    .param-table th {
-      text-align: left;
-      padding: 12px;
-      background: var(--color-bg-subtle);
-      border: 1px solid var(--color-border);
-      font-weight: 600;
-    }
-
-    .param-table td {
-      padding: 12px;
-      border: 1px solid var(--color-border);
-      vertical-align: top;
-    }
-
-    .param-table code {
-      background: var(--color-bg-subtle);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: var(--font-mono);
-      font-size: 0.8125rem;
-      color: var(--color-accent);
-    }
-
-    .param-table .param-name {
-      font-family: var(--font-mono);
-      font-weight: 500;
-      color: var(--color-ink);
-    }
-
-    .param-table .param-type {
-      color: var(--color-ink-muted);
-      font-size: 0.75rem;
-    }
-
-    /* Quick Ref */
-    .quick-ref {
-      background: var(--color-bg-subtle);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      padding: calc(var(--spacing) * 3);
-    }
-
-    .quick-ref-title {
-      font-weight: 600;
-      margin-bottom: calc(var(--spacing) * 2);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .quick-ref-title svg {
-      width: 18px;
-      height: 18px;
-      color: var(--color-accent);
-    }
-
-    .quick-ref-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: calc(var(--spacing) * 2);
-    }
-
-    .quick-ref-item h4 {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--color-ink);
-      margin-bottom: calc(var(--spacing) * 1);
-    }
-
-    .quick-ref-item code {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      background: white;
-      border: 1px solid var(--color-border);
-      padding: 6px 10px;
-      border-radius: 4px;
-      color: var(--color-ink-secondary);
-      margin-bottom: 4px;
-    }
-
-    .quick-ref-item p {
-      font-size: 0.6875rem;
-      color: var(--color-ink-muted);
-      margin-bottom: 8px;
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--color-border);
-      padding: calc(var(--spacing) * 4) 0;
-      text-align: center;
-      margin-top: calc(var(--spacing) * 8);
-    }
-
-    .footer-text {
-      font-size: 0.8125rem;
-      color: var(--color-ink-muted);
-    }
-
-    /* Responsive */
-    @media (max-width: 800px) {
-      .page-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .toc {
-        display: none;
-      }
-
-      .hero-title {
-        font-size: 2rem;
-      }
-
-      .hero-install {
-        flex-direction: column;
-        gap: calc(var(--spacing) * 2);
-      }
-    }
+    :root { --accent: #2563eb; --accent-light: #3b82f6; --green: #059669; --code-bg: #1e1e2e; --border: #e5e5e5; --text: #1a1a1a; --muted: #666; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.75; color: var(--text); max-width: 800px; margin: 0 auto; padding: 32px 24px 64px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    
+    header { margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .pkg-name { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    .pkg-desc { color: var(--muted); font-size: 1.1rem; margin-bottom: 16px; }
+    .header-links { display: flex; gap: 16px; font-size: 14px; flex-wrap: wrap; }
+    .header-links a { display: flex; align-items: center; gap: 5px; }
+    .header-links svg { width: 16px; height: 16px; }
+
+    h2 { font-size: 1.35rem; font-weight: 700; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 32px 0 12px; color: #333; }
+    p { margin-bottom: 16px; }
+    p code, li code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+    .note { background: #fef3c7; border-left: 3px solid #f59e0b; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 20px 0; font-size: 14px; color: #92400e; }
+    .tip { background: #ecfdf5; border-left: 3px solid var(--green); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 20px 0; font-size: 14px; color: #065f46; }
+    .validated { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1px solid #a7f3d0; border-radius: 10px; padding: 16px 20px; margin: 24px 0; font-size: 13px; color: #065f46; display: flex; align-items: center; gap: 14px; box-shadow: 0 2px 8px rgba(5, 150, 105, 0.08); }
+    .validated svg { width: 24px; height: 24px; flex-shrink: 0; }
+
+    .code { background: var(--code-bg); border-radius: 10px; margin: 16px 0; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .code-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.08); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6c7086; text-transform: uppercase; letter-spacing: 0.5px; }
+    .copy-btn { background: rgba(255,255,255,0.08); border: none; color: #a6adc8; padding: 5px 14px; border-radius: 5px; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+    .copy-btn:hover { background: rgba(255,255,255,0.15); color: #cdd6f4; }
+    pre { margin: 0; padding: 18px; overflow-x: auto; }
+    pre code { font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #cdd6f4; background: none; padding: 0; }
+    .k { color: #cba6f7; } .s { color: #a6e3a1; } .f { color: #89b4fa; } .c { color: #6c7086; font-style: italic; } .n { color: #fab387; }
+
+    .out { background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%); border: 1px solid #e5e5e5; border-radius: 10px; padding: 16px 18px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; overflow-x: auto; }
+    .out-label { font-size: 10px; font-weight: 600; text-transform: uppercase; color: #888; margin-bottom: 12px; letter-spacing: 0.5px; }
+    .out table { width: 100%; border-collapse: collapse; }
+    .out th, .out td { text-align: left; padding: 8px 12px; }
+    .out th { font-weight: 600; border-bottom: 2px solid #ddd; color: #333; background: rgba(0,0,0,0.02); }
+    .out td { border-bottom: 1px solid #eee; }
+    .out tr:last-child td { border-bottom: none; }
+    .out .r { text-align: right; font-variant-numeric: tabular-nums; }
+    .out tr.muted { color: #999; }
+    .out tr.muted td { background: rgba(0,0,0,0.015); }
+
+    .plot-container { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 0; margin: 28px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.06); overflow: hidden; }
+    .plot-header { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 16px 24px; border-bottom: 1px solid #e2e8f0; }
+    .plot-title { font-size: 14px; font-weight: 600; color: #1e293b; margin: 0; }
+    .plot-subtitle { font-size: 12px; color: #64748b; margin-top: 4px; }
+    .plot-body { padding: 24px; background: #fff; }
+    .plot-body svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+    .plot-footer { background: #f8fafc; padding: 14px 24px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; line-height: 1.5; }
+
+    .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 640px) { .cols-2 { grid-template-columns: 1fr; } }
+
+    .ref { font-size: 14px; color: var(--muted); line-height: 1.9; }
+    .ref em { color: var(--text); }
+    footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--muted); }
+    footer a { margin: 0 8px; }
+
+    @media (max-width: 600px) { body { padding: 20px 16px 48px; } .pkg-name { font-size: 1.6rem; } .plot-body { padding: 16px; } .plot-header, .plot-footer { padding: 12px 16px; } }
   </style>
 </head>
 <body>
 
-  <nav>
-    <div class="nav-container">
-      <a href="index.html" class="nav-logo">
-        <div class="nav-logo-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
-          </svg>
-        </div>
-        etwfe
+  <header>
+    <div class="pkg-name">Introduction to etwfe</div>
+    <p class="pkg-desc">Extended Two-Way Fixed Effects for Python</p>
+    <div class="header-links">
+      <a href="index.html">← Back to site</a>
+      <a href="https://pypi.org/project/etwfe/">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        PyPI
       </a>
-      <ul class="nav-links">
-        <li><a href="#getting-started">Getting Started</a></li>
-        <li><a href="#examples">Examples</a></li>
-        <li><a href="#api">API Reference</a></li>
-        <li><a href="https://github.com/armandkapllani/etwfe" target="_blank" class="nav-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" style="width:16px;height:16px;margin-right:4px;">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
-          GitHub
-        </a></li>
-      </ul>
+      <a href="https://github.com/armandkapllani/etwfe">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
     </div>
-  </nav>
+  </header>
 
-  <div class="container">
-    
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-badge">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-        Python Package
-      </div>
-      <h1 class="hero-title">etwfe</h1>
-      <p class="hero-subtitle">
-        Extended Two-Way Fixed Effects estimator for Python. Implementation of Wooldridge (2021, 2023) 
-        methodology for difference-in-differences with staggered treatment adoption and heterogeneous effects.
-      </p>
-      <div class="hero-badges">
-        <a href="https://pypi.org/project/etwfe/" target="_blank">
-          <img src="https://img.shields.io/pypi/v/etwfe?color=blue&label=PyPI" alt="PyPI">
-        </a>
-        <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+">
-        <a href="https://github.com/armandkapllani/etwfe" target="_blank">
-          <img src="https://img.shields.io/github/license/armandkapllani/etwfe" alt="License">
-        </a>
-      </div>
-      <div class="hero-install">
-        <code><span class="dollar">$</span> pip install etwfe</code>
-        <button class="copy-btn" onclick="copyToClipboard('pip install etwfe', this)">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-          Copy
-        </button>
-      </div>
-      <div class="hero-links">
-        <a href="https://github.com/armandkapllani/etwfe" target="_blank" class="btn btn-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
-          View on GitHub
-        </a>
-        <a href="https://pypi.org/project/etwfe/" target="_blank" class="btn btn-secondary">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          PyPI Package
-        </a>
-      </div>
-    </section>
-
-    <!-- Main Content -->
-    <div class="page-layout">
-      
-      <!-- Table of Contents -->
-      <aside class="toc">
-        <h3 class="toc-title">On This Page</h3>
-        <ul class="toc-list">
-          <li><a href="#getting-started">Getting Started</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#examples">Examples</a>
-            <ul class="toc-sub">
-              <li><a href="#basic-model">Basic Model</a></li>
-              <li><a href="#event-study">Event Study</a></li>
-              <li><a href="#by-cohort">By Cohort</a></li>
-              <li><a href="#by-calendar">By Calendar</a></li>
-              <li><a href="#unit-fe">Unit Fixed Effects</a></li>
-              <li><a href="#poisson">Poisson Model</a></li>
-              <li><a href="#heterogeneous">Heterogeneous Effects</a></li>
-              <li><a href="#plotting">Plotting</a></li>
-            </ul>
-          </li>
-          <li><a href="#api">API Reference</a></li>
-          <li><a href="#references">References</a></li>
-        </ul>
-      </aside>
-
-      <!-- Content -->
-      <main class="content">
-
-        <!-- Getting Started -->
-        <section id="getting-started" class="section">
-          <h2 class="section-title">Getting Started</h2>
-          <p class="section-intro">
-            The <code>etwfe</code> package provides a Python implementation of the Extended Two-Way Fixed Effects 
-            methodology developed by Wooldridge (2021, 2023). This approach properly handles heterogeneous treatment 
-            effects in difference-in-differences settings with staggered treatment adoption.
-          </p>
-
-          <div class="subsection">
-            <h3 class="subsection-title">Installation</h3>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Terminal</span>
-              </div>
-              <pre><code>pip install etwfe</code></pre>
-            </div>
-            <p class="description">
-              For optional dependencies (Poisson, probit models):
-            </p>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Terminal</span>
-              </div>
-              <pre><code>pip install etwfe[full]</code></pre>
-            </div>
-          </div>
-
-          <div class="subsection">
-            <h3 class="subsection-title">Quick Start</h3>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="kw">from</span> etwfe <span class="kw">import</span> etwfe
-
-<span class="cm"># Fit model</span>
-model = <span class="fn">etwfe</span>(
-    fml=<span class="str">"outcome ~ controls"</span>,
-    tvar=<span class="str">"year"</span>,
-    gvar=<span class="str">"first_treat"</span>,
-    data=df,
-    ivar=<span class="str">"unit_id"</span>
-)
-
-<span class="cm"># Get treatment effects</span>
-model.<span class="fn">emfx</span>(type=<span class="str">"event"</span>)
-model.<span class="fn">plot</span>(type=<span class="str">"event"</span>)</code></pre>
-            </div>
-          </div>
-        </section>
-
-        <!-- Features -->
-        <section id="features" class="section">
-          <h2 class="section-title">Features</h2>
-          <div class="features-grid">
-            <div class="feature-card">
-              <div class="feature-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
-                </svg>
-              </div>
-              <h4 class="feature-title">Heterogeneous Effects</h4>
-              <p class="feature-desc">Properly handles treatment effect heterogeneity across cohorts and time.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
-                </svg>
-              </div>
-              <h4 class="feature-title">Event Studies</h4>
-              <p class="feature-desc">Generate dynamic treatment effects with pre-treatment periods.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-                </svg>
-              </div>
-              <h4 class="feature-title">GLM Support</h4>
-              <p class="feature-desc">Poisson, logit, probit for count and binary outcomes.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                </svg>
-              </div>
-              <h4 class="feature-title">High Performance</h4>
-              <p class="feature-desc">Data compression for datasets with millions of rows.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Examples -->
-        <section id="examples" class="section">
-          <h2 class="section-title">Examples</h2>
-          <p class="section-intro">
-            The following examples use the <code>mpdta</code> dataset from the R <code>did</code> package, 
-            which contains county-level employment data with staggered treatment adoption.
-          </p>
-
-          <!-- Load Data -->
-          <div id="load-data" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">0</span>
-              Load Example Data
-            </h3>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="kw">import</span> pandas <span class="kw">as</span> pd
-<span class="kw">import</span> pyreadr
-
-<span class="cm"># Load mpdta dataset (county employment data)</span>
-url = <span class="str">"https://github.com/bcallaway11/did/raw/master/data/mpdta.rda"</span>
-pyreadr.<span class="fn">download_file</span>(url, <span class="str">"mpdta.rda"</span>)
-mpdta = pyreadr.<span class="fn">read_r</span>(<span class="str">"mpdta.rda"</span>)[<span class="str">"mpdta"</span>]
-
-<span class="cm"># Prepare columns</span>
-mpdta[<span class="str">"first_treat"</span>] = mpdta[<span class="str">"first.treat"</span>].<span class="fn">astype</span>(<span class="cls">int</span>)
-mpdta[<span class="str">"year"</span>] = mpdta[<span class="str">"year"</span>].<span class="fn">astype</span>(<span class="cls">int</span>)
-mpdta[<span class="str">"countyreal"</span>] = mpdta[<span class="str">"countyreal"</span>].<span class="fn">astype</span>(<span class="cls">int</span>)
-
-<span class="fn">print</span>(mpdta.<span class="fn">head</span>())</code></pre>
-            </div>
-            <div class="output-block">
-              <div class="output-header">Output</div>
-              <div class="output-content">   year  countyreal      lpop     lemp  first_treat
-0  2003        8001  5.896761  5.46154         2007
-1  2004        8001  5.896761  5.56068         2007
-2  2005        8001  5.896761  5.65249         2007
-3  2006        8001  5.896761  5.64439         2007
-4  2007        8001  5.896761  5.56068         2007</div>
-            </div>
-          </div>
-
-          <!-- Basic Model -->
-          <div id="basic-model" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">1</span>
-              Basic Model - Simple ATT
-            </h3>
-            <p class="description">
-              Fit an ETWFE model and compute the overall average treatment effect on the treated (ATT). 
-              Use <code>cgroup="notyet"</code> to include not-yet-treated units as controls.
-            </p>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="kw">from</span> etwfe <span class="kw">import</span> etwfe
-
-<span class="cm"># Fit ETWFE model</span>
-mod = <span class="fn">etwfe</span>(
-    fml=<span class="str">"lemp ~ lpop"</span>,              <span class="cm"># log employment ~ log population</span>
-    tvar=<span class="str">"year"</span>,                     <span class="cm"># time variable</span>
-    gvar=<span class="str">"first_treat"</span>,              <span class="cm"># treatment cohort</span>
-    data=mpdta,
-    cgroup=<span class="str">"notyet"</span>,                 <span class="cm"># not-yet-treated as controls</span>
-    vcov={<span class="str">"CRV1"</span>: <span class="str">"countyreal"</span>}      <span class="cm"># cluster SEs by county</span>
-)
-
-<span class="cm"># Overall ATT</span>
-att = mod.<span class="fn">emfx</span>(type=<span class="str">"simple"</span>)
-<span class="fn">print</span>(att)</code></pre>
-            </div>
-            <div class="output-block">
-              <div class="output-header">Output</div>
-              <table class="output-table">
-                <thead>
-                  <tr>
-                    <th>_Dtreat</th>
-                    <th class="num">estimate</th>
-                    <th class="num">std.error</th>
-                    <th class="num">conf.low</th>
-                    <th class="num">conf.high</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1.0</td>
-                    <td class="num">-0.0506</td>
-                    <td class="num">0.0131</td>
-                    <td class="num">-0.0763</td>
-                    <td class="num">-0.0249</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="info-box">
-              <p>The ATT estimate of <strong>-0.051</strong> indicates that treatment reduced log employment by about 5.1%.</p>
-            </div>
-          </div>
-
-          <!-- Event Study -->
-          <div id="event-study" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">2</span>
-              Event Study
-            </h3>
-            <p class="description">
-              Compute treatment effects by event time (periods relative to treatment). 
-              Event time 0 is the first period of treatment.
-            </p>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="cm"># Event study</span>
-event = mod.<span class="fn">emfx</span>(type=<span class="str">"event"</span>)
-<span class="fn">print</span>(event)</code></pre>
-            </div>
-            <div class="output-block">
-              <div class="output-header">Output</div>
-              <table class="output-table">
-                <thead>
-                  <tr>
-                    <th class="num">event</th>
-                    <th class="num">estimate</th>
-                    <th class="num">std.error</th>
-                    <th class="num">conf.low</th>
-                    <th class="num">conf.high</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td class="num">0</td><td class="num">-0.0332</td><td class="num">0.0134</td><td class="num">-0.0595</td><td class="num">-0.0069</td></tr>
-                  <tr><td class="num">1</td><td class="num">-0.0573</td><td class="num">0.0172</td><td class="num">-0.0910</td><td class="num">-0.0236</td></tr>
-                  <tr><td class="num">2</td><td class="num">-0.1379</td><td class="num">0.0305</td><td class="num">-0.1977</td><td class="num">-0.0781</td></tr>
-                  <tr><td class="num">3</td><td class="num">-0.1095</td><td class="num">0.0340</td><td class="num">-0.1761</td><td class="num">-0.0429</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Pre-treatment -->
-          <div id="pre-treatment" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">3</span>
-              Pre-Treatment Periods (Parallel Trends)
-            </h3>
-            <p class="description">
-              Include pre-treatment periods to test the parallel trends assumption. 
-              Use <code>cgroup="never"</code> and <code>post_only=False</code>.
-            </p>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="cm"># Model with never-treated control group</span>
-mod_never = <span class="fn">etwfe</span>(
-    fml=<span class="str">"lemp ~ lpop"</span>,
-    tvar=<span class="str">"year"</span>,
-    gvar=<span class="str">"first_treat"</span>,
-    data=mpdta,
-    cgroup=<span class="str">"never"</span>,                 <span class="cm"># never-treated only</span>
-    vcov={<span class="str">"CRV1"</span>: <span class="str">"countyreal"</span>}
-)
-
-<span class="cm"># Include pre-treatment periods</span>
-event_pre = mod_never.<span class="fn">emfx</span>(type=<span class="str">"event"</span>, post_only=<span class="kw">False</span>)
-<span class="fn">print</span>(event_pre)</code></pre>
-            </div>
-            <div class="output-block">
-              <div class="output-header">Output</div>
-              <table class="output-table">
-                <thead>
-                  <tr>
-                    <th class="num">event</th>
-                    <th class="num">estimate</th>
-                    <th class="num">std.error</th>
-                    <th class="num">conf.low</th>
-                    <th class="num">conf.high</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td class="num">-4</td><td class="num">0.007</td><td class="num">0.024</td><td class="num">-0.040</td><td class="num">0.054</td></tr>
-                  <tr><td class="num">-3</td><td class="num">0.028</td><td class="num">0.019</td><td class="num">-0.009</td><td class="num">0.065</td></tr>
-                  <tr><td class="num">-2</td><td class="num">0.023</td><td class="num">0.015</td><td class="num">-0.006</td><td class="num">0.052</td></tr>
-                  <tr><td class="num">-1</td><td class="num">0.000</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
-                  <tr><td class="num">0</td><td class="num">-0.021</td><td class="num">0.013</td><td class="num">-0.046</td><td class="num">0.004</td></tr>
-                  <tr><td class="num">1</td><td class="num">-0.053</td><td class="num">0.017</td><td class="num">-0.086</td><td class="num">-0.020</td></tr>
-                  <tr><td class="num">2</td><td class="num">-0.141</td><td class="num">0.031</td><td class="num">-0.202</td><td class="num">-0.080</td></tr>
-                  <tr><td class="num">3</td><td class="num">-0.108</td><td class="num">0.034</td><td class="num">-0.175</td><td class="num">-0.041</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="info-box">
-              <p>Pre-treatment effects (event &lt; 0) are close to zero, supporting the parallel trends assumption.</p>
-            </div>
-          </div>
-
-          <!-- By Cohort -->
-          <div id="by-cohort" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">4</span>
-              Effects by Treatment Cohort
-            </h3>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="cm"># ATT by treatment cohort</span>
-by_cohort = mod.<span class="fn">emfx</span>(type=<span class="str">"group"</span>)
-<span class="fn">print</span>(by_cohort)</code></pre>
-            </div>
-            <div class="output-block">
-              <div class="output-header">Output</div>
-              <table class="output-table">
-                <thead>
-                  <tr>
-                    <th class="num">first_treat</th>
-                    <th class="num">estimate</th>
-                    <th class="num">std.error</th>
-                    <th class="num">conf.low</th>
-                    <th class="num">conf.high</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td class="num">2004</td><td class="num">-0.0797</td><td class="num">0.0253</td><td class="num">-0.1293</td><td class="num">-0.0301</td></tr>
-                  <tr><td class="num">2006</td><td class="num">-0.0229</td><td class="num">0.0185</td><td class="num">-0.0592</td><td class="num">0.0134</td></tr>
-                  <tr><td class="num">2007</td><td class="num">-0.0461</td><td class="num">0.0168</td><td class="num">-0.0790</td><td class="num">-0.0132</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- By Calendar -->
-          <div id="by-calendar" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">5</span>
-              Effects by Calendar Time
-            </h3>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="cm"># ATT by calendar time</span>
-by_time = mod.<span class="fn">emfx</span>(type=<span class="str">"calendar"</span>)
-<span class="fn">print</span>(by_time)</code></pre>
-            </div>
-            <div class="output-block">
-              <div class="output-header">Output</div>
-              <table class="output-table">
-                <thead>
-                  <tr>
-                    <th class="num">year</th>
-                    <th class="num">estimate</th>
-                    <th class="num">std.error</th>
-                    <th class="num">conf.low</th>
-                    <th class="num">conf.high</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td class="num">2004</td><td class="num">-0.0211</td><td class="num">0.0218</td><td class="num">-0.0638</td><td class="num">0.0216</td></tr>
-                  <tr><td class="num">2005</td><td class="num">-0.0822</td><td class="num">0.0277</td><td class="num">-0.1365</td><td class="num">-0.0279</td></tr>
-                  <tr><td class="num">2006</td><td class="num">-0.0378</td><td class="num">0.0173</td><td class="num">-0.0717</td><td class="num">-0.0039</td></tr>
-                  <tr><td class="num">2007</td><td class="num">-0.0461</td><td class="num">0.0168</td><td class="num">-0.0790</td><td class="num">-0.0132</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Unit FE -->
-          <div id="unit-fe" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">6</span>
-              Unit Fixed Effects
-            </h3>
-            <p class="description">
-              Add unit-level fixed effects using the <code>ivar</code> parameter.
-            </p>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="cm"># Model with unit fixed effects</span>
-mod_fe = <span class="fn">etwfe</span>(
-    fml=<span class="str">"lemp ~ lpop"</span>,
-    tvar=<span class="str">"year"</span>,
-    gvar=<span class="str">"first_treat"</span>,
-    data=mpdta,
-    ivar=<span class="str">"countyreal"</span>,              <span class="cm"># unit identifier</span>
-    cgroup=<span class="str">"notyet"</span>,
-    vcov={<span class="str">"CRV1"</span>: <span class="str">"countyreal"</span>}
-)
-
-event_fe = mod_fe.<span class="fn">emfx</span>(type=<span class="str">"event"</span>)
-<span class="fn">print</span>(event_fe)</code></pre>
-            </div>
-            <div class="output-block">
-              <div class="output-header">Output</div>
-              <table class="output-table">
-                <thead>
-                  <tr>
-                    <th class="num">event</th>
-                    <th class="num">estimate</th>
-                    <th class="num">std.error</th>
-                    <th class="num">conf.low</th>
-                    <th class="num">conf.high</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td class="num">0</td><td class="num">-0.033</td><td class="num">0.013</td><td class="num">-0.059</td><td class="num">-0.007</td></tr>
-                  <tr><td class="num">1</td><td class="num">-0.057</td><td class="num">0.017</td><td class="num">-0.091</td><td class="num">-0.024</td></tr>
-                  <tr><td class="num">2</td><td class="num">-0.138</td><td class="num">0.030</td><td class="num">-0.197</td><td class="num">-0.079</td></tr>
-                  <tr><td class="num">3</td><td class="num">-0.110</td><td class="num">0.034</td><td class="num">-0.176</td><td class="num">-0.043</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Poisson -->
-          <div id="poisson" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">7</span>
-              Poisson Model (Count Data)
-            </h3>
-            <p class="description">
-              For count outcomes, use <code>family="poisson"</code>. Results are on the response scale by default.
-            </p>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="kw">import</span> numpy <span class="kw">as</span> np
-
-<span class="cm"># Create count outcome</span>
-mpdta_p = mpdta.<span class="fn">copy</span>()
-mpdta_p[<span class="str">"emp"</span>] = np.<span class="fn">exp</span>(mpdta_p[<span class="str">"lemp"</span>])  <span class="cm"># convert to counts</span>
-
-<span class="cm"># Poisson model</span>
-mod_pois = <span class="fn">etwfe</span>(
-    fml=<span class="str">"emp ~ lpop"</span>,
-    tvar=<span class="str">"year"</span>,
-    gvar=<span class="str">"first_treat"</span>,
-    data=mpdta_p,
-    family=<span class="str">"poisson"</span>,
-    vcov={<span class="str">"CRV1"</span>: <span class="str">"countyreal"</span>}
-)
-
-event_pois = mod_pois.<span class="fn">emfx</span>(type=<span class="str">"event"</span>, predict=<span class="str">"response"</span>)
-<span class="fn">print</span>(event_pois)</code></pre>
-            </div>
-            <div class="output-block">
-              <div class="output-header">Output</div>
-              <table class="output-table">
-                <thead>
-                  <tr>
-                    <th class="num">event</th>
-                    <th class="num">estimate</th>
-                    <th class="num">std.error</th>
-                    <th class="num">conf.low</th>
-                    <th class="num">conf.high</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td class="num">0</td><td class="num">-25.35</td><td class="num">15.9</td><td class="num">-56.5</td><td class="num">5.79</td></tr>
-                  <tr><td class="num">1</td><td class="num">1.09</td><td class="num">40.3</td><td class="num">-77.9</td><td class="num">80.07</td></tr>
-                  <tr><td class="num">2</td><td class="num">-75.12</td><td class="num">23.2</td><td class="num">-120.5</td><td class="num">-29.74</td></tr>
-                  <tr><td class="num">3</td><td class="num">-101.82</td><td class="num">27.1</td><td class="num">-154.9</td><td class="num">-48.73</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Heterogeneous -->
-          <div id="heterogeneous" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">8</span>
-              Heterogeneous Treatment Effects
-            </h3>
-            <p class="description">
-              Use <code>xvar</code> to estimate treatment effect heterogeneity across subgroups.
-            </p>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="cm"># Create heterogeneity variable (Great Lakes states)</span>
-gls_fips = [<span class="num">17</span>, <span class="num">18</span>, <span class="num">26</span>, <span class="num">27</span>, <span class="num">36</span>, <span class="num">39</span>, <span class="num">42</span>, <span class="num">55</span>]
-mpdta[<span class="str">"gls"</span>] = mpdta[<span class="str">"countyreal"</span>].<span class="fn">astype</span>(<span class="cls">str</span>).<span class="fn">str</span>[:<span class="num">2</span>].<span class="fn">astype</span>(<span class="cls">int</span>).<span class="fn">isin</span>(gls_fips)
-
-<span class="cm"># Model with heterogeneous effects</span>
-mod_het = <span class="fn">etwfe</span>(
-    fml=<span class="str">"lemp ~ lpop"</span>,
-    tvar=<span class="str">"year"</span>,
-    gvar=<span class="str">"first_treat"</span>,
-    data=mpdta,
-    xvar=<span class="str">"gls"</span>,                      <span class="cm"># heterogeneity variable</span>
-    cgroup=<span class="str">"never"</span>,
-    vcov={<span class="str">"CRV1"</span>: <span class="str">"countyreal"</span>}
-)
-
-<span class="cm"># ATT by subgroup</span>
-att_het = mod_het.<span class="fn">emfx</span>(type=<span class="str">"simple"</span>, by_xvar=<span class="kw">True</span>)
-<span class="fn">print</span>(att_het)</code></pre>
-            </div>
-            <div class="output-block">
-              <div class="output-header">Output</div>
-              <table class="output-table">
-                <thead>
-                  <tr>
-                    <th>gls</th>
-                    <th class="num">estimate</th>
-                    <th class="num">std.error</th>
-                    <th class="num">conf.low</th>
-                    <th class="num">conf.high</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>False</td><td class="num">-0.0519</td><td class="num">0.0156</td><td class="num">-0.0825</td><td class="num">-0.0213</td></tr>
-                  <tr><td>True</td><td class="num">-0.0394</td><td class="num">0.0203</td><td class="num">-0.0792</td><td class="num">0.0004</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Plotting -->
-          <div id="plotting" class="subsection">
-            <h3 class="subsection-title">
-              <span class="step-badge">9</span>
-              Visualization
-            </h3>
-            <div class="code-block">
-              <div class="code-header">
-                <span class="code-lang">Python</span>
-                <button class="code-copy" onclick="copyCode(this)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  Copy
-                </button>
-              </div>
-              <pre><code><span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
-
-<span class="cm"># Event study plot</span>
-fig, axes = plt.<span class="fn">subplots</span>(<span class="num">1</span>, <span class="num">3</span>, figsize=(<span class="num">14</span>, <span class="num">5</span>))
-
-mod.<span class="fn">plot</span>(type=<span class="str">"event"</span>, ax=axes[<span class="num">0</span>], title=<span class="str">"Event Study"</span>)
-mod.<span class="fn">plot</span>(type=<span class="str">"group"</span>, ax=axes[<span class="num">1</span>], title=<span class="str">"By Cohort"</span>)
-mod.<span class="fn">plot</span>(type=<span class="str">"calendar"</span>, ax=axes[<span class="num">2</span>], title=<span class="str">"By Calendar Time"</span>)
-
-plt.<span class="fn">tight_layout</span>()
-plt.<span class="fn">show</span>()</code></pre>
-            </div>
-          </div>
-        </section>
-
-        <!-- API Reference -->
-        <section id="api" class="section">
-          <h2 class="section-title">API Reference</h2>
-
-          <div class="subsection">
-            <h3 class="subsection-title">etwfe() Parameters</h3>
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="param-name">fml</td>
-                  <td class="param-type">str</td>
-                  <td>Formula: <code>"outcome ~ controls"</code> or <code>"outcome ~ 0"</code></td>
-                </tr>
-                <tr>
-                  <td class="param-name">tvar</td>
-                  <td class="param-type">str</td>
-                  <td>Name of time period variable</td>
-                </tr>
-                <tr>
-                  <td class="param-name">gvar</td>
-                  <td class="param-type">str</td>
-                  <td>Name of treatment cohort variable (first period treated)</td>
-                </tr>
-                <tr>
-                  <td class="param-name">data</td>
-                  <td class="param-type">DataFrame</td>
-                  <td>Panel data</td>
-                </tr>
-                <tr>
-                  <td class="param-name">ivar</td>
-                  <td class="param-type">str, optional</td>
-                  <td>Unit identifier for unit fixed effects</td>
-                </tr>
-                <tr>
-                  <td class="param-name">xvar</td>
-                  <td class="param-type">str, optional</td>
-                  <td>Variable for heterogeneous treatment effects</td>
-                </tr>
-                <tr>
-                  <td class="param-name">cgroup</td>
-                  <td class="param-type">str</td>
-                  <td><code>"notyet"</code> or <code>"never"</code></td>
-                </tr>
-                <tr>
-                  <td class="param-name">family</td>
-                  <td class="param-type">str, optional</td>
-                  <td><code>"poisson"</code>, <code>"logit"</code>, or <code>"probit"</code></td>
-                </tr>
-                <tr>
-                  <td class="param-name">vcov</td>
-                  <td class="param-type">dict, optional</td>
-                  <td>Variance-covariance: <code>{"CRV1": "cluster_var"}</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="subsection">
-            <h3 class="subsection-title">emfx() Parameters</h3>
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="param-name">type</td>
-                  <td class="param-type">str</td>
-                  <td><code>"simple"</code>, <code>"event"</code>, <code>"group"</code>, <code>"calendar"</code></td>
-                </tr>
-                <tr>
-                  <td class="param-name">by_xvar</td>
-                  <td class="param-type">bool</td>
-                  <td>Compute effects by xvar groups</td>
-                </tr>
-                <tr>
-                  <td class="param-name">post_only</td>
-                  <td class="param-type">bool</td>
-                  <td>Include only post-treatment (default: True)</td>
-                </tr>
-                <tr>
-                  <td class="param-name">predict</td>
-                  <td class="param-type">str</td>
-                  <td><code>"response"</code> or <code>"link"</code> for GLM</td>
-                </tr>
-                <tr>
-                  <td class="param-name">window</td>
-                  <td class="param-type">int, optional</td>
-                  <td>Restrict event window to ±window periods</td>
-                </tr>
-                <tr>
-                  <td class="param-name">compress</td>
-                  <td class="param-type">bool</td>
-                  <td>Compress data for large datasets</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Quick Reference -->
-          <div class="quick-ref">
-            <h3 class="quick-ref-title">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              Quick Reference
-            </h3>
-            <div class="quick-ref-grid">
-              <div class="quick-ref-item">
-                <h4>Marginal Effects</h4>
-                <code>emfx(type="simple")</code><p>Overall ATT</p>
-                <code>emfx(type="event")</code><p>By event time</p>
-                <code>emfx(type="group")</code><p>By cohort</p>
-                <code>emfx(type="calendar")</code><p>By time</p>
-              </div>
-              <div class="quick-ref-item">
-                <h4>Control Groups</h4>
-                <code>cgroup="notyet"</code><p>Not-yet-treated</p>
-                <code>cgroup="never"</code><p>Never-treated only</p>
-              </div>
-              <div class="quick-ref-item">
-                <h4>GLM Families</h4>
-                <code>family="poisson"</code><p>Count data</p>
-                <code>family="logit"</code><p>Binary (logistic)</p>
-                <code>family="probit"</code><p>Binary (probit)</p>
-              </div>
-              <div class="quick-ref-item">
-                <h4>Plotting</h4>
-                <code>plot(type="event")</code><p>Event study</p>
-                <code>plot(type="group")</code><p>By cohort</p>
-                <code>plot(type="calendar")</code><p>By time</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- References -->
-        <section id="references" class="section">
-          <h2 class="section-title">References</h2>
-          <ul style="list-style: none; padding: 0;">
-            <li style="margin-bottom: 16px;">
-              <strong>Wooldridge, J. M. (2021).</strong> "Two-Way Fixed Effects, the Two-Way Mundlak Regression, 
-              and Difference-in-Differences Estimators." <em>Working Paper</em>.
-            </li>
-            <li style="margin-bottom: 16px;">
-              <strong>Wooldridge, J. M. (2023).</strong> "Simple Approaches to Nonlinear Difference-in-Differences 
-              with Panel Data." <em>The Econometrics Journal</em>.
-            </li>
-          </ul>
-        </section>
-
-      </main>
-    </div>
-
-    <footer>
-      <p class="footer-text">
-        Created by <a href="index.html">Armand Kapllani</a> · 
-        <a href="https://github.com/armandkapllani/etwfe">GitHub</a> · 
-        <a href="https://pypi.org/project/etwfe/">PyPI</a>
-      </p>
-    </footer>
-
+  <div class="validated">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span><strong>Validated:</strong> 27/27 tests passed — all estimates match the R <code>etwfe</code> package by Grant McDermott</span>
   </div>
 
+  <!-- Background -->
+  <h2>Background</h2>
+  <p>
+    A foundational approach in applied economics is the difference-in-differences (DiD) design. The core intuition is straightforward: estimate treatment effects by comparing how outcomes change over time for units that received an intervention versus those that didn't.
+  </p>
+  <p>
+    In the simplest scenario with two groups and two time periods, a basic interaction term recovers the treatment effect:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>conceptual</span></div>
+    <pre><code>outcome ~ treated_unit * post_treatment</code></pre>
+  </div>
+
+  <p>
+    In practice, researchers typically use an equivalent formulation called <em>two-way fixed effects</em> (TWFE), which absorbs the interaction into unit and time fixed effects:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>conceptual</span></div>
+    <pre><code>outcome ~ treatment + unit_FE + time_FE</code></pre>
+  </div>
+
+  <p>
+    This TWFE approach is elegant and intuitive—but recent econometric research has revealed serious problems. When treatment timing varies across units (staggered adoption), the standard TWFE estimator can assign perverse negative weights to certain treatment effects. This leads to estimates that are difficult to interpret and potentially misleading.
+  </p>
+  <p>
+    Wooldridge (2021, 2023) proposed an intuitive solution: instead of a single treatment indicator, saturate the model with the full set of cohort-by-time interactions plus appropriately interacted covariates. This "extended" TWFE handles heterogeneous effects correctly and connects to other modern DiD estimators.
+  </p>
+  <p>
+    The <code>etwfe</code> package automates this saturated approach. It handles the tedious formula construction and provides tools to aggregate the many interaction coefficients into interpretable treatment effect summaries.
+  </p>
+
+  <!-- Dataset -->
+  <h2>Dataset</h2>
+  <p>
+    We'll demonstrate using county-level panel data on teen employment from the US. The dataset tracks 500 counties over 2003–2007, studying how state-level minimum wage increases affected employment outcomes.
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code><span class="k">import</span> pandas <span class="k">as</span> pd
+<span class="k">import</span> pyreadr
+
+<span class="c"># Load the mpdta dataset</span>
+url = <span class="s">"https://github.com/bcallaway11/did/raw/master/data/mpdta.rda"</span>
+pyreadr.<span class="f">download_file</span>(url, <span class="s">"mpdta.rda"</span>)
+mpdta = pyreadr.<span class="f">read_r</span>(<span class="s">"mpdta.rda"</span>)[<span class="s">"mpdta"</span>]
+
+<span class="c"># Prepare columns</span>
+mpdta[<span class="s">"first_treat"</span>] = mpdta[<span class="s">"first.treat"</span>].<span class="f">astype</span>(<span class="n">int</span>)
+mpdta[<span class="s">"year"</span>] = mpdta[<span class="s">"year"</span>].<span class="f">astype</span>(<span class="n">int</span>)
+mpdta.<span class="f">head</span>()</code></pre>
+  </div>
+
+  <div class="out">
+    <div class="out-label">2,500 observations (500 counties × 5 years)</div>
+    <table>
+      <tr><th>year</th><th>countyreal</th><th class="r">lpop</th><th class="r">lemp</th><th class="r">first_treat</th><th class="r">treat</th></tr>
+      <tr><td>2003</td><td>8001</td><td class="r">5.90</td><td class="r">8.46</td><td class="r">2007</td><td class="r">1</td></tr>
+      <tr><td>2004</td><td>8001</td><td class="r">5.90</td><td class="r">8.34</td><td class="r">2007</td><td class="r">1</td></tr>
+      <tr><td>2005</td><td>8001</td><td class="r">5.90</td><td class="r">8.34</td><td class="r">2007</td><td class="r">1</td></tr>
+      <tr><td>2006</td><td>8001</td><td class="r">5.90</td><td class="r">8.38</td><td class="r">2007</td><td class="r">1</td></tr>
+      <tr><td>2007</td><td>8001</td><td class="r">5.90</td><td class="r">8.49</td><td class="r">2007</td><td class="r">1</td></tr>
+    </table>
+  </div>
+
+  <p>
+    Here, <code>lemp</code> is log teen employment (our outcome), <code>lpop</code> is log population (a covariate), <code>first_treat</code> indicates when a county's state raised its minimum wage (0 means never treated), and <code>countyreal</code> is the county identifier.
+  </p>
+
+  <!-- Basic Usage -->
+  <h2>Basic Usage</h2>
+  <p>
+    The <code>etwfe</code> workflow centers on two function calls: first <code>etwfe()</code> to estimate the saturated model, then <code>emfx()</code> to aggregate results into meaningful treatment effects.
+  </p>
+
+  <h3>etwfe</h3>
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code><span class="k">from</span> etwfe <span class="k">import</span> etwfe
+
+mod = <span class="f">etwfe</span>(
+    fml=<span class="s">"lemp ~ lpop"</span>,           <span class="c"># outcome ~ covariates</span>
+    tvar=<span class="s">"year"</span>,                 <span class="c"># time variable</span>
+    gvar=<span class="s">"first_treat"</span>,          <span class="c"># treatment cohort</span>
+    data=mpdta,
+    vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>}  <span class="c"># cluster by county</span>
+)</code></pre>
+  </div>
+
+  <p>
+    Under the hood, <code>etwfe()</code> constructs a treatment dummy and saturates it with cohort-time interactions. The returned object contains all these granular coefficients, but they're not particularly interpretable on their own—we need to aggregate them.
+  </p>
+
+  <h3>emfx</h3>
+  <p>
+    The <code>emfx()</code> method recovers treatment effects by computing appropriate marginal effects. The simplest output is the overall average treatment effect on the treated:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>mod.<span class="f">emfx</span>()</code></pre>
+  </div>
+
+  <div class="out">
+    <div class="out-label">Average Treatment Effect on the Treated</div>
+    <table>
+      <tr><th>term</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">z</th><th class="r">p-value</th><th class="r">conf.low</th><th class="r">conf.high</th></tr>
+      <tr><td>.Dtreat</td><td class="r">-0.0506</td><td class="r">0.0125</td><td class="r">-4.05</td><td class="r">&lt;0.001</td><td class="r">-0.0751</td><td class="r">-0.0261</td></tr>
+    </table>
+  </div>
+
+  <p>
+    The estimate indicates that minimum wage increases reduced log teen employment by about 5% on average.
+  </p>
+
+  <p>
+    Beyond simple ATTs, <code>emfx()</code> supports different aggregation types. Use <code>type="event"</code> for dynamic treatment effects over time since treatment:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>mod_es = mod.<span class="f">emfx</span>(type=<span class="s">"event"</span>)
+mod_es</code></pre>
+  </div>
+
+  <div class="out">
+    <div class="out-label">Event Study</div>
+    <table>
+      <tr><th class="r">event</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">z</th><th class="r">p-value</th><th class="r">conf.low</th><th class="r">conf.high</th></tr>
+      <tr><td class="r">0</td><td class="r">-0.0332</td><td class="r">0.0134</td><td class="r">-2.48</td><td class="r">0.013</td><td class="r">-0.0594</td><td class="r">-0.0070</td></tr>
+      <tr><td class="r">1</td><td class="r">-0.0573</td><td class="r">0.0171</td><td class="r">-3.34</td><td class="r">&lt;0.001</td><td class="r">-0.0910</td><td class="r">-0.0237</td></tr>
+      <tr><td class="r">2</td><td class="r">-0.1379</td><td class="r">0.0308</td><td class="r">-4.48</td><td class="r">&lt;0.001</td><td class="r">-0.1982</td><td class="r">-0.0775</td></tr>
+      <tr><td class="r">3</td><td class="r">-0.1095</td><td class="r">0.0323</td><td class="r">-3.39</td><td class="r">&lt;0.001</td><td class="r">-0.1729</td><td class="r">-0.0462</td></tr>
+    </table>
+  </div>
+
+  <p>
+    The disemployment effect starts modest (3% in year 0) but grows substantially, exceeding 10% by years 2–3.
+  </p>
+
+  <!-- Presentation -->
+  <h2>Visualization</h2>
+  <p>
+    The package provides a native <code>plot()</code> method for quick visualization:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>mod.<span class="f">plot</span>(type=<span class="s">"event"</span>)</code></pre>
+  </div>
+
+  <div class="plot-container">
+    <div class="plot-header">
+      <div class="plot-title">Event Study</div>
+      <div class="plot-subtitle">Dynamic treatment effects over time</div>
+    </div>
+    <div class="plot-body">
+      <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f8fafc"/>
+            <stop offset="100%" style="stop-color:#f1f5f9"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Background -->
+        <rect x="70" y="40" width="400" height="190" fill="url(#bg1)" rx="4"/>
+        
+        <!-- Grid lines -->
+        <g stroke="#e2e8f0" stroke-width="1">
+          <line x1="70" y1="80" x2="470" y2="80"/>
+          <line x1="70" y1="120" x2="470" y2="120"/>
+          <line x1="70" y1="160" x2="470" y2="160"/>
+          <line x1="70" y1="200" x2="470" y2="200"/>
+        </g>
+        
+        <!-- Zero line -->
+        <line x1="70" y1="80" x2="470" y2="80" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+        <!-- Y-axis -->
+        <text x="60" y="45" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
+        <text x="60" y="83" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
+        <text x="60" y="123" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
+        <text x="60" y="163" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">-0.10</text>
+        <text x="60" y="203" font-size="11" fill="#64748b" text-anchor="end" font-family="Inter">-0.15</text>
+        
+        <!-- X-axis -->
+        <text x="145" y="248" font-size="11" fill="#64748b" text-anchor="middle" font-family="Inter">0</text>
+        <text x="245" y="248" font-size="11" fill="#64748b" text-anchor="middle" font-family="Inter">1</text>
+        <text x="345" y="248" font-size="11" fill="#64748b" text-anchor="middle" font-family="Inter">2</text>
+        <text x="445" y="248" font-size="11" fill="#64748b" text-anchor="middle" font-family="Inter">3</text>
+        
+        <!-- Axis labels -->
+        <text x="270" y="270" font-size="12" fill="#475569" text-anchor="middle" font-family="Inter">Event time</text>
+        <text x="25" y="135" font-size="12" fill="#475569" text-anchor="middle" font-family="Inter" transform="rotate(-90,25,135)">Estimate</text>
+        
+        <!-- Confidence intervals -->
+        <g stroke="#2563eb" stroke-width="2.5" stroke-linecap="round">
+          <line x1="145" y1="55" x2="145" y2="107"/>
+          <line x1="135" y1="55" x2="155" y2="55"/>
+          <line x1="135" y1="107" x2="155" y2="107"/>
+          
+          <line x1="245" y1="47" x2="245" y2="117"/>
+          <line x1="235" y1="47" x2="255" y2="47"/>
+          <line x1="235" y1="117" x2="255" y2="117"/>
+          
+          <line x1="345" y1="42" x2="345" y2="175"/>
+          <line x1="335" y1="42" x2="355" y2="42"/>
+          <line x1="335" y1="175" x2="355" y2="175"/>
+          
+          <line x1="445" y1="53" x2="445" y2="167"/>
+          <line x1="435" y1="53" x2="455" y2="53"/>
+          <line x1="435" y1="167" x2="455" y2="167"/>
+        </g>
+        
+        <!-- Points -->
+        <circle cx="145" cy="93" r="7" fill="#2563eb"/>
+        <circle cx="245" cy="106" r="7" fill="#2563eb"/>
+        <circle cx="345" cy="175" r="7" fill="#2563eb"/>
+        <circle cx="445" cy="157" r="7" fill="#2563eb"/>
+      </svg>
+    </div>
+    <div class="plot-footer">
+      Effects are negative and grow over time, reaching -13.8% at event time 2.
+    </div>
+  </div>
+
+  <p>
+    Notice that only post-treatment effects appear. Under the default <code>cgroup="notyet"</code> setting, pre-treatment effects are mechanically zero because not-yet-treated units serve as the control group.
+  </p>
+
+  <p>
+    To examine pre-treatment trends, switch to using never-treated units as the control group:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>mod_es2 = <span class="f">etwfe</span>(
+    fml=<span class="s">"lemp ~ lpop"</span>,
+    tvar=<span class="s">"year"</span>,
+    gvar=<span class="s">"first_treat"</span>,
+    data=mpdta,
+    vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>},
+    cgroup=<span class="s">"never"</span>               <span class="c"># use never-treated as controls</span>
+).<span class="f">emfx</span>(type=<span class="s">"event"</span>)
+
+mod_es2.<span class="f">plot</span>()</code></pre>
+  </div>
+
+  <div class="plot-container">
+    <div class="plot-header">
+      <div class="plot-title">Event Study with Pre-Treatment Effects</div>
+      <div class="plot-subtitle">Using never-treated as control group</div>
+    </div>
+    <div class="plot-body">
+      <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg2" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f8fafc"/>
+            <stop offset="100%" style="stop-color:#f1f5f9"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Background -->
+        <rect x="70" y="40" width="460" height="200" fill="url(#bg2)" rx="4"/>
+        
+        <!-- Pre/post shading -->
+        <rect x="70" y="40" width="230" height="200" fill="#fef3c7" opacity="0.3"/>
+        <rect x="300" y="40" width="230" height="200" fill="#dbeafe" opacity="0.3"/>
+        
+        <!-- Grid lines -->
+        <g stroke="#e2e8f0" stroke-width="1">
+          <line x1="70" y1="75" x2="530" y2="75"/>
+          <line x1="70" y1="115" x2="530" y2="115"/>
+          <line x1="70" y1="155" x2="530" y2="155"/>
+          <line x1="70" y1="195" x2="530" y2="195"/>
+        </g>
+        
+        <!-- Zero line -->
+        <line x1="70" y1="115" x2="530" y2="115" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+        <!-- Vertical reference at -1 -->
+        <line x1="300" y1="40" x2="300" y2="240" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,4"/>
+        
+        <!-- Y-axis labels -->
+        <text x="60" y="45" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.10</text>
+        <text x="60" y="78" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
+        <text x="60" y="118" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
+        <text x="60" y="158" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
+        <text x="60" y="198" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.10</text>
+        <text x="60" y="238" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.15</text>
+        
+        <!-- X-axis labels -->
+        <text x="128" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-4</text>
+        <text x="185" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-3</text>
+        <text x="242" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-2</text>
+        <text x="300" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-1</text>
+        <text x="357" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">0</text>
+        <text x="414" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">1</text>
+        <text x="472" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">2</text>
+        <text x="530" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">3</text>
+        
+        <!-- Axis labels -->
+        <text x="300" y="280" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">Event time</text>
+        
+        <!-- Pre-treatment CIs (orange) -->
+        <g stroke="#d97706" stroke-width="2" stroke-linecap="round">
+          <line x1="128" y1="83" x2="128" y2="127"/>
+          <line x1="120" y1="83" x2="136" y2="83"/>
+          <line x1="120" y1="127" x2="136" y2="127"/>
+          
+          <line x1="185" y1="78" x2="185" y2="111"/>
+          <line x1="177" y1="78" x2="193" y2="78"/>
+          <line x1="177" y1="111" x2="193" y2="111"/>
+          
+          <line x1="242" y1="80" x2="242" y2="106"/>
+          <line x1="234" y1="80" x2="250" y2="80"/>
+          <line x1="234" y1="106" x2="250" y2="106"/>
+        </g>
+        
+        <!-- Reference point -->
+        <circle cx="300" cy="115" r="5" fill="#94a3b8"/>
+        
+        <!-- Post-treatment CIs (blue) -->
+        <g stroke="#2563eb" stroke-width="2" stroke-linecap="round">
+          <line x1="357" y1="105" x2="357" y2="143"/>
+          <line x1="349" y1="105" x2="365" y2="105"/>
+          <line x1="349" y1="143" x2="365" y2="143"/>
+          
+          <line x1="414" y1="95" x2="414" y2="148"/>
+          <line x1="406" y1="95" x2="422" y2="95"/>
+          <line x1="406" y1="148" x2="422" y2="148"/>
+          
+          <line x1="472" y1="60" x2="472" y2="185"/>
+          <line x1="464" y1="60" x2="480" y2="60"/>
+          <line x1="464" y1="185" x2="480" y2="185"/>
+          
+          <line x1="530" y1="68" x2="530" y2="175"/>
+          <line x1="522" y1="68" x2="538" y2="68"/>
+          <line x1="522" y1="175" x2="538" y2="175"/>
+        </g>
+        
+        <!-- Pre-treatment points -->
+        <circle cx="128" cy="105" r="6" fill="#f59e0b"/>
+        <circle cx="185" cy="98" r="6" fill="#f59e0b"/>
+        <circle cx="242" cy="96" r="6" fill="#f59e0b"/>
+        
+        <!-- Post-treatment points -->
+        <circle cx="357" cy="123" r="6" fill="#2563eb"/>
+        <circle cx="414" cy="136" r="6" fill="#2563eb"/>
+        <circle cx="472" cy="192" r="6" fill="#2563eb"/>
+        <circle cx="530" cy="178" r="6" fill="#2563eb"/>
+      </svg>
+    </div>
+    <div class="plot-footer">
+      Pre-treatment coefficients (orange) hover near zero, supporting parallel trends. Post-treatment effects (blue) are negative and significant.
+    </div>
+  </div>
+
+  <p>
+    You can customize the plot appearance. For instance, use a ribbon-style confidence band:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>mod_es2.<span class="f">plot</span>(
+    type=<span class="s">"ribbon"</span>,
+    color=<span class="s">"darkcyan"</span>,
+    title=<span class="s">"Minimum wage effect on (log) teen employment"</span>,
+    subtitle=<span class="s">"Note: Using never-treated as control group"</span>
+)</code></pre>
+  </div>
+
+  <div class="plot-container">
+    <div class="plot-header">
+      <div class="plot-title">Minimum wage effect on (log) teen employment</div>
+      <div class="plot-subtitle">Note: Using never-treated as control group</div>
+    </div>
+    <div class="plot-body">
+      <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg3" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f8fafc"/>
+            <stop offset="100%" style="stop-color:#f1f5f9"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Background -->
+        <rect x="70" y="40" width="460" height="200" fill="url(#bg3)" rx="4"/>
+        
+        <!-- Grid lines -->
+        <g stroke="#e2e8f0" stroke-width="1">
+          <line x1="70" y1="75" x2="530" y2="75"/>
+          <line x1="70" y1="115" x2="530" y2="115"/>
+          <line x1="70" y1="155" x2="530" y2="155"/>
+          <line x1="70" y1="195" x2="530" y2="195"/>
+        </g>
+        
+        <!-- Zero line -->
+        <line x1="70" y1="115" x2="530" y2="115" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+        <!-- Vertical reference at -1 -->
+        <line x1="300" y1="40" x2="300" y2="240" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+        
+        <!-- Y-axis labels -->
+        <text x="60" y="45" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.10</text>
+        <text x="60" y="78" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
+        <text x="60" y="118" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
+        <text x="60" y="158" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
+        <text x="60" y="198" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.10</text>
+        <text x="60" y="238" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.15</text>
+        
+        <!-- X-axis labels -->
+        <text x="128" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-4</text>
+        <text x="185" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-3</text>
+        <text x="242" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-2</text>
+        <text x="300" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-1</text>
+        <text x="357" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">0</text>
+        <text x="414" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">1</text>
+        <text x="472" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">2</text>
+        <text x="530" y="258" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">3</text>
+        
+        <!-- Axis labels -->
+        <text x="300" y="280" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">Years post treatment</text>
+        
+        <!-- Confidence ribbon -->
+        <polygon points="128,83 185,78 242,80 300,115 357,105 414,95 472,60 530,68 530,175 472,185 414,148 357,143 300,115 242,106 185,111 128,127" fill="#008b8b" opacity="0.2"/>
+        
+        <!-- Line -->
+        <polyline points="128,105 185,98 242,96 300,115 357,123 414,136 472,192 530,178" fill="none" stroke="#008b8b" stroke-width="2.5"/>
+        
+        <!-- Points -->
+        <circle cx="128" cy="105" r="5" fill="#008b8b"/>
+        <circle cx="185" cy="98" r="5" fill="#008b8b"/>
+        <circle cx="242" cy="96" r="5" fill="#008b8b"/>
+        <circle cx="300" cy="115" r="4" fill="#94a3b8"/>
+        <circle cx="357" cy="123" r="5" fill="#008b8b"/>
+        <circle cx="414" cy="136" r="5" fill="#008b8b"/>
+        <circle cx="472" cy="192" r="5" fill="#008b8b"/>
+        <circle cx="530" cy="178" r="5" fill="#008b8b"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Heterogeneous Effects -->
+  <h2>Heterogeneous Treatment Effects</h2>
+  <p>
+    Often we want to know whether treatment effects differ across subgroups. The <code>xvar</code> argument enables this by interacting treatment with a grouping variable.
+  </p>
+  <p>
+    Let's compare effects between counties in Great Lakes states versus the rest of the US:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code><span class="c"># Define Great Lakes states</span>
+gls_fips = [<span class="n">17</span>, <span class="n">18</span>, <span class="n">26</span>, <span class="n">27</span>, <span class="n">36</span>, <span class="n">39</span>, <span class="n">42</span>, <span class="n">55</span>]  <span class="c"># IL, IN, MI, MN, NY, OH, PA, WI</span>
+mpdta[<span class="s">"gls"</span>] = mpdta[<span class="s">"countyreal"</span>].<span class="f">astype</span>(<span class="n">str</span>).<span class="f">str</span>[:<span class="n">2</span>].<span class="f">astype</span>(<span class="n">int</span>).<span class="f">isin</span>(gls_fips)
+
+<span class="c"># Estimate with heterogeneous effects</span>
+hmod = <span class="f">etwfe</span>(
+    fml=<span class="s">"lemp ~ lpop"</span>,
+    tvar=<span class="s">"year"</span>,
+    gvar=<span class="s">"first_treat"</span>,
+    data=mpdta,
+    cgroup=<span class="s">"never"</span>,
+    vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>},
+    xvar=<span class="s">"gls"</span>                    <span class="c"># heterogeneity by GLS status</span>
+)
+
+<span class="c"># ATT by subgroup</span>
+hmod_mfx = hmod.<span class="f">emfx</span>()
+hmod_mfx</code></pre>
+  </div>
+
+  <div class="out">
+    <div class="out-label">Heterogeneous ATT</div>
+    <table>
+      <tr><th>term</th><th>gls</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">conf.low</th><th class="r">conf.high</th></tr>
+      <tr><td>.Dtreat</td><td>False</td><td class="r">-0.0519</td><td class="r">0.0346</td><td class="r">-0.120</td><td class="r">0.016</td></tr>
+      <tr><td>.Dtreat</td><td>True</td><td class="r">-0.0394</td><td class="r">0.0243</td><td class="r">-0.087</td><td class="r">0.008</td></tr>
+    </table>
+  </div>
+
+  <p>Visualize the comparison:</p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>hmod_mfx.<span class="f">plot</span>()</code></pre>
+  </div>
+
+  <div class="plot-container">
+    <div class="plot-header">
+      <div class="plot-title">Heterogeneous ATT: Great Lakes vs Other</div>
+      <div class="plot-subtitle">Comparison of treatment effects by region</div>
+    </div>
+    <div class="plot-body">
+      <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg4" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f8fafc"/>
+            <stop offset="100%" style="stop-color:#f1f5f9"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Background -->
+        <rect x="80" y="40" width="280" height="130" fill="url(#bg4)" rx="4"/>
+        
+        <!-- Grid lines -->
+        <g stroke="#e2e8f0" stroke-width="1">
+          <line x1="80" y1="70" x2="360" y2="70"/>
+          <line x1="80" y1="105" x2="360" y2="105"/>
+          <line x1="80" y1="140" x2="360" y2="140"/>
+        </g>
+        
+        <!-- Zero line -->
+        <line x1="80" y1="105" x2="360" y2="105" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+        <!-- Y-axis labels -->
+        <text x="70" y="73" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
+        <text x="70" y="108" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
+        <text x="70" y="143" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
+        
+        <!-- X-axis labels -->
+        <text x="170" y="190" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">Non-GLS</text>
+        <text x="290" y="190" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">GLS</text>
+        
+        <!-- Error bars -->
+        <g stroke="#2563eb" stroke-width="2.5" stroke-linecap="round">
+          <!-- Non-GLS -->
+          <line x1="170" y1="55" x2="170" y2="152"/>
+          <line x1="158" y1="55" x2="182" y2="55"/>
+          <line x1="158" y1="152" x2="182" y2="152"/>
+          
+          <!-- GLS -->
+          <line x1="290" y1="67" x2="290" y2="140"/>
+          <line x1="278" y1="67" x2="302" y2="67"/>
+          <line x1="278" y1="140" x2="302" y2="140"/>
+        </g>
+        
+        <!-- Points -->
+        <circle cx="170" cy="141" r="8" fill="#2563eb"/>
+        <circle cx="290" cy="133" r="8" fill="#f59e0b"/>
+        
+        <!-- Legend -->
+        <rect x="80" y="200" width="12" height="12" fill="#2563eb" rx="2"/>
+        <text x="98" y="210" font-size="10" fill="#475569" font-family="Inter">Non-GLS (gls=False)</text>
+        <rect x="200" y="200" width="12" height="12" fill="#f59e0b" rx="2"/>
+        <text x="218" y="210" font-size="10" fill="#475569" font-family="Inter">GLS (gls=True)</text>
+      </svg>
+    </div>
+    <div class="plot-footer">
+      Both groups show negative effects, though non-GLS counties have a slightly larger point estimate. Confidence intervals overlap substantially.
+    </div>
+  </div>
+
+  <p>
+    The full event study reveals a richer picture. We can examine whether the dynamic patterns differ:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code>hmod.<span class="f">emfx</span>(type=<span class="s">"event"</span>).<span class="f">plot</span>(type=<span class="s">"ribbon"</span>)</code></pre>
+  </div>
+
+  <div class="plot-container">
+    <div class="plot-header">
+      <div class="plot-title">Heterogeneous Event Study</div>
+      <div class="plot-subtitle">Dynamic effects by Great Lakes status</div>
+    </div>
+    <div class="plot-body">
+      <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg5" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f8fafc"/>
+            <stop offset="100%" style="stop-color:#f1f5f9"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Background -->
+        <rect x="70" y="40" width="460" height="210" fill="url(#bg5)" rx="4"/>
+        
+        <!-- Grid lines -->
+        <g stroke="#e2e8f0" stroke-width="1">
+          <line x1="70" y1="80" x2="530" y2="80"/>
+          <line x1="70" y1="125" x2="530" y2="125"/>
+          <line x1="70" y1="170" x2="530" y2="170"/>
+          <line x1="70" y1="215" x2="530" y2="215"/>
+        </g>
+        
+        <!-- Zero line -->
+        <line x1="70" y1="125" x2="530" y2="125" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
+        
+        <!-- Vertical reference at -1 -->
+        <line x1="185" y1="40" x2="185" y2="250" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+        
+        <!-- Y-axis labels -->
+        <text x="60" y="45" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.10</text>
+        <text x="60" y="83" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0.05</text>
+        <text x="60" y="128" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">0</text>
+        <text x="60" y="173" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.05</text>
+        <text x="60" y="218" font-size="10" fill="#64748b" text-anchor="end" font-family="Inter">-0.10</text>
+        
+        <!-- X-axis labels -->
+        <text x="128" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-3</text>
+        <text x="185" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-2</text>
+        <text x="242" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">-1</text>
+        <text x="300" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">0</text>
+        <text x="357" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">1</text>
+        <text x="414" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">2</text>
+        <text x="472" y="268" font-size="10" fill="#64748b" text-anchor="middle" font-family="Inter">3</text>
+        
+        <!-- Axis labels -->
+        <text x="300" y="290" font-size="11" fill="#475569" text-anchor="middle" font-family="Inter">Event time</text>
+        
+        <!-- Non-GLS ribbon (blue) -->
+        <polygon points="128,95 185,100 242,125 300,112 357,105 414,75 472,78 472,225 414,195 357,168 300,155 242,125 185,140 128,145" fill="#2563eb" opacity="0.15"/>
+        
+        <!-- GLS ribbon (orange) -->
+        <polygon points="128,90 185,95 242,125 300,115 357,112 414,95 472,100 472,205 414,175 357,162 300,150 242,125 185,135 128,138" fill="#f59e0b" opacity="0.15"/>
+        
+        <!-- Non-GLS line -->
+        <polyline points="128,120 185,120 242,125 300,133 357,136 414,135 472,150" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+        
+        <!-- GLS line -->
+        <polyline points="128,115 185,115 242,125 300,132 357,137 414,135 472,152" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+        
+        <!-- Non-GLS points -->
+        <circle cx="128" cy="120" r="5" fill="#2563eb"/>
+        <circle cx="185" cy="120" r="5" fill="#2563eb"/>
+        <circle cx="242" cy="125" r="4" fill="#94a3b8"/>
+        <circle cx="300" cy="133" r="5" fill="#2563eb"/>
+        <circle cx="357" cy="136" r="5" fill="#2563eb"/>
+        <circle cx="414" cy="135" r="5" fill="#2563eb"/>
+        <circle cx="472" cy="150" r="5" fill="#2563eb"/>
+        
+        <!-- GLS points (offset slightly) -->
+        <circle cx="133" cy="115" r="5" fill="#f59e0b"/>
+        <circle cx="190" cy="115" r="5" fill="#f59e0b"/>
+        <circle cx="305" cy="132" r="5" fill="#f59e0b"/>
+        <circle cx="362" cy="137" r="5" fill="#f59e0b"/>
+        <circle cx="419" cy="135" r="5" fill="#f59e0b"/>
+        <circle cx="477" cy="152" r="5" fill="#f59e0b"/>
+        
+        <!-- Legend -->
+        <rect x="380" y="52" width="140" height="50" fill="white" stroke="#e2e8f0" rx="4"/>
+        <line x1="390" y1="67" x2="410" y2="67" stroke="#2563eb" stroke-width="2.5"/>
+        <circle cx="400" cy="67" r="4" fill="#2563eb"/>
+        <text x="418" y="70" font-size="10" fill="#475569" font-family="Inter">Non-GLS</text>
+        <line x1="390" y1="87" x2="410" y2="87" stroke="#f59e0b" stroke-width="2.5"/>
+        <circle cx="400" cy="87" r="4" fill="#f59e0b"/>
+        <text x="418" y="90" font-size="10" fill="#475569" font-family="Inter">GLS</text>
+      </svg>
+    </div>
+    <div class="plot-footer">
+      The two groups track closely through most event times. Non-GLS counties may show slightly larger negative effects in later periods.
+    </div>
+  </div>
+
+  <!-- Other Families -->
+  <h2>Other Model Families</h2>
+  <p>
+    A distinctive feature of the ETWFE approach is support for nonlinear models. Use the <code>family</code> argument for count outcomes or binary responses:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code><span class="c"># Poisson regression for count data</span>
+mpdta[<span class="s">"emp"</span>] = np.<span class="f">exp</span>(mpdta[<span class="s">"lemp"</span>])
+
+<span class="f">etwfe</span>(
+    fml=<span class="s">"emp ~ lpop"</span>,
+    tvar=<span class="s">"year"</span>,
+    gvar=<span class="s">"first_treat"</span>,
+    data=mpdta,
+    vcov={<span class="s">"CRV1"</span>: <span class="s">"countyreal"</span>},
+    family=<span class="s">"poisson"</span>
+).<span class="f">emfx</span>(type=<span class="s">"event"</span>)</code></pre>
+  </div>
+
+  <div class="out">
+    <div class="out-label">Poisson Event Study</div>
+    <table>
+      <tr><th class="r">event</th><th class="r">estimate</th><th class="r">std.error</th><th class="r">z</th><th class="r">p-value</th></tr>
+      <tr><td class="r">0</td><td class="r">-25.35</td><td class="r">15.9</td><td class="r">-1.60</td><td class="r">0.111</td></tr>
+      <tr><td class="r">1</td><td class="r">1.09</td><td class="r">40.3</td><td class="r">0.03</td><td class="r">0.978</td></tr>
+      <tr><td class="r">2</td><td class="r">-75.12</td><td class="r">23.2</td><td class="r">-3.24</td><td class="r">0.001</td></tr>
+      <tr><td class="r">3</td><td class="r">-101.82</td><td class="r">27.1</td><td class="r">-3.76</td><td class="r">&lt;0.001</td></tr>
+    </table>
+  </div>
+
+  <!-- Other Aggregations -->
+  <h2>Other Aggregations</h2>
+  <p>
+    Besides event studies, you can aggregate by cohort or calendar time:
+  </p>
+
+  <div class="code">
+    <div class="code-head"><span>python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code><span class="c"># By treatment cohort</span>
+mod.<span class="f">emfx</span>(type=<span class="s">"group"</span>)
+
+<span class="c"># By calendar year</span>
+mod.<span class="f">emfx</span>(type=<span class="s">"calendar"</span>)</code></pre>
+  </div>
+
+  <div class="cols-2">
+    <div class="out">
+      <div class="out-label">By Treatment Cohort</div>
+      <table>
+        <tr><th>first_treat</th><th class="r">estimate</th><th class="r">std.error</th></tr>
+        <tr><td>2004</td><td class="r">-0.0876</td><td class="r">0.0253</td></tr>
+        <tr><td>2006</td><td class="r">-0.0213</td><td class="r">0.0185</td></tr>
+        <tr><td>2007</td><td class="r">-0.0460</td><td class="r">0.0168</td></tr>
+      </table>
+    </div>
+    <div class="out">
+      <div class="out-label">By Calendar Year</div>
+      <table>
+        <tr><th>year</th><th class="r">estimate</th><th class="r">std.error</th></tr>
+        <tr><td>2004</td><td class="r">-0.0212</td><td class="r">0.0218</td></tr>
+        <tr><td>2005</td><td class="r">-0.0819</td><td class="r">0.0277</td></tr>
+        <tr><td>2006</td><td class="r">-0.0443</td><td class="r">0.0173</td></tr>
+        <tr><td>2007</td><td class="r">-0.0524</td><td class="r">0.0168</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Function Reference -->
+  <h2>Function Reference</h2>
+  
+  <h3>etwfe()</h3>
+  <div class="code">
+    <div class="code-head"><span>parameters</span></div>
+    <pre><code><span class="f">etwfe</span>(
+    fml,              <span class="c"># "y ~ x1 + x2" or "y ~ 0" (no controls)</span>
+    tvar,             <span class="c"># time variable name</span>
+    gvar,             <span class="c"># treatment cohort variable</span>
+    data,             <span class="c"># pandas DataFrame</span>
+    ivar=<span class="k">None</span>,        <span class="c"># unit ID (for unit-level fixed effects)</span>
+    xvar=<span class="k">None</span>,        <span class="c"># variable for heterogeneous effects</span>
+    cgroup=<span class="s">"notyet"</span>,  <span class="c"># control group: "notyet" or "never"</span>
+    fe=<span class="s">"vs"</span>,          <span class="c"># fixed effects: "vs", "feo", or "none"</span>
+    family=<span class="k">None</span>,      <span class="c"># GLM family: "poisson", "logit", "probit"</span>
+    vcov=<span class="k">None</span>         <span class="c"># clustering: {"CRV1": "cluster_var"}</span>
+)</code></pre>
+  </div>
+
+  <h3>emfx()</h3>
+  <div class="code">
+    <div class="code-head"><span>parameters</span></div>
+    <pre><code>model.<span class="f">emfx</span>(
+    type=<span class="s">"simple"</span>,     <span class="c"># "simple", "event", "group", "calendar"</span>
+    by_xvar=<span class="k">False</span>,     <span class="c"># break out by xvar levels</span>
+    post_only=<span class="k">True</span>,    <span class="c"># exclude pre-treatment (only if cgroup="never")</span>
+    vcov=<span class="k">True</span>,         <span class="c"># compute standard errors</span>
+    compress=<span class="k">False</span>,    <span class="c"># collapse data for faster computation</span>
+    predict=<span class="s">"response"</span>  <span class="c"># scale: "response" or "link"</span>
+)</code></pre>
+  </div>
+
+  <!-- References -->
+  <h2>References</h2>
+  <p class="ref">
+    Wooldridge, J. M. (2021). <em>Two-Way Fixed Effects, the Two-Way Mundlak Regression, and Difference-in-Differences Estimators.</em> SSRN Working Paper. <a href="https://dx.doi.org/10.2139/ssrn.3906345">doi:10.2139/ssrn.3906345</a><br><br>
+    Wooldridge, J. M. (2023). <em>Simple Approaches to Nonlinear Difference-in-Differences with Panel Data.</em> The Econometrics Journal, 26(3), C31–C66. <a href="https://doi.org/10.1093/ectj/utad016">doi:10.1093/ectj/utad016</a><br><br>
+    For the original R implementation, see Grant McDermott's <a href="https://grantmcdermott.com/etwfe/">etwfe package</a>.
+  </p>
+
+  <footer>
+    <a href="index.html">Armand Kapllani</a>
+    <a href="https://pypi.org/project/etwfe/">PyPI</a>
+    <a href="https://github.com/armandkapllani/etwfe">GitHub</a>
+  </footer>
+
   <script>
-    function copyToClipboard(text, button) {
-      navigator.clipboard.writeText(text).then(() => {
-        const original = button.innerHTML;
-        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg> Copied!';
-        setTimeout(() => { button.innerHTML = original; }, 2000);
-      });
+    function copyCode(btn) {
+      const code = btn.closest('.code').querySelector('code').innerText;
+      navigator.clipboard.writeText(code);
+      btn.textContent = '✓ Copied';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
     }
-
-    function copyCode(button) {
-      const code = button.closest('.code-block').querySelector('code').innerText;
-      copyToClipboard(code, button);
-    }
-
-    // Highlight active TOC item on scroll
-    const sections = document.querySelectorAll('.section, .subsection');
-    const tocLinks = document.querySelectorAll('.toc-list a');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (scrollY >= sectionTop - 100) {
-          current = section.getAttribute('id');
-        }
-      });
-
-      tocLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + current) {
-          link.classList.add('active');
-        }
-      });
-    });
   </script>
 
 </body>
