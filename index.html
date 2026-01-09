@@ -1,965 +1,660 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.36.1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Armand Kapllani - Senior Data Scientist at Microsoft, PhD in Economics">
   <meta name="author" content="Armand Kapllani">
-  <meta name="description" content="PhD Candidate in Economics">
+  <title>Armand Kapllani | Econometrics & Machine Learning</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --color-ink: #1a1a1a;
+      --color-ink-light: #4a4a4a;
+      --color-ink-muted: #737373;
+      --color-paper: #faf9f7;
+      --color-paper-warm: #f5f3ef;
+      --color-accent: #8b4513;
+      --color-accent-light: #a0522d;
+      --color-border: #e5e2dc;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', -apple-system, sans-serif;
+      --max-width: 1200px;
+      --spacing-unit: 8px;
+    }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JN70TB4DJJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    html {
+      scroll-behavior: smooth;
+    }
 
-  gtag('config', 'G-JN70TB4DJJ');
-</script>
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-ink);
+      background: var(--color-paper);
+      -webkit-font-smoothing: antialiased;
+    }
 
+    ::selection {
+      background: var(--color-accent);
+      color: white;
+    }
 
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-paper);
+      border-bottom: 1px solid var(--color-border);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      background: rgba(250, 249, 247, 0.95);
+    }
 
+    .nav-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 calc(var(--spacing-unit) * 4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+    }
 
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-ink);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
 
+    .nav-links {
+      display: flex;
+      gap: calc(var(--spacing-unit) * 4);
+      list-style: none;
+    }
 
+    .nav-links a {
+      color: var(--color-ink-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+      position: relative;
+    }
 
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--color-accent);
+      transition: width 0.3s ease;
+    }
 
-    <link rel="stylesheet" href="/css/highlight.min.css">
+    .nav-links a:hover {
+      color: var(--color-ink);
+    }
 
+    .nav-links a:hover::after {
+      width: 100%;
+    }
 
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/css/academicons.min.css">
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather%7CRoboto+Mono">
-  <link rel="stylesheet" href="/css/hugo-academic.css">
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: calc(var(--spacing-unit) * 8);
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: calc(var(--spacing-unit) * 16) calc(var(--spacing-unit) * 4);
+      align-items: center;
+    }
 
-  <link rel="stylesheet" href="/css/green.css">
+    .hero-image {
+      position: relative;
+    }
 
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: 20px;
+      bottom: 20px;
+      border: 1px solid var(--color-accent);
+      opacity: 0.3;
+    }
 
-  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Armand Kapllani">
-  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Armand Kapllani">
+    .hero-image img {
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: filter 0.4s ease;
+    }
 
-  <link rel="icon" type="image/png" href="/img/icon.png">
-  <link rel="apple-touch-icon" type="image/png" href="/img/apple-touch-icon.png">
+    .hero-image:hover img {
+      filter: grayscale(0%);
+    }
 
-  <link rel="canonical" href="/">
+    .hero-content {
+      padding-left: calc(var(--spacing-unit) * 4);
+    }
 
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700|Montserrat:300,400">
+    .hero-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: calc(var(--spacing-unit) * 2);
+    }
 
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: calc(var(--spacing-unit) * 3);
+      color: var(--color-ink);
+    }
 
-<title>Armand Kapllani</title>
-<meta property="og:title" content="Armand Kapllani">
-<meta property="og:type" content="website">
-<meta property="description" content="A site about me">
-<meta property="og:description" content="A site about me">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://xvrdm.github.io/images/" >
+    .hero-role {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-ink-light);
+      margin-bottom: calc(var(--spacing-unit) * 4);
+    }
 
+    .hero-bio {
+      font-size: 1.05rem;
+      color: var(--color-ink-light);
+      max-width: 520px;
+      margin-bottom: calc(var(--spacing-unit) * 5);
+    }
 
-<meta name="twitter:creator" content="">
-<meta name="twitter:site" content="">
+    .hero-bio a {
+      color: var(--color-accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
 
-  <title>Armand Kapllani</title>
+    .hero-bio a:hover {
+      border-color: var(--color-accent);
+    }
 
+    .hero-links {
+      display: flex;
+      gap: calc(var(--spacing-unit) * 3);
+      align-items: center;
+    }
+
+    .hero-links a {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing-unit) * 1);
+      color: var(--color-ink-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .hero-links a:hover {
+      color: var(--color-accent);
+    }
+
+    .hero-links svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Section Styles */
+    section {
+      padding: calc(var(--spacing-unit) * 12) calc(var(--spacing-unit) * 4);
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: calc(var(--spacing-unit) * 8);
+      margin-bottom: calc(var(--spacing-unit) * 6);
+      align-items: start;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      position: sticky;
+      top: 100px;
+    }
+
+    .section-content {
+      border-top: 1px solid var(--color-border);
+      padding-top: calc(var(--spacing-unit) * 4);
+    }
+
+    /* Papers Section */
+    .paper {
+      padding: calc(var(--spacing-unit) * 4) 0;
+      border-bottom: 1px solid var(--color-border);
+      display: grid;
+      gap: calc(var(--spacing-unit) * 2);
+    }
+
+    .paper:last-child {
+      border-bottom: none;
+    }
+
+    .paper-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--color-ink);
+    }
+
+    .paper-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--color-accent);
+      color: white;
+      padding: 4px 10px;
+      margin-left: 12px;
+      vertical-align: middle;
+      border-radius: 2px;
+    }
+
+    .paper-meta {
+      font-size: 0.9rem;
+      color: var(--color-ink-muted);
+      font-style: italic;
+    }
+
+    .paper-abstract {
+      color: var(--color-ink-light);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    .paper-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: calc(var(--spacing-unit) * 1);
+      transition: gap 0.2s ease;
+    }
+
+    .paper-link:hover {
+      gap: 10px;
+    }
+
+    .paper-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Teaching Section */
+    .teaching-item {
+      padding: calc(var(--spacing-unit) * 4) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .teaching-item:last-child {
+      border-bottom: none;
+    }
+
+    .teaching-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: calc(var(--spacing-unit) * 1);
+    }
+
+    .teaching-institution {
+      color: var(--color-ink-muted);
+      font-size: 0.9rem;
+      margin-bottom: calc(var(--spacing-unit) * 2);
+    }
+
+    .teaching-links {
+      display: flex;
+      gap: calc(var(--spacing-unit) * 3);
+    }
+
+    .teaching-links a {
+      color: var(--color-accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    .teaching-links a:hover {
+      border-color: var(--color-accent);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--color-paper-warm);
+      padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 4);
+      margin-top: calc(var(--spacing-unit) * 8);
+    }
+
+    .footer-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      color: var(--color-ink-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: calc(var(--spacing-unit) * 3);
+    }
+
+    .footer-links a {
+      color: var(--color-ink-muted);
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--color-accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: calc(var(--spacing-unit) * 14);
+      }
+
+      .hero-image {
+        order: -1;
+        display: flex;
+        justify-content: center;
+      }
+
+      .hero-image::before {
+        display: none;
+      }
+
+      .hero-image img {
+        max-width: 280px;
+        border-radius: 4px;
+      }
+
+      .hero-content {
+        padding-left: 0;
+      }
+
+      .hero-bio {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-links {
+        justify-content: center;
+      }
+
+      .section-header {
+        grid-template-columns: 1fr;
+        gap: calc(var(--spacing-unit) * 2);
+      }
+
+      .section-title {
+        position: static;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-subtitle,
+    .hero-title,
+    .hero-role,
+    .hero-bio,
+    .hero-links {
+      animation: fadeInUp 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    .hero-subtitle { animation-delay: 0.1s; }
+    .hero-title { animation-delay: 0.2s; }
+    .hero-role { animation-delay: 0.3s; }
+    .hero-bio { animation-delay: 0.4s; }
+    .hero-links { animation-delay: 0.5s; }
+
+    .hero-image {
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+  </style>
 </head>
-<body id="top" data-spy="scroll" data-target="#navbar-main" data-offset="71">
+<body>
 
-<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
-  <div class="container">
-
-
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-              data-target=".navbar-collapse" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">Armand Kapllani</a>
-    </div>
-
-
-    <div class="collapse navbar-collapse">
-
-
-      <ul class="nav navbar-nav navbar-right">
-
-
-
-
-        <li class="nav-item">
-          <a href="/#about" data-target="#about">
-
-            <span>Home</span>
-          </a>
-        </li>
-
-
-        <li class="nav-item">
-          <a href="/#workingpapers" data-target="#workingpapers">
-
-            <span>Working Papers</span>
-          </a>
-        </li>
-
-
-
- <li class="nav-item">
-          <a href="/#teaching" data-target="#teaching">
-
-            <span>Teaching</span>
-          </a>
-        </li> 
-         
-<!--                 <li class="nav-item">
-          <a href="Armand Kapllani_CV.pdf" target="_blank" data-target="#resume">
-
-            <span>Resume</span>
-          </a>
-        </li>
-        
-                <li class="nav-item">
-          <a href="JMP_Kapllani.pdf" data-target="#JMP">
-
-            <span>JMP</span>
-          </a>
-        </li>  -->
-        
-
-        <!--
-                <li class="nav-item">
-          <a href="/#code" data-target="#code">
-
-            <span>Python/R</span>
-          </a>
-        </li>
-
-         -->
-
-
-
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="nav-logo">AK</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#teaching">Teaching</a></li>
       </ul>
-
     </div>
-  </div>
-</nav>
+  </nav>
 
-
-
-<span id="homepage" style="display: none"></span>
-
-
-
-
-
-  <section id="about" class="home-section">
-    <div class="container">
-
-
-
-
-<div class="row" itemprop="author" itemscope itemtype="http://schema.org/Person" itemref="person-email">
-  <div class="col-xs-12 col-md-4">
-    <div id="profile">
-
-
-      <div class="portrait" style="background-image: url('/img/IMG_6255-1.png');">
-      </div>
-      <meta itemprop="image" content="/img/IMG_6255-1.png">
-
-
-       <div class="portrait-title">
-         <h2 itemprop="name">Armand Kapllani</h2> 
-         <h3 itemprop="jobTitle"> </h3> 
-
-          <h3 itemprop="worksFor" itemscope itemtype="http://schema.org/Organization"> 
-
-           <span itemprop="name">Sr. Data Scientist</span> 
-
-        </h3> 
-
-      </div>
-
-      <link itemprop="url" href="/">
-
-      <ul class="social-icon" aria-hidden="true">
-
-
-        <li>
-          <a itemprop="sameAs" href="mailto:akapllani@gmail.com" target="_blank">
-            <i class="fa fa-paper-plane big-icon"></i>
-          </a>
-        </li>
-
-
-
-        <li>
-          <a itemprop="sameAs" href="" target="_blank">
-            <i class="ai ai-google-scholar big-icon"></i>
-          </a>
-        </li>
-
-
-        <li>
-          <a itemprop="sameAs" href="//github.com/armandkapllani" target="_blank">
-            <i class="fa fa-github big-icon"></i>
-          </a>
-        </li>
-
-         <li>
-          <a itemprop="sameAs" href="" target="_blank">
-            <i class="fa fa-twitter big-icon"></i>
-          </a>
-        </li>
-
-      </ul>
-
+  <header class="hero" id="about">
+    <div class="hero-image">
+      <img src="img/IMG_6255-1.png" alt="Armand Kapllani" onerror="this.style.background='linear-gradient(135deg, #e8e4df 0%, #d4cfc7 100%)'; this.style.display='block';">
     </div>
-  </div>
-  <div class="col-xs-12 col-md-8" itemprop="description">
-
-    
-
-
-  
-  
-<h2 id="about-me">About Me</h2>
-
-<p align="left"> I am a Senior Data Scientist at <a href="https://www.microsoft.com"> Microsoft</a>. I work at the intersection of econometrics and machine learning in cloud economics. I received my PhD in Economics from the <a href="https://www.ufl.edu"> University of Florida. </a> My research spans the fields of econometrics 
-  and microeconomics. 
-  <p style="padding-top:10px;">
-  My job market paper <a href="https://armandkapllani.github.io/JMP_Kapllani.pdf" target="_blank"> [here] </a> focuses on the missing outcome problem and deriving informative bounds using covariates without imposing shape restrictions with applications to consumer confidence. 
-  Another part of my research focuses on network formations and extending the partial identification on bounding the centrality measures when networks suffer from the missing link problem. 
-  </p>
-    
-  <!--  
-    
-  <p style="padding-top:10px;">
-  I am an instructor for econometrics and I will graduate with my Ph.D. in Spring 2022. I am currently on the job market and I am available for interviews, 
-  including at the ASSA 2022 Annual Meeting on January 7-9, 2022. 
-  <p>   
-     
-  -->
-  
-    </p>
-
-<p align="left"> 
-<ul>      
-  <li style="color:Blue"> <a href = "mailto: akapllani@ufl.edu" style="color:Blue"> akapllani@gmail.com </a> </li>
-<ul>
-</p>
-
-
-
-  </div>
-</div>
-
-    </div>
-  </section>
-
-
-
-  <section id="workingpapers" class="home-section">
-    <div class="container">
-
-
-
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-4 section-heading">
-    <h2>Working Papers</h2>
-
-
-  </div>
-  
- 
-
-  
-  <div class="col-xs-12 col-md-8">
-
-
-
-    <ul class="fa-ul">
-      
-      
-         
-     <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Partial Identification with Covariates [JOB MARKET PAPER]  <b> </b> . </span>
- 
-    <p style="padding-top:10px; color:#2F3E6F;">
-    
-      <b> Abstract:</b> The missing outcome problem is a pervasive problem in economics that arises in many situations and it hinders the researcher's 
-    apacity to recover the population moments. The literature has focused on the identifying power of shape restrictions which can 
-    be invoked in empirical studies. In this study, we propose a novel approach of partial identification that does not rely on shape 
-    restrictions but exploits the variation in the sample of University of Michigan Index of Consumer of Sentiment that resulted from 
-    the substitution of landlines with cellphones in telephone surveys. We provide conditions under which the bounds are improved and 
-    extend our approach to treatment effects literature. 
-
-
- <p style="padding-top:10px">
- <a class="btn btn-primary btn-outline btn-xs" href="JMP_Kapllani.pdf" target="_blank">
-  Download
-</a> 
-<p>
-  
-</p>
-</li>        
-    
-      
-   <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Partial Identification of Centrality Measures in Incomplete Networks <b> </b> </span>
-   
-  <p style="padding-top:10px; color:#2F3E6F;">
-    
-    <b> Abstract:</b> Networks with missing links can arise due to the boundary specification, non-response in surveys, 
-    and fixed choice survey design. We model the link formation of a friendship network with missing links arising 
-    from non-response in surveys and fixed choice problem and construct sharp upper bounds on the centrality measures. 
-    We provide identification conditions to overcome degree heterogeneity. Finally, we apply our proposed approach to 
-    study a friendship network in North Carolina. 
-    
-
-  <!--
-  <a class="btn btn-primary btn-outline btn-xs" href="">
-  View Article
-</a> -->
-
-</p>       
-     
-</li>    
-      
-      
-   <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Undercoverage and Partial Identification in Telephone Surveys with an Application to Consumer Confidence [under review] (with Hector H. Sandoval) <b> </b> </span>
- 
-    <p style="padding-top:10px; color:#2F3E6F;">
-
-    <b> Abstract:</b> Undercoverage occurs when population members do not appear in the sample frame. For instance, the substitution of landlines with 
-    cellphones that took place in the last two decades increased the undercovered population in telephone surveys because survey practices tended to 
-    exclude cellphones. This undercoverage problem is related to the identification problem with incomplete information studied 
-    by Manski (2009). This paper shows how to construct an identification region a la Manski to assess the extent of the undercoverage 
-    problem for a population mean and for the coverage error considered in the survey research literature; and it shows that the widths of both regions 
-    are the same. The identification region considers all the possible values that the mean of the undercovered population can take and provides a neat 
-    summary of the potential extent of the coverage error. We illustrate the approach using two indices of consumer confidence during the period 2003-2018.
-<!--
-    
- <a class="btn btn-primary btn-outline btn-xs" href="">
-  View Article
-</a> -->
-
-</p>
-</li>       
-      
-                 <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> The Effects of Political Knowledge on Voter Turnout: A Nonparametric Bounds Approach (with Enrijeta Shino)  <b> </b> . </span>
- 
-    <p style="padding-top:10px; color:#2F3E6F;">
-    
-      <b> Abstract:</b> Empirical models find a positive effect of political knowledge on turnout, however this may not reflect the true causal effect. 
-      The identification of the average causal effect of political knowledge on turnout is hindered by a key identification issue: the endogenous 
-      acquisition of political knowledge. Using survey data from the 2016 American National Election Studies (ANES), we employ a nonparametric 
-      bounding method to overcome this identification challenge. This method relies on weak and credible assumptions to partially identify the 
-      average treatment effect (ATE) of political knowledge on turnout. Specifically, we provide informative bounds by exploring in a sequential 
-      fashion the identifying power of different assumptions. We find that the joint combination of the monotone treatment response, 
-      monotone treatment selection, and monotone instrumental variable, allows us to improve, in the sense that the estimated upper bound is 
-      lower than the point estimates reported in the literature. 
-  
-</p>
-</li>   
-      
-      
-    
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> “Nonparametric Estimation of Nonlinear in Means Models” <b> </b> </span>
-  <p>
-    
-    <p style="padding-top:10px; color:#2F3E6F;">
-
-    <b> Abstract:</b> Linear-in-means models, first proposed by Manski (1993), are used in modelling social interactions. 
-      Manski shows that identification of the endogenous, contextual, and correlated effects is not possible when we condition 
-      on individual member characteristics to identify the groups. Different from Manski we use a nonlinear linear-in-means model 
-      to identify the main effects under several very mild conditions and estimate our model using a GMM approach.
-      
-   </p>
-</li>   
-
-<!--
- <a class="btn btn-primary btn-outline btn-xs" href="">
-  View Article
-</a>
-
-</p>
-</li>      -->
-         
-
-      
-
-
-
-
-    </ul>
-
-
-  </div>
-      
-
-      
-</div>
-
-    </div>
-  </section>
-
-
-<!--
-
-   <section id="media" class="home-section">
-    <div class="container">
-
-
-
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-4 section-heading">
-    <h2>Media</h2>
-
-
-  </div>
-  
-  <div class="col-xs-12 col-md-8">
-    
-        <ul class="fa-ul">
-    
-    
-     <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Analysis | Do you usually vote by mail? A lot of Republicans who do won’t say so. <b> Monkey Cage - The Washington Post </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.washingtonpost.com/politics/2020/10/09/do-you-usually-vote-by-mail-lot-republicans-who-do-wont-say-so/">
-  View Article
-</a>
-
-</p>
-       
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Analysis | Here’s the problem with mail-in ballots: They might not be counted. <b> Monkey Cage - The Washington Post </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.washingtonpost.com/politics/2020/05/21/heres-problem-with-mail-in-ballots-they-might-not-be-counted/">
-  View Article
-</a>
-
-</p>
-    
-    
-   <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> These were our 10 most popular posts of 2020. <b> Monkey Cage - The Washington Post </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.washingtonpost.com/politics/2020/12/31/these-were-our-10-most-popular-posts-2020/">
-  View Article
-</a>
-
-</p>  
-    
-    
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Twitter started fact-checking Trump. Then Trump threatened to close it down. <b> Monkey Cage - The Washington Post </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.washingtonpost.com/politics/2020/05/26/twitter-has-started-fact-checking-trump/">
-  View Article
-</a>
-
-</p>
-    
-    
-
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Which party would benefit most from voting by mail? It’s complicated. <b> The New York Times </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.nytimes.com/2020/05/25/us/vote-by-mail-coronavirus.html">
-  View Article
-</a>
-
-</p>
-    
-    
- <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Thinking About Moving to Georgia to Vote in Runoffs? Better Hurry and Plan to Stay. <b> The Wall Street Journal </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.wsj.com/livecoverage/trump-biden-election-day-2020/card/csOMnlXFihSgJ256gUwI">
-  View Article
-</a>
-
-</p>   
-    
-    
- <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> How to fix America’s voter registration system so more people can vote. <b> Vox </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.vox.com/21492380/elections-vote-register-same-day-automatic">
-  View Article
-</a>
-
-</p>   
-   
-
-<li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Record amount of mail-in votes could be rejected in 2020 election. <b> Newsweek </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.newsweek.com/record-amount-mail-votes-rejected-2020-election-1528021">
-  View Article
-</a>
-
-</p>     
-   
-  
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Black voters are disproportionately having mail ballots rejected in North Carolina. <b> Newsweek </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.msn.com/en-us/news/world/black-voters-are-disproportionately-having-mail-ballots-rejected-in-north-carolina/ar-BB19L7hN">
-  View Article
-</a>
-
-</p>     
-  
-   
-   
-<li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Oh, for the good old days of 'Hanging Chads': The electoral litigation snarls of 2020. <b> RealClear Investigations </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.realclearinvestigations.com/articles/2020/10/20/oh_for_the_good_old_days_of_hanging_chads__125695.html">
-  View Article
-</a>
-
-</p>      
-
-
-  
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> 4 common mistakes that could get your mail-in ballot rejected — and how to make sure your vote is counted. <b> MarketWatch </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.marketwatch.com/story/4-common-mistakes-that-could-get-your-mail-in-ballot-rejected-and-how-to-make-sure-your-vote-is-counted-11601579628">
-  View Article
-</a>
-
-</p>    
-    
-    
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Tror Trump kan ødelegge for republikanerne. <b> VG </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.vg.no/nyheter/utenriks/i/AlRlbz/tror-trump-kan-oedelegge-for-republikanerne">
-  View Article
-</a>
-
-</p>      
-
-    
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Your voting habits may depend on when you registered to vote. <b> The Conversation </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://theconversation.com/your-voting-habits-may-depend-on-when-you-registered-to-vote-100944">
-  View Article
-</a>
-
-</p>     
-    
-    
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Mailing It In: Data shows mailed ballots benefit both parties in battleground states. <b> CNHI News </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.cnhinews.com/georgia/article_47e7151a-08ac-11eb-8319-bb2c1c2ee61e.html">
-  View Article
-</a>
-
-</p>        
-  
-    
-    
- <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> A tiny provision slipped into a new election law could block early voting sites on campuses. <b> Florida Phoenix </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.floridaphoenix.com/2019/07/09/a-tiny-provision-slipped-into-a-new-election-law-could-block-early-voting-sites-on-campuses/">
-  View Article
-</a>
-
-</p>      
-      
-   
-   
- 
- <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Should voters using mail in ballots be worried about fraud?. <b> First Coast News </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.firstcoastnews.com/article/news/local/should-voters-using-mail-in-ballots-be-worried-about-fraud/77-dd9ed30c-72c2-4de8-9cfe-ddb24a6511b9">
-  View Article
-</a>
-
-</p>       
-  
-   
-   
-   
- <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Study: More Voting by Mail Increases the Rate of Rejected Ballots – Especially From Younger and Minority Voters. <b> Tampa Bay News9 </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.baynews9.com/fl/tampa/politics/2020/06/08/study--more-voting-by-mail-increases-the-rate-of-rejected-ballots---especially-from-younger-and-minority-voters">
-  View Article
-</a>
-
-</p>       
-
- 
-   
-   <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Broken democracy: Election challenges and consequences during COVID-19. <b> The University of Chicago, Hong Kong </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.uchicago.hk/events/broken-democracy-election-challenges-and-consequences-during-covid-19/">
-  View Video
-</a>
-
-</p>       
-   
-     
-    
-   <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> Ballot access, voter fraud, and voter suppression: A panel discussion. <b> Georgia State University </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://ethics.gsu.edu/2020/10/02/ballot-access-voter-fraud-and-voter-suppression-a-panel-discussion/">
-  View Video
-</a>
-
-</p>      
-     
-     
-     
- 
-  <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"> 38 percent of St. Johns County voters have already cast ballots. <b> First Coast News </b> </span>
-  <p>
-
-
- <a class="btn btn-primary btn-outline btn-xs" href="https://www.firstcoastnews.com/article/news/politics/38-percent-of-st-johns-county-voters-have-already-cast-ballots/77-64a3dfcf-fbb5-454b-b1ae-661da4a503ab">
-  View Video
-</a>
-
-</p>        
-   
-   
-    
-  
-    
-    </ul>
-      
-
-
-    </div>
-  </section>
-
--->
- 
-
-<section id="teaching" class="home-section">
-    <div class="container">
-
-
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-4 section-heading">
-    <h2>Teaching</h2>
-
-  </div>
-  <div class="col-xs-12 col-md-8">
-
-
-    <div class="project-toolbar">
-      <div id="filters">
-        <div class="btn-toolbar">
-          <div class="btn-group">
-            
-            <a href="#" data-filter="*" class="btn btn-primary btn-large">All</a>
-
-            <a href="#" data-filter=".florida" class="btn btn-primary btn-large"> University of Florida </a>
-
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    
-    <div id="container-projects" class="row isotope">
-    
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 project-item isotope-item florida">
-        <div class="card">
-
-          <div class="card-text">
-            <h5> Econometrics </h5>
-            <div class="card-desription">
-              <p> <a href="Spring 2021-Econometrics-Kapllani.pdf" target="_blank"> View Evaluations [latest] </a> <p>
-              <p> <a href="Econometrics-Syllabus-Kapllani.pdf" target="_blank"> View Syllabus [Fall 2021]</a> <p>
-            </div>
-          </div>
-      </div>
-      
-          <!--
-
-  <a class="btn btn-primary btn-outline btn-xs" href="">
-  View Article
-</a> -->
-     
-
-    </div>
-
-
-
-  </div>
-</div>
-
-    </div>
-  </section>
-
-
-
-
-
-<!--
-  
-  
-  
-    <section id="code" class="home-section">
-    <div class="container">
-
-
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-4 section-heading">
-    <h2>Python/R</h2>
-
-  </div>
-  <div class="col-xs-12 col-md-8">
-
-
-    <div class="project-toolbar">
-      <div id="filters">
-        <div class="btn-toolbar">
-          <div class="btn-group">
-            
-            
-            <a href="#" data-filter=".machine-learning" class="btn btn-primary btn-large">Machine Learning</a>
-
-            <a href="#" data-filter=".python" class="btn btn-primary btn-large">Python</a>
-
-            <a href="#" data-filter=".r" class="btn btn-primary btn-large">R</a>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div id="container-projects" class="row isotope">
-
-
-
-
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 project-item isotope-item python">
-        <div class="card">
-
-          <div class="card-text">
-            <h4><a href="/project/classes-in-python/" >Classes in Python</a></h4>
-            <div class="card-desription">
-              <p>A guide to Classes in Python</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 project-item isotope-item python">
-        <div class="card">
-
-          <div class="card-text">
-            <h4><a href="/project/functions-in-python/" >Functions in Python</a></h4>
-            <div class="card-desription">
-              <p>A guide to function in Python</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 project-item isotope-item r">
-        <div class="card">
-
-          <div class="card-text">
-            <h4><a href="/project/functions-in-R/" >Functions in R</a></h4>
-            <div class="card-desription">
-              <p>A guide to functions in R</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 project-item isotope-item r">
-        <div class="card">
-
-          <div class="card-text">
-            <h4><a href="/project/a-guide-to-plyr-package/" >plyr</a></h4>
-            <div class="card-desription">
-              <p>A guide to plyr package</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 project-item isotope-item r">
-        <div class="card">
-
-          <div class="card-text">
-            <h4><a href="/project/a-guide-to-reshape2-package/" >reshape2</a></h4>
-            <div class="card-desription">
-              <p>A guide to reshape2 package</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-
-
-  </div>
-</div>
-
-    </div>
-  </section>
-  
-  
-  
-  -->
-  
-
-
-
-<footer class="site-footer">
-  <div class="container">
-    <p class="powered-by">
-
-      &copy; 2021 Armand Kapllani &middot;
-
-      <span class="pull-right" aria-hidden="true">
-        <a href="#" id="back_to_top">
-          <span class="button_icon">
-            <i class="fa fa-chevron-up fa-2x"></i>
-          </span>
+    <div class="hero-content">
+      <p class="hero-subtitle">Econometrics & Machine Learning</p>
+      <h1 class="hero-title">Armand Kapllani</h1>
+      <p class="hero-role">Senior Data Scientist at Microsoft</p>
+      <p class="hero-bio">
+        I work at the intersection of econometrics and machine learning in cloud economics. 
+        I received my PhD in Economics from the <a href="https://www.ufl.edu">University of Florida</a>, 
+        with research spanning econometrics and microeconomics.
+      </p>
+      <p class="hero-bio">
+        My work focuses on the missing outcome problem, deriving informative bounds using covariates 
+        without imposing shape restrictions, and extending partial identification to network formations 
+        and centrality measures.
+      </p>
+      <div class="hero-links">
+        <a href="mailto:akapllani@gmail.com">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+          </svg>
+          Email
         </a>
-      </span>
+        <a href="https://github.com/armandkapllani" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
 
-    </p>
-  </div>
-</footer>
+  <section id="research">
+    <div class="section-header">
+      <h2 class="section-title">Working Papers</h2>
+      <div class="section-content">
+        
+        <article class="paper">
+          <h3 class="paper-title">
+            Partial Identification with Covariates
+            <span class="paper-badge">Job Market Paper</span>
+          </h3>
+          <p class="paper-abstract">
+            The missing outcome problem is a pervasive problem in economics that arises in many situations 
+            and hinders the researcher's capacity to recover population moments. The literature has focused 
+            on the identifying power of shape restrictions which can be invoked in empirical studies. In this 
+            study, we propose a novel approach of partial identification that does not rely on shape restrictions 
+            but exploits variation in the sample of University of Michigan Index of Consumer Sentiment that 
+            resulted from the substitution of landlines with cellphones in telephone surveys. We provide conditions 
+            under which the bounds are improved and extend our approach to treatment effects literature.
+          </p>
+          <a href="JMP_Kapllani.pdf" target="_blank" class="paper-link">
+            Download Paper
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+            </svg>
+          </a>
+        </article>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/ScrollToPlugin.min.js"></script>
-    <script src="/js/jquery-1.12.3.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/isotope.pkgd.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.1/imagesloaded.pkgd.min.js"></script>
-    <script src="/js/hugo-academic.js"></script>
+        <article class="paper">
+          <h3 class="paper-title">Partial Identification of Centrality Measures in Incomplete Networks</h3>
+          <p class="paper-abstract">
+            Networks with missing links can arise due to boundary specification, non-response in surveys, 
+            and fixed choice survey design. We model the link formation of a friendship network with missing 
+            links arising from non-response in surveys and fixed choice problem and construct sharp upper bounds 
+            on centrality measures. We provide identification conditions to overcome degree heterogeneity. 
+            Finally, we apply our proposed approach to study a friendship network in North Carolina.
+          </p>
+        </article>
 
+        <article class="paper">
+          <h3 class="paper-title">Undercoverage and Partial Identification in Telephone Surveys with an Application to Consumer Confidence</h3>
+          <p class="paper-meta">with Hector H. Sandoval · Under Review</p>
+          <p class="paper-abstract">
+            Undercoverage occurs when population members do not appear in the sample frame. For instance, 
+            the substitution of landlines with cellphones that took place in the last two decades increased 
+            the undercovered population in telephone surveys because survey practices tended to exclude cellphones. 
+            This paper shows how to construct an identification region à la Manski to assess the extent of the 
+            undercoverage problem for a population mean and for the coverage error considered in survey research 
+            literature; and it shows that the widths of both regions are the same. We illustrate the approach 
+            using two indices of consumer confidence during the period 2003–2018.
+          </p>
+        </article>
 
+        <article class="paper">
+          <h3 class="paper-title">The Effects of Political Knowledge on Voter Turnout: A Nonparametric Bounds Approach</h3>
+          <p class="paper-meta">with Enrijeta Shino</p>
+          <p class="paper-abstract">
+            Empirical models find a positive effect of political knowledge on turnout, however this may not 
+            reflect the true causal effect. The identification of the average causal effect of political knowledge 
+            on turnout is hindered by a key identification issue: the endogenous acquisition of political knowledge. 
+            Using survey data from the 2016 American National Election Studies (ANES), we employ a nonparametric 
+            bounding method to overcome this identification challenge. This method relies on weak and credible 
+            assumptions to partially identify the average treatment effect (ATE) of political knowledge on turnout.
+          </p>
+        </article>
 
+        <article class="paper">
+          <h3 class="paper-title">Nonparametric Estimation of Nonlinear in Means Models</h3>
+          <p class="paper-abstract">
+            Linear-in-means models, first proposed by Manski (1993), are used in modelling social interactions. 
+            Manski shows that identification of the endogenous, contextual, and correlated effects is not possible 
+            when we condition on individual member characteristics to identify the groups. Different from Manski 
+            we use a nonlinear linear-in-means model to identify the main effects under several very mild conditions 
+            and estimate our model using a GMM approach.
+          </p>
+        </article>
 
+      </div>
+    </div>
+  </section>
 
+  <section id="teaching">
+    <div class="section-header">
+      <h2 class="section-title">Teaching</h2>
+      <div class="section-content">
+        
+        <div class="teaching-item">
+          <h3 class="teaching-title">Econometrics</h3>
+          <p class="teaching-institution">University of Florida</p>
+          <div class="teaching-links">
+            <a href="Spring 2021-Econometrics-Kapllani.pdf" target="_blank">View Evaluations</a>
+            <a href="Econometrics-Syllabus-Kapllani.pdf" target="_blank">View Syllabus (Fall 2021)</a>
+          </div>
+        </div>
 
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+      </div>
+    </div>
+  </section>
 
+  <footer>
+    <div class="footer-content">
+      <p class="footer-text">© 2025 Armand Kapllani</p>
+      <div class="footer-links">
+        <a href="mailto:akapllani@gmail.com">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+          </svg>
+        </a>
+        <a href="https://github.com/armandkapllani" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
 
-
-
-
-      <script>hljs.initHighlightingOnLoad();</script>
-
-
-
-
-
-  </body>
+</body>
 </html>
