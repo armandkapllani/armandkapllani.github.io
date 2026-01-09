@@ -9,22 +9,22 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --color-ink: #1a1a1a;
-      --color-ink-light: #4a4a4a;
-      --color-ink-muted: #737373;
-      --color-paper: #faf9f7;
-      --color-paper-warm: #f5f3ef;
-      --color-accent: #8b4513;
-      --color-accent-light: #a0522d;
-      --color-border: #e5e2dc;
-      --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-body: 'DM Sans', -apple-system, sans-serif;
-      --max-width: 1200px;
-      --spacing-unit: 8px;
+      --color-ink: #1c1c1c;
+      --color-ink-secondary: #3d3d3d;
+      --color-ink-muted: #6b6b6b;
+      --color-bg: #ffffff;
+      --color-bg-subtle: #f8f8f8;
+      --color-border: #e0e0e0;
+      --color-accent: #2c5282;
+      --color-accent-hover: #1e3a5f;
+      --font-serif: 'Source Serif 4', Georgia, serif;
+      --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-width: 900px;
+      --spacing: 8px;
     }
 
     * {
@@ -38,11 +38,11 @@
     }
 
     body {
-      font-family: var(--font-body);
+      font-family: var(--font-sans);
       font-size: 16px;
       line-height: 1.7;
       color: var(--color-ink);
-      background: var(--color-paper);
+      background: var(--color-bg);
       -webkit-font-smoothing: antialiased;
     }
 
@@ -51,444 +51,322 @@
       color: white;
     }
 
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--color-accent-hover);
+    }
+
     /* Navigation */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      background: var(--color-paper);
+      background: rgba(255, 255, 255, 0.97);
       border-bottom: 1px solid var(--color-border);
       z-index: 1000;
-      backdrop-filter: blur(10px);
-      background: rgba(250, 249, 247, 0.95);
+      backdrop-filter: blur(8px);
     }
 
     .nav-container {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 calc(var(--spacing-unit) * 4);
+      padding: 0 calc(var(--spacing) * 4);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 72px;
+      height: 60px;
     }
 
     .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
       font-weight: 600;
       color: var(--color-ink);
       text-decoration: none;
-      letter-spacing: -0.02em;
     }
 
     .nav-links {
       display: flex;
-      gap: calc(var(--spacing-unit) * 4);
+      gap: calc(var(--spacing) * 4);
       list-style: none;
     }
 
     .nav-links a {
       color: var(--color-ink-muted);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       font-weight: 500;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
       transition: color 0.2s ease;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--color-accent);
-      transition: width 0.3s ease;
     }
 
     .nav-links a:hover {
       color: var(--color-ink);
     }
 
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    /* Hero Section */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: calc(var(--spacing-unit) * 8);
+    /* Main Container */
+    .container {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: calc(var(--spacing-unit) * 16) calc(var(--spacing-unit) * 4);
-      align-items: center;
+      padding: 0 calc(var(--spacing) * 4);
     }
 
-    .hero-image {
-      position: relative;
-    }
-
-    .hero-image::before {
-      content: '';
-      position: absolute;
-      top: -20px;
-      left: -20px;
-      right: 20px;
-      bottom: 20px;
-      border: 1px solid var(--color-accent);
-      opacity: 0.3;
-    }
-
-    .hero-image img {
-      width: 100%;
-      max-width: 380px;
-      aspect-ratio: 4/5;
-      object-fit: cover;
-      filter: grayscale(20%);
-      transition: filter 0.4s ease;
-    }
-
-    .hero-image:hover img {
-      filter: grayscale(0%);
-    }
-
-    .hero-content {
-      padding-left: calc(var(--spacing-unit) * 4);
-    }
-
-    .hero-subtitle {
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: calc(var(--spacing-unit) * 2);
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 600;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin-bottom: calc(var(--spacing-unit) * 3);
-      color: var(--color-ink);
-    }
-
-    .hero-role {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--color-ink-light);
-      margin-bottom: calc(var(--spacing-unit) * 4);
-    }
-
-    .hero-bio {
-      font-size: 1.05rem;
-      color: var(--color-ink-light);
-      max-width: 520px;
-      margin-bottom: calc(var(--spacing-unit) * 5);
-    }
-
-    .hero-bio a {
-      color: var(--color-accent);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease;
-    }
-
-    .hero-bio a:hover {
-      border-color: var(--color-accent);
-    }
-
-    .hero-links {
-      display: flex;
-      gap: calc(var(--spacing-unit) * 3);
-      align-items: center;
-    }
-
-    .hero-links a {
-      display: flex;
-      align-items: center;
-      gap: calc(var(--spacing-unit) * 1);
-      color: var(--color-ink-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s ease;
-    }
-
-    .hero-links a:hover {
-      color: var(--color-accent);
-    }
-
-    .hero-links svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    /* Section Styles */
-    section {
-      padding: calc(var(--spacing-unit) * 12) calc(var(--spacing-unit) * 4);
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
-
-    .section-header {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: calc(var(--spacing-unit) * 8);
-      margin-bottom: calc(var(--spacing-unit) * 6);
-      align-items: start;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--color-ink-muted);
-      position: sticky;
-      top: 100px;
-    }
-
-    .section-content {
-      border-top: 1px solid var(--color-border);
-      padding-top: calc(var(--spacing-unit) * 4);
-    }
-
-    /* Papers Section */
-    .paper {
-      padding: calc(var(--spacing-unit) * 4) 0;
+    /* Header / About */
+    .header {
+      padding-top: calc(var(--spacing) * 14);
+      padding-bottom: calc(var(--spacing) * 8);
       border-bottom: 1px solid var(--color-border);
-      display: grid;
-      gap: calc(var(--spacing-unit) * 2);
     }
 
-    .paper:last-child {
+    .header-content {
+      display: flex;
+      gap: calc(var(--spacing) * 5);
+      align-items: flex-start;
+    }
+
+    .header-image {
+      flex-shrink: 0;
+      width: 140px;
+      height: 140px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--color-bg-subtle);
+    }
+
+    .header-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(10%);
+    }
+
+    .header-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .header-name {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--color-ink);
+      margin-bottom: calc(var(--spacing) * 0.5);
+      letter-spacing: -0.01em;
+    }
+
+    .header-title {
+      font-size: 1rem;
+      color: var(--color-ink-secondary);
+      margin-bottom: calc(var(--spacing) * 2);
+    }
+
+    .header-title a {
+      color: var(--color-accent);
+    }
+
+    .header-bio {
+      font-size: 0.9375rem;
+      color: var(--color-ink-secondary);
+      line-height: 1.75;
+      margin-bottom: calc(var(--spacing) * 2.5);
+    }
+
+    .header-links {
+      display: flex;
+      gap: calc(var(--spacing) * 2.5);
+      align-items: center;
+    }
+
+    .header-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      color: var(--color-ink-muted);
+    }
+
+    .header-link:hover {
+      color: var(--color-accent);
+    }
+
+    .header-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Sections */
+    section {
+      padding: calc(var(--spacing) * 6) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    section:last-of-type {
       border-bottom: none;
     }
 
-    .paper-title {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
       font-weight: 600;
-      line-height: 1.3;
       color: var(--color-ink);
+      margin-bottom: calc(var(--spacing) * 3);
+      letter-spacing: -0.01em;
+    }
+
+    /* Papers */
+    .paper {
+      margin-bottom: calc(var(--spacing) * 4);
+      padding-bottom: calc(var(--spacing) * 4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .paper:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .paper-header {
+      display: flex;
+      align-items: flex-start;
+      gap: calc(var(--spacing) * 1.5);
+      margin-bottom: calc(var(--spacing) * 1);
+    }
+
+    .paper-title {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem;
+      font-weight: 500;
+      color: var(--color-ink);
+      line-height: 1.4;
     }
 
     .paper-badge {
-      display: inline-block;
-      font-size: 0.7rem;
+      flex-shrink: 0;
+      font-size: 0.625rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       background: var(--color-accent);
       color: white;
-      padding: 4px 10px;
-      margin-left: 12px;
-      vertical-align: middle;
+      padding: 3px 8px;
       border-radius: 2px;
+      margin-top: 3px;
     }
 
     .paper-meta {
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       color: var(--color-ink-muted);
       font-style: italic;
+      margin-bottom: calc(var(--spacing) * 1.5);
     }
 
     .paper-abstract {
-      color: var(--color-ink-light);
-      font-size: 0.95rem;
-      line-height: 1.8;
-      max-width: 700px;
+      font-size: 0.9375rem;
+      color: var(--color-ink-secondary);
+      line-height: 1.75;
+    }
+
+    .paper-actions {
+      margin-top: calc(var(--spacing) * 2);
     }
 
     .paper-link {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      color: var(--color-accent);
-      text-decoration: none;
-      font-size: 0.9rem;
+      gap: 4px;
+      font-size: 0.875rem;
       font-weight: 500;
-      margin-top: calc(var(--spacing-unit) * 1);
-      transition: gap 0.2s ease;
+      color: var(--color-accent);
     }
 
     .paper-link:hover {
-      gap: 10px;
+      color: var(--color-accent-hover);
     }
 
     .paper-link svg {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
     }
 
-    /* Teaching Section */
+    /* Teaching */
     .teaching-item {
-      padding: calc(var(--spacing-unit) * 4) 0;
-      border-bottom: 1px solid var(--color-border);
+      margin-bottom: calc(var(--spacing) * 3);
     }
 
     .teaching-item:last-child {
-      border-bottom: none;
+      margin-bottom: 0;
     }
 
     .teaching-title {
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: calc(var(--spacing-unit) * 1);
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-ink);
+      margin-bottom: calc(var(--spacing) * 0.5);
     }
 
     .teaching-institution {
+      font-size: 0.875rem;
       color: var(--color-ink-muted);
-      font-size: 0.9rem;
-      margin-bottom: calc(var(--spacing-unit) * 2);
+      margin-bottom: calc(var(--spacing) * 1);
     }
 
     .teaching-links {
       display: flex;
-      gap: calc(var(--spacing-unit) * 3);
+      gap: calc(var(--spacing) * 2);
     }
 
     .teaching-links a {
-      color: var(--color-accent);
-      text-decoration: none;
-      font-size: 0.9rem;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease;
-    }
-
-    .teaching-links a:hover {
-      border-color: var(--color-accent);
+      font-size: 0.875rem;
     }
 
     /* Footer */
     footer {
-      background: var(--color-paper-warm);
-      padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 4);
-      margin-top: calc(var(--spacing-unit) * 8);
-    }
-
-    .footer-content {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: calc(var(--spacing) * 4) 0;
+      text-align: center;
     }
 
     .footer-text {
-      font-size: 0.9rem;
+      font-size: 0.8125rem;
       color: var(--color-ink-muted);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: calc(var(--spacing-unit) * 3);
-    }
-
-    .footer-links a {
-      color: var(--color-ink-muted);
-      transition: color 0.2s ease;
-    }
-
-    .footer-links a:hover {
-      color: var(--color-accent);
     }
 
     /* Responsive */
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
+    @media (max-width: 600px) {
+      .header-content {
+        flex-direction: column;
+        align-items: center;
         text-align: center;
-        padding-top: calc(var(--spacing-unit) * 14);
       }
 
-      .hero-image {
-        order: -1;
-        display: flex;
+      .header-image {
+        width: 120px;
+        height: 120px;
+      }
+
+      .header-links {
         justify-content: center;
-      }
-
-      .hero-image::before {
-        display: none;
-      }
-
-      .hero-image img {
-        max-width: 280px;
-        border-radius: 4px;
-      }
-
-      .hero-content {
-        padding-left: 0;
-      }
-
-      .hero-bio {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-links {
-        justify-content: center;
-      }
-
-      .section-header {
-        grid-template-columns: 1fr;
-        gap: calc(var(--spacing-unit) * 2);
-      }
-
-      .section-title {
-        position: static;
+        flex-wrap: wrap;
       }
 
       .nav-links {
-        display: none;
+        gap: calc(var(--spacing) * 2);
       }
-    }
 
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+      .paper-header {
+        flex-direction: column;
+        gap: calc(var(--spacing) * 1);
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+
+      .paper-badge {
+        align-self: flex-start;
       }
-    }
-
-    .hero-subtitle,
-    .hero-title,
-    .hero-role,
-    .hero-bio,
-    .hero-links {
-      animation: fadeInUp 0.8s ease forwards;
-      opacity: 0;
-    }
-
-    .hero-subtitle { animation-delay: 0.1s; }
-    .hero-title { animation-delay: 0.2s; }
-    .hero-role { animation-delay: 0.3s; }
-    .hero-bio { animation-delay: 0.4s; }
-    .hero-links { animation-delay: 0.5s; }
-
-    .hero-image {
-      animation: fadeInUp 0.8s ease forwards;
-      animation-delay: 0.2s;
-      opacity: 0;
     }
   </style>
 </head>
@@ -496,7 +374,7 @@
 
   <nav>
     <div class="nav-container">
-      <a href="#" class="nav-logo">AK</a>
+      <a href="#" class="nav-logo">Armand Kapllani</a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#research">Research</a></li>
@@ -505,156 +383,142 @@
     </div>
   </nav>
 
-  <header class="hero" id="about">
-    <div class="hero-image">
-      <img src="img/IMG_6255-1.png" alt="Armand Kapllani" onerror="this.style.background='linear-gradient(135deg, #e8e4df 0%, #d4cfc7 100%)'; this.style.display='block';">
-    </div>
-    <div class="hero-content">
-      <p class="hero-subtitle">Econometrics & Machine Learning</p>
-      <h1 class="hero-title">Armand Kapllani</h1>
-      <p class="hero-role">Senior Data Scientist at Microsoft</p>
-      <p class="hero-bio">
-        I work at the intersection of econometrics and machine learning in cloud economics. 
-        I received my PhD in Economics from the <a href="https://www.ufl.edu">University of Florida</a>, 
-        with research spanning econometrics and microeconomics.
-      </p>
-      <p class="hero-bio">
-        My work focuses on the missing outcome problem, deriving informative bounds using covariates 
-        without imposing shape restrictions, and extending partial identification to network formations 
-        and centrality measures.
-      </p>
-      <div class="hero-links">
-        <a href="mailto:akapllani@gmail.com">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-          </svg>
-          Email
-        </a>
-        <a href="https://github.com/armandkapllani" target="_blank">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
-          GitHub
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <section id="research">
-    <div class="section-header">
-      <h2 class="section-title">Working Papers</h2>
-      <div class="section-content">
-        
-        <article class="paper">
-          <h3 class="paper-title">
-            Partial Identification with Covariates
-            <span class="paper-badge">Job Market Paper</span>
-          </h3>
-          <p class="paper-abstract">
-            The missing outcome problem is a pervasive problem in economics that arises in many situations 
-            and hinders the researcher's capacity to recover population moments. The literature has focused 
-            on the identifying power of shape restrictions which can be invoked in empirical studies. In this 
-            study, we propose a novel approach of partial identification that does not rely on shape restrictions 
-            but exploits variation in the sample of University of Michigan Index of Consumer Sentiment that 
-            resulted from the substitution of landlines with cellphones in telephone surveys. We provide conditions 
-            under which the bounds are improved and extend our approach to treatment effects literature.
+  <div class="container">
+    
+    <header class="header" id="about">
+      <div class="header-content">
+        <div class="header-image">
+          <img src="img/IMG_6255-1.png" alt="Armand Kapllani">
+        </div>
+        <div class="header-text">
+          <h1 class="header-name">Armand Kapllani</h1>
+          <p class="header-title">Senior Data Scientist at <a href="https://www.microsoft.com">Microsoft</a></p>
+          <p class="header-bio">
+            I work at the intersection of econometrics and machine learning in cloud economics. 
+            I received my PhD in Economics from the <a href="https://www.ufl.edu">University of Florida</a>. 
+            My research focuses on partial identification, missing outcome problems, and network formations.
           </p>
-          <a href="JMP_Kapllani.pdf" target="_blank" class="paper-link">
-            Download Paper
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-            </svg>
-          </a>
-        </article>
-
-        <article class="paper">
-          <h3 class="paper-title">Partial Identification of Centrality Measures in Incomplete Networks</h3>
-          <p class="paper-abstract">
-            Networks with missing links can arise due to boundary specification, non-response in surveys, 
-            and fixed choice survey design. We model the link formation of a friendship network with missing 
-            links arising from non-response in surveys and fixed choice problem and construct sharp upper bounds 
-            on centrality measures. We provide identification conditions to overcome degree heterogeneity. 
-            Finally, we apply our proposed approach to study a friendship network in North Carolina.
-          </p>
-        </article>
-
-        <article class="paper">
-          <h3 class="paper-title">Undercoverage and Partial Identification in Telephone Surveys with an Application to Consumer Confidence</h3>
-          <p class="paper-meta">with Hector H. Sandoval · Under Review</p>
-          <p class="paper-abstract">
-            Undercoverage occurs when population members do not appear in the sample frame. For instance, 
-            the substitution of landlines with cellphones that took place in the last two decades increased 
-            the undercovered population in telephone surveys because survey practices tended to exclude cellphones. 
-            This paper shows how to construct an identification region à la Manski to assess the extent of the 
-            undercoverage problem for a population mean and for the coverage error considered in survey research 
-            literature; and it shows that the widths of both regions are the same. We illustrate the approach 
-            using two indices of consumer confidence during the period 2003–2018.
-          </p>
-        </article>
-
-        <article class="paper">
-          <h3 class="paper-title">The Effects of Political Knowledge on Voter Turnout: A Nonparametric Bounds Approach</h3>
-          <p class="paper-meta">with Enrijeta Shino</p>
-          <p class="paper-abstract">
-            Empirical models find a positive effect of political knowledge on turnout, however this may not 
-            reflect the true causal effect. The identification of the average causal effect of political knowledge 
-            on turnout is hindered by a key identification issue: the endogenous acquisition of political knowledge. 
-            Using survey data from the 2016 American National Election Studies (ANES), we employ a nonparametric 
-            bounding method to overcome this identification challenge. This method relies on weak and credible 
-            assumptions to partially identify the average treatment effect (ATE) of political knowledge on turnout.
-          </p>
-        </article>
-
-        <article class="paper">
-          <h3 class="paper-title">Nonparametric Estimation of Nonlinear in Means Models</h3>
-          <p class="paper-abstract">
-            Linear-in-means models, first proposed by Manski (1993), are used in modelling social interactions. 
-            Manski shows that identification of the endogenous, contextual, and correlated effects is not possible 
-            when we condition on individual member characteristics to identify the groups. Different from Manski 
-            we use a nonlinear linear-in-means model to identify the main effects under several very mild conditions 
-            and estimate our model using a GMM approach.
-          </p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <section id="teaching">
-    <div class="section-header">
-      <h2 class="section-title">Teaching</h2>
-      <div class="section-content">
-        
-        <div class="teaching-item">
-          <h3 class="teaching-title">Econometrics</h3>
-          <p class="teaching-institution">University of Florida</p>
-          <div class="teaching-links">
-            <a href="Spring 2021-Econometrics-Kapllani.pdf" target="_blank">View Evaluations</a>
-            <a href="Econometrics-Syllabus-Kapllani.pdf" target="_blank">View Syllabus (Fall 2021)</a>
+          <div class="header-links">
+            <a href="mailto:akapllani@gmail.com" class="header-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+              akapllani@gmail.com
+            </a>
+            <a href="https://github.com/armandkapllani" target="_blank" class="header-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              GitHub
+            </a>
           </div>
         </div>
-
       </div>
-    </div>
-  </section>
+    </header>
 
-  <footer>
-    <div class="footer-content">
+    <section id="research">
+      <h2 class="section-title">Working Papers</h2>
+      
+      <article class="paper">
+        <div class="paper-header">
+          <h3 class="paper-title">Partial Identification with Covariates</h3>
+          <span class="paper-badge">Job Market Paper</span>
+        </div>
+        <p class="paper-abstract">
+          The missing outcome problem is a pervasive problem in economics that arises in many situations 
+          and hinders the researcher's capacity to recover population moments. The literature has focused 
+          on the identifying power of shape restrictions which can be invoked in empirical studies. In this 
+          study, we propose a novel approach of partial identification that does not rely on shape restrictions 
+          but exploits variation in the sample of University of Michigan Index of Consumer Sentiment that 
+          resulted from the substitution of landlines with cellphones in telephone surveys. We provide conditions 
+          under which the bounds are improved and extend our approach to treatment effects literature.
+        </p>
+        <div class="paper-actions">
+          <a href="JMP_Kapllani.pdf" target="_blank" class="paper-link">
+            Download PDF
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="paper">
+        <div class="paper-header">
+          <h3 class="paper-title">Partial Identification of Centrality Measures in Incomplete Networks</h3>
+        </div>
+        <p class="paper-abstract">
+          Networks with missing links can arise due to boundary specification, non-response in surveys, 
+          and fixed choice survey design. We model the link formation of a friendship network with missing 
+          links arising from non-response in surveys and fixed choice problem and construct sharp upper bounds 
+          on centrality measures. We provide identification conditions to overcome degree heterogeneity. 
+          Finally, we apply our proposed approach to study a friendship network in North Carolina.
+        </p>
+      </article>
+
+      <article class="paper">
+        <div class="paper-header">
+          <h3 class="paper-title">Undercoverage and Partial Identification in Telephone Surveys with an Application to Consumer Confidence</h3>
+        </div>
+        <p class="paper-meta">with Hector H. Sandoval · Under Review</p>
+        <p class="paper-abstract">
+          Undercoverage occurs when population members do not appear in the sample frame. For instance, 
+          the substitution of landlines with cellphones that took place in the last two decades increased 
+          the undercovered population in telephone surveys because survey practices tended to exclude cellphones. 
+          This paper shows how to construct an identification region à la Manski to assess the extent of the 
+          undercoverage problem for a population mean and for the coverage error considered in survey research 
+          literature. We illustrate the approach using two indices of consumer confidence during 2003–2018.
+        </p>
+      </article>
+
+      <article class="paper">
+        <div class="paper-header">
+          <h3 class="paper-title">The Effects of Political Knowledge on Voter Turnout: A Nonparametric Bounds Approach</h3>
+        </div>
+        <p class="paper-meta">with Enrijeta Shino</p>
+        <p class="paper-abstract">
+          Empirical models find a positive effect of political knowledge on turnout, however this may not 
+          reflect the true causal effect. Using survey data from the 2016 American National Election Studies, 
+          we employ a nonparametric bounding method to overcome this identification challenge. This method 
+          relies on weak and credible assumptions to partially identify the average treatment effect of 
+          political knowledge on turnout.
+        </p>
+      </article>
+
+      <article class="paper">
+        <div class="paper-header">
+          <h3 class="paper-title">Nonparametric Estimation of Nonlinear in Means Models</h3>
+        </div>
+        <p class="paper-abstract">
+          Linear-in-means models, first proposed by Manski (1993), are used in modelling social interactions. 
+          Manski shows that identification of the endogenous, contextual, and correlated effects is not possible 
+          when we condition on individual member characteristics to identify the groups. Different from Manski 
+          we use a nonlinear linear-in-means model to identify the main effects under several very mild conditions 
+          and estimate our model using a GMM approach.
+        </p>
+      </article>
+
+    </section>
+
+    <section id="teaching">
+      <h2 class="section-title">Teaching</h2>
+      
+      <div class="teaching-item">
+        <h3 class="teaching-title">Econometrics</h3>
+        <p class="teaching-institution">University of Florida</p>
+        <div class="teaching-links">
+          <a href="Spring 2021-Econometrics-Kapllani.pdf" target="_blank">Evaluations</a>
+          <a href="Econometrics-Syllabus-Kapllani.pdf" target="_blank">Syllabus (Fall 2021)</a>
+        </div>
+      </div>
+
+    </section>
+
+    <footer>
       <p class="footer-text">© 2025 Armand Kapllani</p>
-      <div class="footer-links">
-        <a href="mailto:akapllani@gmail.com">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-          </svg>
-        </a>
-        <a href="https://github.com/armandkapllani" target="_blank">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </footer>
+    </footer>
+
+  </div>
 
 </body>
 </html>
