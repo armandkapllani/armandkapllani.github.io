@@ -295,7 +295,13 @@
       Recent work raised concerns about TWFE in staggered adoption settings, where units receive treatment at different times. Wooldridge (2023, 2025) clarifies that the problem is not TWFE itself, but applying it to an insufficiently flexible model. The solution is to saturate the regression with cohort×time interactions—what Wooldridge calls extended TWFE (ETWFE). This approach identifies average treatment effects on the treated (ATT) under standard parallel trends assumptions and can be aggregated to overall effects, event-study estimates, or cohort-specific effects.
     </p>
     <p>
-      An important result is that several estimation strategies—imputation, pooled OLS with cohort dummies, random effects, and TWFE—all yield numerically identical estimates when applied to the flexible ETWFE specification. The <strong>etwfe</strong> package automates this approach: constructing the saturated model, estimating via fixed effects, and recovering interpretable treatment effects through marginal effect aggregation.
+      An important result is that several estimation strategies yield numerically identical estimates when applied to the flexible ETWFE specification: imputation using treatment cohort dummies, pooled OLS with cohort dummies, random effects, and TWFE. Moreover, this estimator turns out to be identical to the 2×2 regression-based estimators in Callaway and Sant'Anna (2021), establishing a direct link between the ETWFE approach and other modern DiD methods.
+    </p>
+    <p>
+      The framework extends naturally to nonlinear models. When the outcome is binary, fractional, or a count variable, linear parallel trends may be implausible. Wooldridge (2023) shows that pooled quasi-MLE in the linear exponential family—with logit for binary outcomes or Poisson for counts—identifies ATTs under an index version of parallel trends, with the same equivalence properties as in the linear case.
+    </p>
+    <p>
+      The <strong>etwfe</strong> package automates this approach for both linear and nonlinear models: constructing the saturated specification, estimating via fixed effects or quasi-MLE, and recovering interpretable treatment effects through marginal effect aggregation.
     </p>
   </section>
 
@@ -684,10 +690,35 @@ hmod.<span class="f">emfx</span>(by_xvar=<span class="k">True</span>)</code></pr
   <section class="content-section">
     <h2>Non-Linear Models</h2>
     <p>
-      ETWFE extends naturally to non-linear models via the <code>family</code> argument. This is useful for count outcomes (Poisson), binary outcomes (logit/probit), and other GLM families.
+      Standard ETWFE assumes linear parallel trends (LPT)—that the mean of potential outcomes follows parallel paths for treated and control units. This assumption can be problematic when the outcome variable is limited in range.
+    </p>
+
+    <h3>When Linear Parallel Trends Fails</h3>
+    <p>
+      For binary outcomes, LPT is potentially suspect: if baseline rates differ substantially between groups, requiring parallel trends in levels may be implausible. Similar concerns arise with fractional responses that cluster near zero or one, and with count variables or corner solutions that take zero with some regularity alongside large positive values.
     </p>
     <p>
-      Here's the same analysis using Poisson regression on employment counts:
+      An alternative is to assume parallel trends holds for an index—for example, in the log-odds for binary outcomes or in the log of the mean for counts. This index parallel trends (IPT) assumption motivates nonlinear conditional mean functions that may be more appropriate for limited dependent variables.
+    </p>
+
+    <h3>Quasi-Maximum Likelihood Estimation</h3>
+    <p>
+      Wooldridge (2023) shows that pooled quasi-MLE in the linear exponential family (LEF) extends pooled OLS estimation to nonlinear settings. Under IPT, the ATTs are identified from a conditional expectation involving cohort dummies, time dummies, and covariates—exactly as in the linear case.
+    </p>
+    <p>
+      A key result is that using the canonical link function ensures imputation and pooling across the entire sample produce identical estimates. This mirrors the equivalence results for linear models: there is nothing inherently wrong with the estimation approach, provided one applies it to a suitably flexible specification.
+    </p>
+    <p>
+      The leading cases are:
+    </p>
+    <ul>
+      <li><strong>Binary and fractional outcomes:</strong> Logit functional form with Bernoulli quasi-log likelihood</li>
+      <li><strong>Counts and corner solutions:</strong> Exponential mean with Poisson quasi-log likelihood</li>
+    </ul>
+
+    <h3>Implementation</h3>
+    <p>
+      The <code>family</code> argument enables nonlinear estimation. Here we apply Poisson regression to employment counts:
     </p>
 
     <div class="code">
@@ -718,6 +749,11 @@ mod_pois.<span class="f">emfx</span>(type=<span class="s">"event"</span>)</code>
 2      2 -75.124632  23.154168 -120.506802  -29.742462
 3      3 -101.823979  27.087814 -154.916095  -48.731864</pre>
     </div>
+
+    <h3>Robustness</h3>
+    <p>
+      From a practical perspective, nonlinear ETWFE provides a simple way to assess robustness of findings. By comparing estimates from a linear model with those from a suitable nonlinear alternative, researchers can evaluate whether conclusions are sensitive to the functional form assumption. When results align across specifications, this strengthens confidence in the findings. When they diverge, it signals that the parallel trends assumption may hold in one metric but not another—valuable information for interpreting the analysis.
+    </p>
   </section>
 
   <section class="content-section">
@@ -736,10 +772,16 @@ mod_pois.<span class="f">emfx</span>(type=<span class="s">"event"</span>)</code>
 
     <h3>Compression</h3>
     <p>
-      The <code>compress=True</code> option aggregates the data by collapsing observations into conditionally sufficient statistics before computing marginal effects. This reduces data volume substantially—datasets with millions of observations compress to a much smaller structure—while preserving the information needed for estimation.
+      The <code>compress=True</code> option implements the data compression strategy from Wong et al. (2021). The key insight is that for linear models, the data can be reduced to <em>conditionally sufficient statistics</em>—aggregated summaries that preserve all information needed for OLS estimation with homoskedastic, heteroskedastic, or clustered covariances.
     </p>
     <p>
-      Compression enables interactive analysis on large datasets that would otherwise require distributed computing. The trade-off is a small approximation in standard errors, but point estimates remain accurate. Testing on typical panel data shows results match uncompressed estimates to 2-3 decimal places.
+      Compression collapses observations by grouping variables, reducing datasets with millions of rows to a much smaller structure. This is fundamentally different from distributed computing or parallelization, which reduce computing time but not data volume. Compression reduces both, enabling interactive single-machine analysis on datasets that would otherwise require specialized infrastructure.
+    </p>
+    <p>
+      The practical benefit is significant: researchers can explore data interactively, iterate on specifications, and debug analyses using standard Python tools—exactly as they would with smaller datasets. This bridges the gap between offline model development and production deployment, allowing methodological improvements to flow more easily between research and engineering systems.
+    </p>
+    <p>
+      For ETWFE, compression yields point estimates that match uncompressed results to high precision. Standard errors are approximate but typically accurate to 2-3 decimal places on panel data. The trade-off is worthwhile when the alternative is waiting minutes or hours for exact computation on large datasets.
     </p>
 
     <h3>Recommended Workflow</h3>
@@ -890,8 +932,10 @@ FE..year                                X           X</pre>
   <section class="content-section">
     <h2>References</h2>
     <p class="ref">
-      Wooldridge, J. M. (2025). <em>Two-way fixed effects, the two-way Mundlak regression, and difference-in-differences estimators.</em> Empirical Economics, 69(5), 2545-2587.<br><br>
-      Wooldridge, J. M. (2023). <em>Simple approaches to nonlinear difference-in-differences with panel data.</em> The Econometrics Journal, 26(3), C31-C66.
+      Wooldridge, J. M. (2025). <a href="https://link.springer.com/article/10.1007/s00181-024-02681-z"><em>Two-way fixed effects, the two-way Mundlak regression, and difference-in-differences estimators.</em></a> Empirical Economics, 69(5), 2545-2587.<br><br>
+      Wooldridge, J. M. (2023). <a href="https://academic.oup.com/ectj/article/26/3/C31/7039335"><em>Simple approaches to nonlinear difference-in-differences with panel data.</em></a> The Econometrics Journal, 26(3), C31-C66.<br><br>
+      Callaway, B. and Sant'Anna, P. H. (2021). <em>Difference-in-differences with multiple time periods.</em> Journal of Econometrics, 225(2), 200-230.<br><br>
+      Wong, J., Forsell, E., Lewis, R., Mao, T., and Wardrop, M. (2021). <a href="https://arxiv.org/abs/2102.11297"><em>You only compress once: Optimal data compression for estimating linear models.</em></a> arXiv:2102.11297.
     </p>
   </section>
 
