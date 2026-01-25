@@ -296,6 +296,39 @@
       margin-bottom: 20px;
     }
 
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .badges img {
+      height: 20px;
+    }
+
+    /* Plot containers */
+    .plot-container {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .plot-svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .plot-caption {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+
     p { margin-bottom: 16px; color: var(--text-secondary); }
 
     p code, li code {
@@ -512,6 +545,8 @@
       <span>GitHub</span>
     </a>
     <a href="https://pypi.org/project/etwfe/" class="header-link"><span>PyPI</span></a>
+    <a href="https://pepy.tech/project/etwfe" class="header-link"><span>Downloads</span></a>
+    <a href="https://github.com/armandkapllani/etwfe#requirements" class="header-link"><span>Dependencies</span></a>
     <a href="https://github.com/armandkapllani/etwfe/issues" class="header-link"><span>Issues</span></a>
   </div>
 </header>
@@ -564,6 +599,7 @@
       <div class="nav-title">Reference</div>
       <ul class="nav-list">
         <li class="nav-item"><a href="#api" onclick="closeSidebar()">API Reference</a></li>
+        <li class="nav-item"><a href="#requirements" onclick="closeSidebar()">Requirements</a></li>
         <li class="nav-item"><a href="#refs" onclick="closeSidebar()">Citations</a></li>
         <li class="nav-item"><a href="#acknowledgments" onclick="closeSidebar()">Acknowledgments</a></li>
       </ul>
@@ -577,6 +613,12 @@
 
     <section id="intro">
       <h1>etwfe</h1>
+      <div class="badges">
+        <a href="https://pypi.org/project/etwfe/"><img src="https://badge.fury.io/py/etwfe.svg" alt="PyPI version"></a>
+        <a href="https://pepy.tech/project/etwfe"><img src="https://static.pepy.tech/badge/etwfe" alt="Downloads"></a>
+        <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python 3.9+"></a>
+        <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+      </div>
       <p class="lead">
         Extended Two-Way Fixed Effects for Python — implementing Wooldridge's modern approach to difference-in-differences with staggered treatment adoption.
       </p>
@@ -738,6 +780,67 @@ mod.<span class="fn">emfx</span>(type<span class="op">=</span><span class="str">
         <pre><code>mod.<span class="fn">plot</span>(type<span class="op">=</span><span class="str">"event"</span>)</code></pre>
       </div>
 
+      <div class="plot-container">
+        <svg viewBox="0 0 500 280" class="plot-svg">
+          <defs>
+            <linearGradient id="gridGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <!-- Background -->
+          <rect x="60" y="20" width="420" height="220" fill="url(#gridGrad)" stroke="#e2e8f0"/>
+          <!-- Grid lines -->
+          <g stroke="#e2e8f0" stroke-width="1">
+            <line x1="60" y1="75" x2="480" y2="75"/>
+            <line x1="60" y1="130" x2="480" y2="130"/>
+            <line x1="60" y1="185" x2="480" y2="185"/>
+          </g>
+          <!-- Zero line -->
+          <line x1="60" y1="130" x2="480" y2="130" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4"/>
+          <!-- Y axis labels -->
+          <text x="50" y="25" font-size="11" fill="#64748b" text-anchor="end">0.05</text>
+          <text x="50" y="80" font-size="11" fill="#64748b" text-anchor="end">0.00</text>
+          <text x="50" y="135" font-size="11" fill="#64748b" text-anchor="end">-0.05</text>
+          <text x="50" y="190" font-size="11" fill="#64748b" text-anchor="end">-0.10</text>
+          <text x="50" y="240" font-size="11" fill="#64748b" text-anchor="end">-0.15</text>
+          <!-- X axis labels -->
+          <text x="140" y="255" font-size="11" fill="#64748b" text-anchor="middle">0</text>
+          <text x="240" y="255" font-size="11" fill="#64748b" text-anchor="middle">1</text>
+          <text x="340" y="255" font-size="11" fill="#64748b" text-anchor="middle">2</text>
+          <text x="440" y="255" font-size="11" fill="#64748b" text-anchor="middle">3</text>
+          <!-- Axis titles -->
+          <text x="270" y="275" font-size="12" fill="#475569" text-anchor="middle">Event Time</text>
+          <text x="15" y="130" font-size="12" fill="#475569" text-anchor="middle" transform="rotate(-90, 15, 130)">Estimate</text>
+          <!-- Error bars -->
+          <g stroke="#3b82f6" stroke-width="2">
+            <line x1="140" y1="108" x2="140" y2="140"/>
+            <line x1="130" y1="108" x2="150" y2="108"/>
+            <line x1="130" y1="140" x2="150" y2="140"/>
+            
+            <line x1="240" y1="95" x2="240" y2="155"/>
+            <line x1="230" y1="95" x2="250" y2="95"/>
+            <line x1="230" y1="155" x2="250" y2="155"/>
+            
+            <line x1="340" y1="60" x2="340" y2="175"/>
+            <line x1="330" y1="60" x2="350" y2="60"/>
+            <line x1="330" y1="175" x2="350" y2="175"/>
+            
+            <line x1="440" y1="75" x2="440" y2="165"/>
+            <line x1="430" y1="75" x2="450" y2="75"/>
+            <line x1="430" y1="165" x2="450" y2="165"/>
+          </g>
+          <!-- Points -->
+          <g fill="#3b82f6">
+            <circle cx="140" cy="123" r="5"/>
+            <circle cx="240" cy="140" r="5"/>
+            <circle cx="340" cy="200" r="5"/>
+            <circle cx="440" cy="180" r="5"/>
+          </g>
+        </svg>
+        <p class="plot-caption">Event study showing treatment effects relative to adoption timing</p>
+      </div>
+
       <p>
         When using the default <code>cgroup="notyet"</code> control group, pre-treatment coefficients are mechanically zero because not-yet-treated observations serve as controls during those periods. To assess whether parallel trends held before treatment—a crucial diagnostic—restrict the comparison group to never-treated units:
       </p>
@@ -783,6 +886,66 @@ mod_never.<span class="fn">emfx</span>(type<span class="op">=</span><span class=
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
         <pre><code>mod_never.<span class="fn">plot</span>(type<span class="op">=</span><span class="str">"event"</span>, post_only<span class="op">=</span><span class="kw">False</span>, style<span class="op">=</span><span class="str">"ribbon"</span>)</code></pre>
+      </div>
+
+      <div class="plot-container">
+        <svg viewBox="0 0 500 280" class="plot-svg">
+          <defs>
+            <linearGradient id="gridGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <!-- Background -->
+          <rect x="60" y="20" width="420" height="220" fill="url(#gridGrad2)" stroke="#e2e8f0"/>
+          <!-- Grid lines -->
+          <g stroke="#e2e8f0" stroke-width="1">
+            <line x1="60" y1="75" x2="480" y2="75"/>
+            <line x1="60" y1="130" x2="480" y2="130"/>
+            <line x1="60" y1="185" x2="480" y2="185"/>
+          </g>
+          <!-- Zero line -->
+          <line x1="60" y1="110" x2="480" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4"/>
+          <!-- Vertical line at t=0 -->
+          <line x1="270" y1="20" x2="270" y2="240" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,4"/>
+          <!-- Y axis labels -->
+          <text x="50" y="30" font-size="11" fill="#64748b" text-anchor="end">0.10</text>
+          <text x="50" y="75" font-size="11" fill="#64748b" text-anchor="end">0.05</text>
+          <text x="50" y="115" font-size="11" fill="#64748b" text-anchor="end">0.00</text>
+          <text x="50" y="160" font-size="11" fill="#64748b" text-anchor="end">-0.05</text>
+          <text x="50" y="205" font-size="11" fill="#64748b" text-anchor="end">-0.10</text>
+          <text x="50" y="240" font-size="11" fill="#64748b" text-anchor="end">-0.15</text>
+          <!-- X axis labels -->
+          <text x="90" y="255" font-size="11" fill="#64748b" text-anchor="middle">-4</text>
+          <text x="135" y="255" font-size="11" fill="#64748b" text-anchor="middle">-3</text>
+          <text x="180" y="255" font-size="11" fill="#64748b" text-anchor="middle">-2</text>
+          <text x="225" y="255" font-size="11" fill="#64748b" text-anchor="middle">-1</text>
+          <text x="270" y="255" font-size="11" fill="#64748b" text-anchor="middle">0</text>
+          <text x="330" y="255" font-size="11" fill="#64748b" text-anchor="middle">1</text>
+          <text x="390" y="255" font-size="11" fill="#64748b" text-anchor="middle">2</text>
+          <text x="450" y="255" font-size="11" fill="#64748b" text-anchor="middle">3</text>
+          <!-- Axis titles -->
+          <text x="270" y="275" font-size="12" fill="#475569" text-anchor="middle">Event Time</text>
+          <!-- Ribbon (confidence band) -->
+          <path d="M90,85 L135,75 L180,80 L225,110 L270,115 L330,125 L390,155 L450,145 
+                   L450,175 L390,220 L330,165 L270,145 L225,110 L180,140 L135,135 L90,145 Z" 
+                fill="#3b82f6" fill-opacity="0.15" stroke="none"/>
+          <!-- Line -->
+          <path d="M90,105 L135,95 L180,100 L225,110 L270,125 L330,145 L390,200 L450,175" 
+                fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+          <!-- Points -->
+          <g fill="#3b82f6">
+            <circle cx="90" cy="105" r="4"/>
+            <circle cx="135" cy="95" r="4"/>
+            <circle cx="180" cy="100" r="4"/>
+            <circle cx="225" cy="110" r="4"/>
+            <circle cx="270" cy="125" r="4"/>
+            <circle cx="330" cy="145" r="4"/>
+            <circle cx="390" cy="200" r="4"/>
+            <circle cx="450" cy="175" r="4"/>
+          </g>
+        </svg>
+        <p class="plot-caption">Event study with pre-treatment periods — ribbon style confidence bands</p>
       </div>
     </section>
 
@@ -845,6 +1008,90 @@ hmod.<span class="fn">emfx</span>(by_xvar<span class="op">=</span><span class="k
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
         <pre><code>hmod.<span class="fn">plot</span>(type<span class="op">=</span><span class="str">"event"</span>, by_xvar<span class="op">=</span><span class="kw">True</span>, style<span class="op">=</span><span class="str">"ribbon"</span>)</code></pre>
+      </div>
+
+      <div class="plot-container">
+        <svg viewBox="0 0 500 300" class="plot-svg">
+          <defs>
+            <linearGradient id="gridGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <!-- Background -->
+          <rect x="60" y="20" width="420" height="220" fill="url(#gridGrad3)" stroke="#e2e8f0"/>
+          <!-- Grid lines -->
+          <g stroke="#e2e8f0" stroke-width="1">
+            <line x1="60" y1="75" x2="480" y2="75"/>
+            <line x1="60" y1="130" x2="480" y2="130"/>
+            <line x1="60" y1="185" x2="480" y2="185"/>
+          </g>
+          <!-- Zero line -->
+          <line x1="60" y1="110" x2="480" y2="110" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4"/>
+          <!-- Y axis labels -->
+          <text x="50" y="30" font-size="11" fill="#64748b" text-anchor="end">0.10</text>
+          <text x="50" y="75" font-size="11" fill="#64748b" text-anchor="end">0.05</text>
+          <text x="50" y="115" font-size="11" fill="#64748b" text-anchor="end">0.00</text>
+          <text x="50" y="160" font-size="11" fill="#64748b" text-anchor="end">-0.05</text>
+          <text x="50" y="205" font-size="11" fill="#64748b" text-anchor="end">-0.10</text>
+          <text x="50" y="240" font-size="11" fill="#64748b" text-anchor="end">-0.15</text>
+          <!-- X axis labels -->
+          <text x="90" y="255" font-size="11" fill="#64748b" text-anchor="middle">-4</text>
+          <text x="135" y="255" font-size="11" fill="#64748b" text-anchor="middle">-3</text>
+          <text x="180" y="255" font-size="11" fill="#64748b" text-anchor="middle">-2</text>
+          <text x="225" y="255" font-size="11" fill="#64748b" text-anchor="middle">-1</text>
+          <text x="270" y="255" font-size="11" fill="#64748b" text-anchor="middle">0</text>
+          <text x="330" y="255" font-size="11" fill="#64748b" text-anchor="middle">1</text>
+          <text x="390" y="255" font-size="11" fill="#64748b" text-anchor="middle">2</text>
+          <text x="450" y="255" font-size="11" fill="#64748b" text-anchor="middle">3</text>
+          <!-- Axis titles -->
+          <text x="270" y="270" font-size="12" fill="#475569" text-anchor="middle">Event Time</text>
+          <!-- Ribbon 1 (Other regions - blue) -->
+          <path d="M90,80 L135,70 L180,75 L225,110 L270,115 L330,125 L390,150 L450,140 
+                   L450,175 L390,215 L330,170 L270,150 L225,110 L180,145 L135,140 L90,150 Z" 
+                fill="#3b82f6" fill-opacity="0.15" stroke="none"/>
+          <!-- Line 1 (Other regions - blue) -->
+          <path d="M90,105 L135,95 L180,100 L225,110 L270,125 L330,145 L390,195 L450,165" 
+                fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+          <!-- Ribbon 2 (Great Lakes - orange) -->
+          <path d="M90,90 L135,85 L180,85 L225,110 L270,120 L330,130 L390,145 L450,135 
+                   L450,165 L390,190 L330,165 L270,145 L225,110 L180,130 L135,125 L90,130 Z" 
+                fill="#f97316" fill-opacity="0.15" stroke="none"/>
+          <!-- Line 2 (Great Lakes - orange) -->
+          <path d="M90,110 L135,100 L180,105 L225,110 L270,130 L330,145 L390,165 L450,150" 
+                fill="none" stroke="#f97316" stroke-width="2.5"/>
+          <!-- Points - Blue -->
+          <g fill="#3b82f6">
+            <circle cx="90" cy="105" r="4"/>
+            <circle cx="135" cy="95" r="4"/>
+            <circle cx="180" cy="100" r="4"/>
+            <circle cx="225" cy="110" r="4"/>
+            <circle cx="270" cy="125" r="4"/>
+            <circle cx="330" cy="145" r="4"/>
+            <circle cx="390" cy="195" r="4"/>
+            <circle cx="450" cy="165" r="4"/>
+          </g>
+          <!-- Points - Orange -->
+          <g fill="#f97316">
+            <circle cx="90" cy="110" r="4"/>
+            <circle cx="135" cy="100" r="4"/>
+            <circle cx="180" cy="105" r="4"/>
+            <circle cx="225" cy="110" r="4"/>
+            <circle cx="270" cy="130" r="4"/>
+            <circle cx="330" cy="145" r="4"/>
+            <circle cx="390" cy="165" r="4"/>
+            <circle cx="450" cy="150" r="4"/>
+          </g>
+          <!-- Legend -->
+          <rect x="350" y="30" width="120" height="50" fill="white" stroke="#e2e8f0" rx="4"/>
+          <line x1="360" y1="45" x2="385" y2="45" stroke="#3b82f6" stroke-width="2.5"/>
+          <circle cx="372" cy="45" r="3" fill="#3b82f6"/>
+          <text x="392" y="49" font-size="11" fill="#475569">Other Regions</text>
+          <line x1="360" y1="65" x2="385" y2="65" stroke="#f97316" stroke-width="2.5"/>
+          <circle cx="372" cy="65" r="3" fill="#f97316"/>
+          <text x="392" y="69" font-size="11" fill="#475569">Great Lakes</text>
+        </svg>
+        <p class="plot-caption">Heterogeneous treatment effects by region</p>
       </div>
     </section>
 
@@ -1007,6 +1254,17 @@ mod.<span class="fn">emfx</span>(type<span class="op">=</span><span class="str">
       </div>
     </section>
 
+    <section id="requirements">
+      <h2>Requirements</h2>
+      <ul>
+        <li>Python >= 3.9</li>
+        <li>numpy >= 1.21.0</li>
+        <li>pandas >= 1.3.0</li>
+        <li>matplotlib >= 3.4.0</li>
+        <li>pyfixest >= 0.18.0</li>
+      </ul>
+    </section>
+
     <section id="refs">
       <h2>References</h2>
       <p style="font-size: 14px; line-height: 2.2;">
@@ -1031,6 +1289,8 @@ mod.<span class="fn">emfx</span>(type<span class="op">=</span><span class="str">
     <div class="footer-links">
       <a href="https://github.com/armandkapllani/etwfe">GitHub</a>
       <a href="https://pypi.org/project/etwfe/">PyPI</a>
+      <a href="https://pepy.tech/project/etwfe">Downloads</a>
+      <a href="https://github.com/armandkapllani/etwfe/issues">Issues</a>
     </div>
   </footer>
 </main>
