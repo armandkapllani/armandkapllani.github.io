@@ -3,133 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="etwfe - Extended Two-Way Fixed Effects for Python">
   <title>etwfe — Extended Two-Way Fixed Effects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    
     :root {
       --bg: #ffffff;
       --bg-secondary: #f8fafc;
       --sidebar-bg: #0f172a;
       --text: #1e293b;
       --text-secondary: #475569;
+      --text-muted: #64748b;
       --border: #e2e8f0;
       --link: #2563eb;
-      --code-bg: #1e293b;
-      --code-text: #e2e8f0;
+      --code-bg: #0f172a;
+      --accent: #3b82f6;
+      --sidebar-w: 256px;
+      --header-h: 56px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 24px); }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 15px;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
       line-height: 1.7;
       color: var(--text);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
     }
 
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Layout */
-    .layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      min-height: 100vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      background: var(--sidebar-bg);
-      padding: 32px 24px;
-      position: sticky;
+    /* ===== TOP HEADER ===== */
+    .top-header {
+      position: fixed;
       top: 0;
-      height: 100vh;
-      overflow-y: auto;
+      left: 0;
+      right: 0;
+      height: var(--header-h);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      padding: 0 16px;
+      z-index: 100;
+      gap: 12px;
     }
 
-    .sidebar-header {
-      margin-bottom: 32px;
+    .menu-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: 8px;
+      color: var(--text);
     }
 
-    .logo {
+    .menu-toggle:hover { background: var(--bg-secondary); }
+    .menu-toggle svg { width: 22px; height: 22px; }
+
+    .top-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.75rem;
       font-weight: 700;
-      color: #fff;
-      margin-bottom: 4px;
-    }
-
-    .tagline {
-      font-size: 12px;
-      color: #64748b;
-    }
-
-    .install-box {
-      background: #1e293b;
-      border: 1px solid #334155;
-      padding: 12px 14px;
-      border-radius: 6px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: #e2e8f0;
-      margin-bottom: 32px;
-    }
-
-    .install-box .prompt { color: #64748b; }
-
-    .nav-section {
-      margin-bottom: 24px;
-    }
-
-    .nav-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #64748b;
-      margin-bottom: 12px;
-    }
-
-    .nav-links {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .nav-link {
-      color: #94a3b8;
-      font-size: 14px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      transition: all 0.15s;
-    }
-
-    .nav-link:hover {
-      color: #fff;
-      background: #1e293b;
+      font-size: 1.1rem;
+      color: var(--text);
       text-decoration: none;
     }
 
-    /* Main Content */
-    .main {
-      padding: 0 64px 80px;
-      max-width: 900px;
+    .top-brand:hover { text-decoration: none; }
+
+    .top-version {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg-secondary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
     }
 
-    .main-header {
+    .header-links {
       display: flex;
-      gap: 20px;
-      padding: 20px 0;
-      margin-bottom: 32px;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 10;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
     }
 
     .header-link {
@@ -139,7 +109,7 @@
       font-size: 13px;
       font-weight: 500;
       color: var(--text-secondary);
-      padding: 6px 12px;
+      padding: 8px 12px;
       border-radius: 6px;
       transition: all 0.15s;
     }
@@ -150,58 +120,202 @@
       text-decoration: none;
     }
 
-    .header-link svg {
-      width: 16px;
-      height: 16px;
+    .header-link svg { width: 18px; height: 18px; }
+    .header-link span { display: inline; }
+
+    .header-link.github {
+      background: var(--sidebar-bg);
+      color: #fff;
     }
 
-    section {
-      margin-bottom: 56px;
+    .header-link.github:hover { background: #1e293b; color: #fff; }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s, visibility 0.25s;
     }
+
+    .sidebar-overlay.open { opacity: 1; visibility: visible; }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      background: var(--sidebar-bg);
+      z-index: 300;
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .sidebar.open { transform: translateX(0); }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #fff;
+    }
+
+    .sidebar-close {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e293b;
+      border: none;
+      border-radius: 8px;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .sidebar-close:hover { color: #fff; }
+    .sidebar-close svg { width: 20px; height: 20px; }
+
+    .sidebar-content { padding: 20px; }
+
+    .install-box {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #e2e8f0;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .install-box .prompt { color: #64748b; }
+
+    .copy-install {
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .copy-install:hover { color: #fff; }
+    .copy-install svg { width: 16px; height: 16px; display: block; }
+
+    .nav-section { margin-bottom: 24px; }
+
+    .nav-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+
+    .nav-list { list-style: none; }
+
+    .nav-item a {
+      display: block;
+      padding: 10px 12px;
+      font-size: 14px;
+      color: #94a3b8;
+      border-radius: 6px;
+      margin-bottom: 2px;
+      transition: all 0.15s;
+    }
+
+    .nav-item a:hover {
+      color: #fff;
+      background: #1e293b;
+      text-decoration: none;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      padding-top: var(--header-h);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      flex: 1;
+      padding: 32px 20px 64px;
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    section { margin-bottom: 48px; }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.75rem;
       font-weight: 700;
       color: var(--text);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
     }
 
     h2 {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 600;
       color: var(--text);
       margin-bottom: 16px;
-      padding-bottom: 12px;
+      padding-bottom: 10px;
       border-bottom: 1px solid var(--border);
     }
 
     h3 {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: var(--text);
-      margin: 32px 0 12px;
+      margin: 28px 0 12px;
+    }
+
+    .lead {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
     }
 
     p { margin-bottom: 16px; color: var(--text-secondary); }
 
     p code, li code {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85em;
-      background: #f1f5f9;
+      font-size: 0.875em;
+      background: var(--bg-secondary);
       padding: 2px 6px;
       border-radius: 4px;
-      color: #0f172a;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
     ul, ol { margin-bottom: 16px; padding-left: 24px; color: var(--text-secondary); }
     li { margin-bottom: 8px; }
+    strong { color: var(--text); font-weight: 600; }
 
-    strong { color: var(--text); }
-
-    /* Code */
+    /* Code blocks */
     .code-block {
       background: var(--code-bg);
-      border-radius: 8px;
+      border-radius: 10px;
       margin: 20px 0;
       overflow: hidden;
     }
@@ -210,20 +324,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 16px;
-      background: #0f172a;
+      padding: 8px 12px;
+      background: #1e293b;
       border-bottom: 1px solid #334155;
     }
 
     .code-lang {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
       color: #64748b;
     }
 
     .copy-btn {
-      background: transparent;
+      background: none;
       border: 1px solid #475569;
       color: #94a3b8;
       padding: 4px 10px;
@@ -234,24 +348,25 @@
       font-family: 'Inter', sans-serif;
     }
 
-    .copy-btn:hover { border-color: #94a3b8; color: #e2e8f0; }
+    .copy-btn:hover { border-color: #94a3b8; color: #fff; }
 
     pre {
       margin: 0;
       padding: 16px;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     pre code {
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
       line-height: 1.6;
-      color: var(--code-text);
+      color: #e2e8f0;
       background: none;
       padding: 0;
+      border: none;
     }
 
-    /* Syntax */
     .kw { color: #c586c0; }
     .fn { color: #dcdcaa; }
     .str { color: #ce9178; }
@@ -263,20 +378,20 @@
     .output {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       margin: 20px 0;
       overflow: hidden;
     }
 
     .output-header {
-      padding: 10px 16px;
-      font-size: 12px;
+      padding: 8px 12px;
+      font-size: 11px;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       background: #fff;
       border-bottom: 1px solid var(--border);
       text-transform: uppercase;
-      letter-spacing: 0.025em;
+      letter-spacing: 0.05em;
     }
 
     .output pre {
@@ -284,179 +399,197 @@
       font-size: 12px;
       line-height: 1.5;
       color: var(--text);
-      padding: 16px;
-      background: none;
+      padding: 12px;
     }
 
     /* Tables */
     .table-wrap {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       margin: 20px 0;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
+      font-size: 14px;
+      min-width: 480px;
     }
 
     th, td {
       text-align: left;
-      padding: 12px 16px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--border);
     }
 
     th {
       font-weight: 600;
       background: var(--bg-secondary);
-      color: var(--text-secondary);
-      font-size: 12px;
+      color: var(--text-muted);
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.025em;
+      letter-spacing: 0.05em;
     }
 
     td { color: var(--text-secondary); }
-
     tr:last-child td { border-bottom: none; }
-
     .param { color: var(--link); font-weight: 500; }
 
-    /* Refs */
-    .refs {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 2;
-    }
-
-    .refs em { color: var(--text); }
-
-    /* Main Footer */
-    .main-footer {
-      margin-top: 64px;
-      padding-top: 32px;
+    /* Footer */
+    .footer {
+      padding: 24px 20px;
       border-top: 1px solid var(--border);
       text-align: center;
-    }
-
-    .main-footer p {
       font-size: 14px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
     }
 
-    .main-footer a {
-      color: var(--text);
-      font-weight: 500;
+    .footer a { color: var(--text-secondary); font-weight: 500; }
+    .footer a:hover { color: var(--text); }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 12px;
+      flex-wrap: wrap;
     }
 
-    /* Mobile */
-    @media (max-width: 900px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
+    /* ===== DESKTOP ===== */
+    @media (min-width: 769px) {
+      .menu-toggle { display: none; }
+      .sidebar-overlay { display: none; }
+
       .sidebar {
-        position: relative;
-        height: auto;
+        position: fixed;
+        top: var(--header-h);
+        left: 0;
+        height: calc(100vh - var(--header-h));
+        transform: translateX(0);
+        border-right: 1px solid #1e293b;
       }
-      .main {
-        padding: 0 24px 64px;
+
+      .sidebar-header { display: none; }
+
+      .main { margin-left: var(--sidebar-w); }
+
+      .content {
+        padding: 48px 40px 80px;
+        max-width: 780px;
       }
-      .main-header {
-        flex-wrap: wrap;
-        gap: 10px;
-      }
+
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+    }
+
+    /* ===== SMALL MOBILE ===== */
+    @media (max-width: 400px) {
+      .header-link span { display: none; }
+      .header-link { padding: 8px; }
+      h1 { font-size: 1.5rem; }
+      pre code { font-size: 12px; }
     }
   </style>
 </head>
 <body>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="logo">etwfe</div>
-      <div class="tagline">Extended Two-Way Fixed Effects</div>
-    </div>
+<!-- Top Header -->
+<header class="top-header">
+  <button class="menu-toggle" onclick="openSidebar()" aria-label="Open menu">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+  </button>
+  <a href="#" class="top-brand">
+    etwfe
+    <span class="top-version">v0.1</span>
+  </a>
+  <div class="header-links">
+    <a href="https://github.com/armandkapllani/etwfe" class="header-link github">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      <span>GitHub</span>
+    </a>
+    <a href="https://pypi.org/project/etwfe/" class="header-link"><span>PyPI</span></a>
+    <a href="https://github.com/armandkapllani/etwfe/issues" class="header-link"><span>Issues</span></a>
+  </div>
+</header>
 
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-brand">etwfe</span>
+    <button class="sidebar-close" onclick="closeSidebar()" aria-label="Close menu">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+  <div class="sidebar-content">
     <div class="install-box">
-      <span class="prompt">$ </span>pip install etwfe
+      <code><span class="prompt">$ </span>pip install etwfe</code>
+      <button class="copy-install" onclick="navigator.clipboard.writeText('pip install etwfe')" title="Copy">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="9" y="9" width="13" height="13" rx="2"/>
+          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+        </svg>
+      </button>
     </div>
 
-    <nav class="nav-section">
-      <div class="nav-label">Documentation</div>
-      <div class="nav-links">
-        <a href="#background" class="nav-link">Background</a>
-        <a href="#installation" class="nav-link">Installation</a>
-        <a href="#sample-data" class="nav-link">Sample Data</a>
-        <a href="#core-workflow" class="nav-link">Core Workflow</a>
-        <a href="#visualizations" class="nav-link">Visualizations</a>
-        <a href="#heterogeneity" class="nav-link">Effect Heterogeneity</a>
-        <a href="#nonlinear" class="nav-link">Nonlinear Specs</a>
-        <a href="#performance" class="nav-link">Performance</a>
-        <a href="#reference" class="nav-link">API Reference</a>
-      </div>
-    </nav>
+    <div class="nav-section">
+      <div class="nav-title">Getting Started</div>
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#intro" onclick="closeSidebar()">Introduction</a></li>
+        <li class="nav-item"><a href="#install" onclick="closeSidebar()">Installation</a></li>
+        <li class="nav-item"><a href="#quickstart" onclick="closeSidebar()">Sample Data</a></li>
+      </ul>
+    </div>
 
-    <nav class="nav-section">
-      <div class="nav-label">Resources</div>
-      <div class="nav-links">
-        <a href="#references" class="nav-link">References</a>
-        <a href="#acknowledgments" class="nav-link">Acknowledgments</a>
-      </div>
-    </nav>
-  </aside>
+    <div class="nav-section">
+      <div class="nav-title">Guide</div>
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#workflow" onclick="closeSidebar()">Core Workflow</a></li>
+        <li class="nav-item"><a href="#plots" onclick="closeSidebar()">Visualizations</a></li>
+        <li class="nav-item"><a href="#heterogeneity" onclick="closeSidebar()">Effect Heterogeneity</a></li>
+        <li class="nav-item"><a href="#nonlinear" onclick="closeSidebar()">Nonlinear Specs</a></li>
+        <li class="nav-item"><a href="#performance" onclick="closeSidebar()">Performance</a></li>
+      </ul>
+    </div>
 
-  <main class="main">
-    <header class="main-header">
-      <a href="https://pypi.org/project/etwfe/" class="header-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-        PyPI
-      </a>
-      <a href="https://github.com/armandkapllani/etwfe" class="header-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a href="https://github.com/armandkapllani/etwfe/issues" class="header-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Report a Bug
-      </a>
-      <a href="https://github.com/grantmcdermott/etwfe" class="header-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        R Package
-      </a>
-    </header>
+    <div class="nav-section">
+      <div class="nav-title">Reference</div>
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#api" onclick="closeSidebar()">API Reference</a></li>
+        <li class="nav-item"><a href="#refs" onclick="closeSidebar()">Citations</a></li>
+        <li class="nav-item"><a href="#acknowledgments" onclick="closeSidebar()">Acknowledgments</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-    <section id="background">
+<!-- Main Content -->
+<main class="main">
+  <div class="content">
+
+    <section id="intro">
       <h1>etwfe</h1>
-      <p>
-        The <strong>etwfe</strong> package brings Wooldridge's Extended Two-Way Fixed Effects methodology to Python. It is a Python implementation inspired by the <a href="https://github.com/grantmcdermott/etwfe">etwfe R package</a> created by <a href="https://grantmcdermott.com/">Grant McDermott</a>. R users may prefer the <a href="https://github.com/grantmcdermott/etwfe">original R package</a>.
+      <p class="lead">
+        Extended Two-Way Fixed Effects for Python — implementing Wooldridge's modern approach to difference-in-differences with staggered treatment adoption.
       </p>
       <p>
-        Researchers commonly use two-way fixed effects (TWFE) regressions—models that include both unit and time fixed effects—when analyzing panel data to estimate causal effects. This technique removes time-invariant unit characteristics and common temporal shocks, leaving variation that can plausibly identify treatment effects when the standard difference-in-differences assumptions hold.
+        Two-way fixed effects (TWFE) regressions are widely used for causal inference with panel data, but naive TWFE specifications produce misleading estimates when treatment adoption is staggered and effects vary across cohorts or time. Wooldridge (2023, 2025) proposed a clean solution: fully interact treatment status with cohort and time indicators. This saturated specification—extended TWFE (ETWFE)—recovers cohort-time-specific effects that can be aggregated into interpretable summaries like overall average effects or dynamic event studies.
       </p>
       <p>
-        Methodologists recently uncovered problems with applying naive TWFE specifications to settings where treatment adoption is staggered across units. The culprit is not the fixed effects themselves but rather the overly restrictive assumption that treatment effects are constant across all cohorts and time periods. When effects actually differ—for example, growing over time or varying by when units adopted treatment—the standard approach conflates these heterogeneous effects in ways that can produce misleading estimates.
-      </p>
-      <p>
-        Wooldridge (2023, 2025) proposed a clean solution: include all interactions between treatment status, cohort membership, and time periods. This saturated specification—termed extended TWFE (ETWFE)—recovers cohort-time-specific treatment effects that researchers can then combine into summary measures: overall average effects, dynamic event-study patterns, or comparisons across treatment cohorts.
-      </p>
-      <p>
-        A notable theoretical finding is that several different estimation approaches—imputation methods, pooled OLS with appropriate dummies, random effects, and TWFE itself—all yield identical point estimates when applied to this flexible model. Furthermore, these estimates match those from the regression-based estimators in Callaway and Sant'Anna (2021), linking ETWFE directly to other modern difference-in-differences methods.
-      </p>
-      <p>
-        The methodology also accommodates nonlinear outcomes. When dealing with binary responses, count data, or fractional outcomes, assuming parallel trends in levels may be unrealistic. Wooldridge (2023) demonstrates that pooled quasi-maximum likelihood estimation using appropriate link functions identifies treatment effects under an index version of parallel trends—maintaining the same equivalence properties as the linear case.
-      </p>
-      <p>
-        This Python package handles the tedious work of building the saturated interaction specification, performs estimation through high-dimensional fixed effects or quasi-MLE, and extracts interpretable treatment effect estimates with proper standard errors.
+        This package is a Python implementation inspired by the <a href="https://github.com/grantmcdermott/etwfe">etwfe R package</a> created by <a href="https://grantmcdermott.com/">Grant McDermott</a>. It handles the tedious work of building the saturated interaction specification, performs estimation through high-dimensional fixed effects or quasi-MLE, and extracts interpretable treatment effect estimates with proper standard errors.
       </p>
     </section>
 
-    <section id="installation">
+    <section id="install">
       <h2>Installation</h2>
-      <p>
-        Install etwfe from PyPI using pip:
-      </p>
-
       <div class="code-block">
         <div class="code-header">
           <span class="code-lang">shell</span>
@@ -464,13 +597,10 @@
         </div>
         <pre><code>pip install etwfe</code></pre>
       </div>
-
-      <p>
-        The package requires Python 3.8 or higher. Dependencies including <code>pyfixest</code>, <code>pandas</code>, and <code>numpy</code> will be installed automatically.
-      </p>
+      <p>Requires Python 3.8+. Dependencies install automatically.</p>
     </section>
 
-    <section id="sample-data">
+    <section id="quickstart">
       <h2>Sample Data</h2>
       <p>
         The examples in this guide use <code>mpdta</code>, a panel dataset tracking teen employment in 500 U.S. counties from 2003 through 2007. Some counties implemented minimum wage increases in 2004, 2006, or 2007, while others never raised their minimum wage—creating a textbook staggered adoption design for difference-in-differences analysis.
@@ -512,7 +642,7 @@ mpdta.<span class="fn">head</span>()</code></pre>
       </p>
     </section>
 
-    <section id="core-workflow">
+    <section id="workflow">
       <h2>Core Workflow</h2>
       <p>
         Analysis with <strong>etwfe</strong> proceeds in two stages. First, <code>etwfe()</code> fits the saturated interaction specification. Second, <code>emfx()</code> transforms the many coefficient estimates into meaningful treatment effect summaries.
@@ -564,6 +694,7 @@ mod.<span class="fn">emfx</span>()</code></pre>
       <p>
         The estimate of −0.051 implies that minimum wage increases lowered teen employment by roughly 5% on average across treated counties and post-treatment periods. The confidence interval excludes zero, indicating statistical significance.
       </p>
+
       <p>
         The <code>type</code> parameter controls how effects are broken down. Setting <code>type="event"</code> generates an event study that tracks effects relative to treatment timing:
       </p>
@@ -591,7 +722,7 @@ mod.<span class="fn">emfx</span>(type<span class="op">=</span><span class="str">
       </p>
     </section>
 
-    <section id="visualizations">
+    <section id="plots">
       <h2>Creating Visualizations</h2>
 
       <h3>Event Study Plots</h3>
@@ -767,6 +898,11 @@ mod_pois.<span class="fn">emfx</span>(type<span class="op">=</span><span class="
 2      2 -75.124632  23.154168 -120.506802  -29.742462
 3      3 -101.823979  27.087814 -154.916095  -48.731864</pre>
       </div>
+
+      <h3>Robustness Assessment</h3>
+      <p>
+        Even when linear parallel trends seems reasonable, running both linear and nonlinear models provides a valuable robustness check. When estimates align across specifications, confidence in the findings grows. When they diverge, it signals sensitivity to the functional form assumption—useful diagnostic information for interpreting results.
+      </p>
     </section>
 
     <section id="performance">
@@ -793,6 +929,9 @@ mod.<span class="fn">emfx</span>(type<span class="op">=</span><span class="str">
       <p>
         The <code>compress=True</code> option implements the data compression approach from Wong et al. (2021). The core insight is that for linear models, data can be reduced to sufficient statistics—aggregated summaries preserving all information needed for estimation.
       </p>
+      <p>
+        Compression can shrink datasets with millions of observations to much smaller structures, enabling interactive analysis that would otherwise demand specialized infrastructure. Point estimates match uncompressed results exactly, while standard errors are approximate but typically accurate to 2-3 decimal places.
+      </p>
 
       <div class="code-block">
         <div class="code-header">
@@ -802,9 +941,17 @@ mod.<span class="fn">emfx</span>(type<span class="op">=</span><span class="str">
         <pre><code><span class="cmt"># Compressed estimation</span>
 mod.<span class="fn">emfx</span>(type<span class="op">=</span><span class="str">"event"</span>, compress<span class="op">=</span><span class="kw">True</span>)</code></pre>
       </div>
+
+      <h3>Practical Approach</h3>
+      <p>For large datasets, a staged approach works well:</p>
+      <ol>
+        <li>Run <code>emfx(vcov=False)</code> to verify point estimates look sensible</li>
+        <li>Run <code>emfx(vcov=False, compress=True)</code> to confirm compression preserves estimates</li>
+        <li>If results align, run <code>emfx(compress=True)</code> for approximate standard errors</li>
+      </ol>
     </section>
 
-    <section id="reference">
+    <section id="api">
       <h2>API Reference</h2>
 
       <h3>etwfe()</h3>
@@ -813,52 +960,59 @@ mod.<span class="fn">emfx</span>(type<span class="op">=</span><span class="str">
       <div class="table-wrap">
         <table>
           <tr><th>Argument</th><th>Type</th><th>Description</th></tr>
-          <tr><td class="param">fml</td><td><code>str</code></td><td>Model formula: <code>"outcome ~ covariates"</code></td></tr>
+          <tr><td class="param">fml</td><td><code>str</code></td><td>Model formula: <code>"outcome ~ covariates"</code> or <code>"outcome ~ 0"</code> for no covariates</td></tr>
           <tr><td class="param">tvar</td><td><code>str</code></td><td>Name of the time period variable</td></tr>
-          <tr><td class="param">gvar</td><td><code>str</code></td><td>Name of the treatment cohort variable</td></tr>
-          <tr><td class="param">data</td><td><code>DataFrame</code></td><td>Panel dataset</td></tr>
-          <tr><td class="param">ivar</td><td><code>str</code></td><td>Unit identifier (optional)</td></tr>
-          <tr><td class="param">xvar</td><td><code>str</code></td><td>Heterogeneity variable (optional)</td></tr>
-          <tr><td class="param">cgroup</td><td><code>str</code></td><td><code>"notyet"</code> or <code>"never"</code></td></tr>
-          <tr><td class="param">family</td><td><code>str</code></td><td>GLM family: <code>"poisson"</code>, <code>"logit"</code>, etc.</td></tr>
-          <tr><td class="param">vcov</td><td><code>str | dict</code></td><td>Variance estimator</td></tr>
+          <tr><td class="param">gvar</td><td><code>str</code></td><td>Name of the treatment cohort variable (period of first treatment; 0 = never treated)</td></tr>
+          <tr><td class="param">data</td><td><code>DataFrame</code></td><td>Panel dataset containing all required variables</td></tr>
+          <tr><td class="param">ivar</td><td><code>str</code></td><td>Unit identifier for unit-level fixed effects (optional)</td></tr>
+          <tr><td class="param">xvar</td><td><code>str</code></td><td>Variable for heterogeneous treatment effects (optional)</td></tr>
+          <tr><td class="param">tref</td><td><code>int</code></td><td>Reference time period (optional; defaults to earliest)</td></tr>
+          <tr><td class="param">gref</td><td><code>int</code></td><td>Reference cohort (optional; defaults to 0 / never-treated)</td></tr>
+          <tr><td class="param">cgroup</td><td><code>str</code></td><td>Control group: <code>"notyet"</code> (default) or <code>"never"</code></td></tr>
+          <tr><td class="param">fe</td><td><code>str</code></td><td>Fixed effects: <code>"vs"</code>, <code>"feo"</code> (default), or <code>"none"</code></td></tr>
+          <tr><td class="param">family</td><td><code>str</code></td><td>GLM family: <code>"poisson"</code>, <code>"logit"</code>, <code>"probit"</code>, etc.</td></tr>
+          <tr><td class="param">vcov</td><td><code>str | dict</code></td><td>Variance estimator, e.g., <code>{"CRV1": "cluster_var"}</code></td></tr>
         </table>
       </div>
 
       <h3>model.emfx()</h3>
-      <p>Calculate aggregated marginal effects.</p>
+      <p>Calculate aggregated marginal effects (treatment effect estimates).</p>
 
       <div class="table-wrap">
         <table>
           <tr><th>Argument</th><th>Type</th><th>Description</th></tr>
-          <tr><td class="param">type</td><td><code>str</code></td><td><code>"simple"</code>, <code>"event"</code>, <code>"group"</code>, or <code>"calendar"</code></td></tr>
-          <tr><td class="param">by_xvar</td><td><code>bool</code></td><td>Separate effects by xvar</td></tr>
-          <tr><td class="param">post_only</td><td><code>bool</code></td><td>Post-treatment only</td></tr>
-          <tr><td class="param">compress</td><td><code>bool</code></td><td>Data compression</td></tr>
-          <tr><td class="param">vcov</td><td><code>bool</code></td><td>Compute standard errors</td></tr>
+          <tr><td class="param">type</td><td><code>str</code></td><td>Aggregation: <code>"simple"</code> (overall ATT), <code>"event"</code>, <code>"group"</code>, or <code>"calendar"</code></td></tr>
+          <tr><td class="param">by_xvar</td><td><code>bool</code></td><td>Report separate effects by xvar levels (default False)</td></tr>
+          <tr><td class="param">post_only</td><td><code>bool</code></td><td>Restrict to post-treatment periods only (default True)</td></tr>
+          <tr><td class="param">compress</td><td><code>bool</code></td><td>Apply data compression for speed (default False)</td></tr>
+          <tr><td class="param">vcov</td><td><code>bool</code></td><td>Calculate standard errors; set False to skip (default True)</td></tr>
+          <tr><td class="param">predict</td><td><code>str</code></td><td>Prediction scale: <code>"response"</code> (default) or <code>"link"</code></td></tr>
         </table>
       </div>
 
       <h3>model.plot()</h3>
-      <p>Generate visualizations.</p>
+      <p>Generate visualizations of treatment effects.</p>
 
       <div class="table-wrap">
         <table>
           <tr><th>Argument</th><th>Type</th><th>Description</th></tr>
-          <tr><td class="param">type</td><td><code>str</code></td><td><code>"event"</code>, <code>"group"</code>, or <code>"calendar"</code></td></tr>
-          <tr><td class="param">style</td><td><code>str</code></td><td><code>"errorbar"</code> or <code>"ribbon"</code></td></tr>
-          <tr><td class="param">by_xvar</td><td><code>bool</code></td><td>Separate series by xvar</td></tr>
-          <tr><td class="param">figsize</td><td><code>tuple</code></td><td>Figure dimensions</td></tr>
+          <tr><td class="param">type</td><td><code>str</code></td><td>Plot type: <code>"event"</code>, <code>"group"</code>, or <code>"calendar"</code></td></tr>
+          <tr><td class="param">style</td><td><code>str</code></td><td>Visual style: <code>"errorbar"</code> (default) or <code>"ribbon"</code></td></tr>
+          <tr><td class="param">post_only</td><td><code>bool</code></td><td>Display only post-treatment periods</td></tr>
+          <tr><td class="param">by_xvar</td><td><code>bool</code></td><td>Draw separate series for each xvar group</td></tr>
+          <tr><td class="param">figsize</td><td><code>tuple</code></td><td>Figure dimensions as (width, height)</td></tr>
+          <tr><td class="param">color</td><td><code>str</code></td><td>Color for single-group plots</td></tr>
+          <tr><td class="param">colors</td><td><code>list</code></td><td>Color sequence for multi-group plots</td></tr>
         </table>
       </div>
     </section>
 
-    <section id="references">
+    <section id="refs">
       <h2>References</h2>
-      <p class="refs">
-        Wooldridge, J. M. (2025). <a href="https://link.springer.com/article/10.1007/s00181-024-02681-z"><em>Two-way fixed effects, the two-way Mundlak regression, and difference-in-differences estimators.</em></a> Empirical Economics, 69(5), 2545-2587.<br><br>
-        Wooldridge, J. M. (2023). <a href="https://academic.oup.com/ectj/article/26/3/C31/7039335"><em>Simple approaches to nonlinear difference-in-differences with panel data.</em></a> The Econometrics Journal, 26(3), C31-C66.<br><br>
-        Callaway, B. and Sant'Anna, P. H. (2021). <em>Difference-in-differences with multiple time periods.</em> Journal of Econometrics, 225(2), 200-230.<br><br>
+      <p style="font-size: 14px; line-height: 2.2;">
+        Wooldridge, J. M. (2025). <a href="https://link.springer.com/article/10.1007/s00181-024-02681-z"><em>Two-way fixed effects, the two-way Mundlak regression, and difference-in-differences estimators.</em></a> Empirical Economics, 69(5), 2545-2587.<br>
+        Wooldridge, J. M. (2023). <a href="https://academic.oup.com/ectj/article/26/3/C31/7039335"><em>Simple approaches to nonlinear difference-in-differences with panel data.</em></a> The Econometrics Journal, 26(3), C31-C66.<br>
+        Callaway, B. and Sant'Anna, P. H. (2021). <em>Difference-in-differences with multiple time periods.</em> Journal of Econometrics, 225(2), 200-230.<br>
         Wong, J., Forsell, E., Lewis, R., Mao, T., and Wardrop, M. (2021). <a href="https://arxiv.org/abs/2102.11297"><em>You only compress once: Optimal data compression for estimating linear models.</em></a> arXiv:2102.11297.
       </p>
     </section>
@@ -866,23 +1020,48 @@ mod.<span class="fn">emfx</span>(type<span class="op">=</span><span class="str">
     <section id="acknowledgments">
       <h2>Acknowledgments</h2>
       <p>
-        This package relies on several high-quality open-source projects. Estimation uses <a href="https://github.com/py-econometrics/pyfixest">pyfixest</a> for high-dimensional fixed effects regression. The API and methodology draw heavily from Grant McDermott's <a href="https://github.com/grantmcdermott/etwfe">etwfe</a> package for R.
+        This package relies on several high-quality open-source projects. Estimation uses <a href="https://github.com/py-econometrics/pyfixest">pyfixest</a> for high-dimensional fixed effects regression. The API and methodology draw heavily from Grant McDermott's <a href="https://github.com/grantmcdermott/etwfe">etwfe</a> package for R. We thank the developers of these projects for their contributions to accessible econometric software.
       </p>
     </section>
 
-    <footer class="main-footer">
-      <p>Developed by <a href="https://github.com/armandkapllani">Armand Kapllani</a></p>
-    </footer>
-  </main>
-</div>
+  </div>
+
+  <footer class="footer">
+    <div>Developed by <a href="https://github.com/armandkapllani">Armand Kapllani</a></div>
+    <div class="footer-links">
+      <a href="https://github.com/armandkapllani/etwfe">GitHub</a>
+      <a href="https://pypi.org/project/etwfe/">PyPI</a>
+    </div>
+  </footer>
+</main>
 
 <script>
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+
+function openSidebar() {
+  sidebar.classList.add('open');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 function copyCode(btn) {
   const code = btn.closest('.code-block').querySelector('code').innerText;
   navigator.clipboard.writeText(code);
   btn.textContent = 'Copied!';
-  setTimeout(() => btn.textContent = 'Copy', 2000);
+  setTimeout(() => btn.textContent = 'Copy', 1500);
 }
+
+// Close sidebar on escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeSidebar();
+});
 </script>
 
 </body>
