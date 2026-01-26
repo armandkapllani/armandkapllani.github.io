@@ -625,7 +625,7 @@
         Two-way fixed effects (TWFE) regressions are widely used for causal inference with panel data, but naive TWFE specifications produce misleading estimates when treatment adoption is staggered and effects vary across cohorts or time. Wooldridge (2023, 2025) proposed a clean solution: fully interact treatment status with cohort and time indicators. This saturated specification—extended TWFE (ETWFE)—recovers cohort-time-specific effects that can be aggregated into interpretable summaries like overall average effects or dynamic event studies.
       </p>
       <p>
-        This package is a Python implementation inspired by the <a href="https://github.com/grantmcdermott/etwfe">etwfe R package</a> created by <a href="https://grantmcdermott.com/">Grant McDermott</a>. It handles the tedious work of building the saturated interaction specification, performs estimation through high-dimensional fixed effects or quasi-MLE, and extracts interpretable treatment effect estimates with proper standard errors.
+        This package is a Python implementation that was inspired by the <a href="https://github.com/grantmcdermott/etwfe">etwfe R package</a> created by <a href="https://grantmcdermott.com/">Grant McDermott</a>. It handles the tedious work of building the saturated interaction specification, performs estimation through high-dimensional fixed effects or quasi-MLE, and extracts interpretable treatment effect estimates with proper standard errors.
       </p>
     </section>
 
